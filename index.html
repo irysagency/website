@@ -4,215 +4,188 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Irys Agency — Agence montage vidéo pour infopreneurs et coaches</title>
-  <meta name="description" content="Irys est l'agence de montage vidéo pour coaches, formateurs et infopreneurs. Shorts, YouTube, Ads, VSL — livraison en 48h, sans engagement. Première vidéo offerte.">
+  <meta name="description" content="Irys est l'agence de montage vidéo pour coaches, formateurs et infopreneurs. Shorts, YouTube, Ads, VSL — livraison en 48h, sans engagement.">
   <link rel="canonical" href="https://irysagency.com">
   <meta property="og:title" content="Irys Agency — Agence montage vidéo pour infopreneurs et coaches">
   <meta property="og:description" content="Shorts, YouTube, Ads, VSL — livraison en 48h, sans engagement. Première vidéo offerte.">
   <meta property="og:url" content="https://irysagency.com">
-  <meta property="og:site_name" content="Irys Agency">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80' fill='%23E63946'>◆</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80' fill='%23E84C6A'>◆</text></svg>">
+
+  <!-- Fonts : InterTight (Google) + IvyPresto fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
+
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Irys Agency","description":"Agence de montage vidéo pour infopreneurs, coaches et formateurs.","url":"https://irysagency.com","areaServed":"FR","serviceType":"Montage vidéo","knowsLanguage":"fr"}</script>
 </head>
 <body>
 
-<!-- Cursor glow -->
-<div class="glow" id="glow"></div>
-
-<!-- NAV -->
+<!-- ═══ NAV ═══ -->
 <header class="nav" id="nav">
-  <div class="container nav__in">
-    <a href="#" class="nav__logo">IRYS<span>.</span></a>
-    <nav class="nav__links"><a href="#portfolio" class="nav__link">Portfolio</a><a href="#methode" class="nav__link">Méthode</a><a href="#offres" class="nav__link">Offres</a><a href="#faq" class="nav__link">FAQ</a></nav>
-    <a href="#cta" class="cta-btn">Réserver un appel</a>
+  <div class="wrap nav__in">
+    <a href="#" class="nav__logo">irys</a>
+    <nav class="nav__links">
+      <a href="#realisations" class="nav__link">Nos réalisations</a>
+      <a href="#resultats" class="nav__link">Nos résultats</a>
+      <a href="#offres" class="nav__link">Nos offres</a>
+      <a href="#faq" class="nav__link">FAQ</a>
+    </nav>
+    <a href="#contact" class="nav__cta">Prendre rendez-vous</a>
     <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
-  <div class="mob" id="mob"><a href="#portfolio">Portfolio</a><a href="#methode">Méthode</a><a href="#offres">Offres</a><a href="#faq">FAQ</a><a href="#cta" class="cta-btn" style="margin-top:12px">Réserver un appel</a></div>
+  <div class="mob" id="mob">
+    <a href="#realisations">Nos réalisations</a>
+    <a href="#resultats">Nos résultats</a>
+    <a href="#offres">Nos offres</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact" class="nav__cta" style="margin-top:16px">Prendre rendez-vous</a>
+  </div>
 </header>
 
 <main>
 
-<!-- HERO -->
+<!-- ═══ HERO ═══ -->
 <section class="hero" id="hero">
-  <div class="container">
-    <div class="hero__badge rv">Agence spécialisée en contenu vidéo</div>
-    <h1 class="hero__title rv d1">Ton contenu vidéo.<br><em>Sans y passer ta vie.</em></h1>
-    <p class="hero__sub rv d2">On s'occupe de tout : stratégie, tournage, montage. Concentre-toi sur ton business, on fait exploser ton audience avec des vidéos percutantes.</p>
-    <div class="hero__btns rv d3">
-      <a href="#cta" class="btn btn--r">Réserver un appel gratuit</a>
-      <a href="#portfolio" class="btn btn--o">Voir nos réalisations</a>
+  <!-- Blobs organiques animés -->
+  <div class="hero__blob hero__blob--1"></div>
+  <div class="hero__blob hero__blob--2"></div>
+  <div class="hero__blob hero__blob--3"></div>
+
+  <div class="wrap hero__grid">
+    <div class="hero__content">
+      <p class="hero__badge rv">
+        <span class="hero__badge-icon">🔥</span>
+        <em>L'agence qui transforme les marques en tendances virales</em>
+      </p>
+
+      <h1 class="hero__title rv d1">
+        <span class="hero__title-line">
+          <i>Visible</i> aujourd'hui,
+        </span>
+        <span class="hero__title-line">
+          Inoubliable <i>demain.</i>
+        </span>
+        <svg class="hero__squiggle rv d2" viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 10C20 3 40 17 60 10C80 3 100 17 120 10C140 3 160 17 180 10C190 7 195 8 197 10" stroke="var(--rose)" stroke-width="3" stroke-linecap="round" class="squiggle-path"/>
+        </svg>
+      </h1>
+
+      <div class="hero__bottom rv d2">
+        <p class="hero__sub">
+          Chez Irys, on ne se contente pas de faire du bruit. On crée du contenu qui vous rend visible aujourd'hui, et inoubliable demain. Une stratégie claire, des vidéos percutantes, une image de marque solide.
+        </p>
+        <a href="#contact" class="btn btn--rose">Passer au niveau supérieur</a>
+      </div>
     </div>
-    <p class="hero__trust rv d4">Sans engagement · Première vidéo offerte en 48h</p>
+
+    <div class="hero__visual rv d3">
+      <div class="hero__phone">
+        <div class="hero__phone-frame">
+          <!-- Remplace ce placeholder par ta vraie photo/vidéo -->
+          <div class="hero__phone-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social proof sous le hero -->
+  <div class="wrap">
+    <div class="hero__proof rv d4">
+      <p class="hero__proof-text">S'ils nous ont fait confiance, pourquoi <i>pas vous ?</i></p>
+      <!-- Placeholder pour les logos/avatars clients -->
+      <div class="hero__proof-avatars">
+        <div class="hero__avatar" style="background:#ddd"></div>
+        <div class="hero__avatar" style="background:#ccc"></div>
+        <div class="hero__avatar" style="background:#bbb"></div>
+        <div class="hero__avatar" style="background:#aaa"></div>
+        <div class="hero__avatar" style="background:#999"></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- STATS -->
-<section class="stats">
-  <div class="container stats__in">
-    <div class="stats__item rv"><div class="stats__num" data-target="54" data-prefix="+">+0</div><div class="stats__label">clients accompagnés</div></div>
-    <div class="stats__item rv d1"><div class="stats__num" data-target="1600" data-prefix="+" data-sep=" ">+0</div><div class="stats__label">vidéos livrées</div></div>
-    <div class="stats__item rv d2"><div class="stats__num" data-target="2500" data-prefix="+" data-suffix="h" data-sep=" ">+0h</div><div class="stats__label">de rush traité</div></div>
+<!-- ═══ PLACEHOLDER SECTIONS (à construire ensuite) ═══ -->
+
+<!-- Stats band -->
+<section class="stats-band" id="stats">
+  <div class="wrap stats-band__in">
+    <div class="stats-band__item rv"><div class="stats-band__num" data-target="54" data-prefix="+">+0</div><div class="stats-band__label">clients accompagnés</div></div>
+    <div class="stats-band__item rv d1"><div class="stats-band__num" data-target="1600" data-prefix="+" data-sep=" ">+0</div><div class="stats-band__label">vidéos livrées</div></div>
+    <div class="stats-band__item rv d2"><div class="stats-band__num" data-target="2500" data-prefix="+" data-suffix="h" data-sep=" ">+0h</div><div class="stats-band__label">de rush traité</div></div>
   </div>
 </section>
 
-<!-- PORTFOLIO -->
-<section class="section" id="portfolio">
-  <div class="container">
-    <div class="s-head s-head--c rv">
-      <p class="s-tag">Portfolio</p>
-      <h2 class="s-title">Nos <em>réalisations</em></h2>
-      <p class="s-sub">Des montages conçus pour la performance. Ads, YouTube, Shorts : choisissez votre format.</p>
-    </div>
-    <div class="pf-filters rv">
-      <button class="pf-f on" data-filter="all">Tous</button>
-      <button class="pf-f" data-filter="shorts">Shorts & Reels</button>
-      <button class="pf-f" data-filter="ads">Ads & VSL</button>
-      <button class="pf-f" data-filter="youtube">YouTube & Vlogs</button>
-      <button class="pf-f" data-filter="podcast">Podcast</button>
-    </div>
-    <div class="pf-grid" id="pf-grid">
-      <div class="pf-item rv" data-cat="shorts" data-vimeo="000001"><div class="pf-item__bg" style="background:linear-gradient(135deg,#E63946 0%,#7B2040 100%)"></div><div class="pf-item__grad"></div><div class="pf-item__play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div><div class="pf-item__info"><div class="pf-item__cat">Shorts</div><div class="pf-item__name">Short coaching mindset</div></div></div>
-      <div class="pf-item rv d1" data-cat="youtube" data-vimeo="000002"><div class="pf-item__bg" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%)"></div><div class="pf-item__grad"></div><div class="pf-item__play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div><div class="pf-item__info"><div class="pf-item__cat">YouTube</div><div class="pf-item__name">Vidéo longue formation</div></div></div>
-      <div class="pf-item rv d2" data-cat="ads" data-vimeo="000003"><div class="pf-item__bg" style="background:linear-gradient(135deg,#2d1b4e 0%,#1a0a2e 100%)"></div><div class="pf-item__grad"></div><div class="pf-item__play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div><div class="pf-item__info"><div class="pf-item__cat">Ads</div><div class="pf-item__name">Pub conversion coaching</div></div></div>
-      <div class="pf-item rv d3" data-cat="shorts" data-vimeo="000004"><div class="pf-item__bg" style="background:linear-gradient(135deg,#0f3460 0%,#0a1931 100%)"></div><div class="pf-item__grad"></div><div class="pf-item__play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div><div class="pf-item__info"><div class="pf-item__cat">Shorts</div><div class="pf-item__name">Reel infopreneur</div></div></div>
-      <div class="pf-item rv" data-cat="ads" data-vimeo="000005"><div class="pf-item__bg" style="background:linear-gradient(135deg,#3a0647 0%,#1a0226 100%)"></div><div class="pf-item__grad"></div><div class="pf-item__play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div><div class="pf-item__info"><div class="pf-item__cat">Ads</div><div class="pf-item__name">VSL programme coaching</div></div></div>
-      <div class="pf-item rv d1" data-cat="podcast" data-vimeo="000006"><div class="pf-item__bg" style="background:linear-gradient(135deg,#1a1a1a 0%,#333 100%)"></div><div class="pf-item__grad"></div><div class="pf-item__play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div><div class="pf-item__info"><div class="pf-item__cat">Podcast</div><div class="pf-item__name">Podcast business en ligne</div></div></div>
-      <div class="pf-item rv d2" data-cat="youtube" data-vimeo="000007"><div class="pf-item__bg" style="background:linear-gradient(135deg,#0d2137 0%,#0a1628 100%)"></div><div class="pf-item__grad"></div><div class="pf-item__play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div><div class="pf-item__info"><div class="pf-item__cat">YouTube</div><div class="pf-item__name">Vlog formateur</div></div></div>
-      <div class="pf-item rv d3" data-cat="shorts" data-vimeo="000008"><div class="pf-item__bg" style="background:linear-gradient(135deg,#4a1942 0%,#2c0e27 100%)"></div><div class="pf-item__grad"></div><div class="pf-item__play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div><div class="pf-item__info"><div class="pf-item__cat">Shorts</div><div class="pf-item__name">Extrait podcast entrepreneur</div></div></div>
-    </div>
-    <div class="pf-more rv"><a href="#" class="btn btn--o">Voir tout le portfolio →</a></div>
+<!-- Section placeholder : Portfolio -->
+<section class="section" id="realisations">
+  <div class="wrap" style="text-align:center;padding:120px 0;opacity:.3">
+    <p class="s-tag">À venir</p>
+    <p style="font-family:var(--font-h);font-size:32px;font-weight:600">Section Portfolio</p>
+    <p style="color:var(--muted);margin-top:8px">Sera construite dans la prochaine étape</p>
   </div>
 </section>
 
-<!-- MÉTHODE -->
+<!-- Section placeholder : Comparaison -->
+<section class="section" id="comparaison" style="background:var(--dark)">
+  <div class="wrap" style="text-align:center;padding:120px 0;opacity:.3">
+    <p class="s-tag">À venir</p>
+    <p style="font-family:var(--font-h);font-size:32px;font-weight:600;color:#fff">Section Irys vs Autres Agences</p>
+    <p style="color:rgba(255,255,255,.4);margin-top:8px">Sera construite prochainement</p>
+  </div>
+</section>
+
+<!-- Section placeholder : Méthode -->
 <section class="section" id="methode">
-  <div class="container">
-    <div class="s-head s-head--c rv">
-      <p class="s-tag">Méthode</p>
-      <h2 class="s-title">Le système Irys. <em>Fluide</em> dès le premier jour.</h2>
-      <p class="s-sub">Un espace dédié, un canal direct, une direction artistique fixée une fois pour toutes. Tu envoies tes rushs — on gère le reste.</p>
-    </div>
-    <div class="m-grid">
-      <div class="m-card rv"><div class="m-card__n">01</div><h3 class="m-card__t">Ton espace de travail</h3><p class="m-card__tool">Frame.io</p><p class="m-card__d">Tu déposes tes rushs, tu retrouves tes vidéos livrées, tu laisses tes retours directement sur la timeline. Pas de mail, pas de fichiers perdus.</p></div>
-      <div class="m-card rv d1"><div class="m-card__n">02</div><h3 class="m-card__t">Une ligne directe</h3><p class="m-card__tool">Slack</p><p class="m-card__d">Questions, validations, retours — tout au même endroit. Une réponse dans la journée, toujours.</p></div>
-      <div class="m-card rv d2"><div class="m-card__n">03</div><h3 class="m-card__t">Direction artistique fixée</h3><p class="m-card__tool">Kick-off</p><p class="m-card__d">Au démarrage : typographies, couleurs, sous-titres, ambiance. Toutes tes vidéos sont reconnaissables dès la première semaine.</p></div>
-    </div>
-    <div class="proc rv">
-      <p class="proc__t">De tes rushs à ta vidéo publiée.</p>
-      <div class="proc__steps">
-        <div class="proc__s rv"><div class="proc__dot">1</div><div><h3 class="proc__st">Tu filmes</h3><p class="proc__sd">Ton téléphone, ton décor. On t'accompagne si besoin.</p></div></div>
-        <div class="proc__s rv d1"><div class="proc__dot">2</div><div><h3 class="proc__st">Tu déposes sur Frame.io</h3><p class="proc__sd">C'est là que notre travail commence.</p></div></div>
-        <div class="proc__s rv d2"><div class="proc__dot">3</div><div><h3 class="proc__st">48h plus tard, c'est prêt</h3><p class="proc__sd">Montage, sous-titres, DA. Révisions illimitées.</p></div></div>
-        <div class="proc__s rv d3"><div class="proc__dot">4</div><div><h3 class="proc__st">Tu publies. On recommence.</h3><p class="proc__sd">Chaque semaine. Sans exception.</p></div></div>
-      </div>
-    </div>
+  <div class="wrap" style="text-align:center;padding:120px 0;opacity:.3">
+    <p class="s-tag">À venir</p>
+    <p style="font-family:var(--font-h);font-size:32px;font-weight:600">Section Méthode & Process</p>
   </div>
 </section>
 
-<!-- OFFRES -->
-<section class="section" id="offres" style="background:#EFEBE3">
-  <div class="container">
-    <div class="s-head s-head--c rv">
-      <p class="s-tag">Nos Offres</p>
-      <h2 class="s-title">Choisissez le pack qui <em>correspond</em> à vos besoins</h2>
-      <p class="s-sub">et propulsez votre contenu vers de nouveaux sommets.</p>
-    </div>
-    <div class="pr-grid">
-      <div class="pr-card pr-card--pop rv">
-        <div class="pr-badge">Populaire</div>
-        <h3 class="pr-name">Pack Shorts</h3>
-        <p class="pr-price">€500<span>/mois</span></p>
-        <div class="pr-feats">
-          <div class="pr-feat">Montage dynamique et percutant</div>
-          <div class="pr-feat">Sous-titres animés sur mesure</div>
-          <div class="pr-feat">Effets sonores et musique libre de droits</div>
-          <div class="pr-feat">Jusqu'à 15 vidéos par mois</div>
-        </div>
-        <a href="#cta" class="btn btn--r pr-cta">Choisir ce pack</a>
-      </div>
-      <div class="pr-card rv d1">
-        <h3 class="pr-name">Pack YouTube</h3>
-        <p class="pr-price">€1200<span>/mois</span></p>
-        <div class="pr-feats">
-          <div class="pr-feat">Montage complet (jusqu'à 20 min)</div>
-          <div class="pr-feat">Création de miniatures accrocheuses</div>
-          <div class="pr-feat">Optimisation SEO (Titres, Descriptions)</div>
-          <div class="pr-feat">4 vidéos par mois</div>
-        </div>
-        <a href="#cta" class="btn btn--o pr-cta">Choisir ce pack</a>
-      </div>
-      <div class="pr-card rv d2">
-        <h3 class="pr-name">Pack Podcast</h3>
-        <p class="pr-price">€800<span>/mois</span></p>
-        <div class="pr-feats">
-          <div class="pr-feat">Mixage et mastering audio professionnel</div>
-          <div class="pr-feat">Version vidéo multi-caméras (si fourni)</div>
-          <div class="pr-feat">Extraction de 3 extraits shorts par épisode</div>
-          <div class="pr-feat">4 épisodes par mois</div>
-        </div>
-        <a href="#cta" class="btn btn--o pr-cta">Choisir ce pack</a>
-      </div>
-    </div>
-    <div class="ao rv">
-      <p class="ao__t">Add-ons</p>
-      <div class="ao__grid">
-        <div class="ao__item"><div class="ao__icon">📢</div><div class="ao__info"><div class="ao__name">Campagnes ADS</div><div class="ao__desc">Vidéos publicitaires ciblées pour les réseaux</div></div><div class="ao__pr">Sur devis</div></div>
-        <div class="ao__item"><div class="ao__icon">🚀</div><div class="ao__info"><div class="ao__name">Launch Pack</div><div class="ao__desc">Kit de lancement complet pour ta marque</div></div><div class="ao__pr">Sur devis</div></div>
-        <div class="ao__item"><div class="ao__icon">🎬</div><div class="ao__info"><div class="ao__name">VSL</div><div class="ao__desc">Video Sales Letters ultra performantes</div></div><div class="ao__pr">Sur devis</div></div>
-      </div>
-    </div>
+<!-- Section placeholder : Services -->
+<section class="section" id="services" style="background:var(--dark)">
+  <div class="wrap" style="text-align:center;padding:120px 0;opacity:.3">
+    <p class="s-tag">À venir</p>
+    <p style="font-family:var(--font-h);font-size:32px;font-weight:600;color:#fff">Section Services & Différenciateurs</p>
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="section" id="faq">
-  <div class="container">
-    <div class="s-head s-head--c rv">
-      <p class="s-tag">FAQ</p>
-      <h2 class="s-title">Les questions qu'on nous pose <em>tout le temps.</em></h2>
-    </div>
-    <div class="faq__list">
-      <div class="faq__item rv"><button class="faq__q" aria-expanded="false"><span>Est-ce que je garde le contrôle sur mes vidéos ?</span><span class="faq__ic"></span></button><div class="faq__a" role="region"><div class="faq__a-in"><p class="faq__a-txt">Complètement. On définit ta direction artistique ensemble au kick-off, et rien n'est lancé sans ta validation. Tu restes l'auteur de ton contenu — on est juste l'équipe derrière.</p></div></div></div>
-      <div class="faq__item rv d1"><button class="faq__q" aria-expanded="false"><span>Je dois filmer comment ? Avec quoi ?</span><span class="faq__ic"></span></button><div class="faq__a" role="region"><div class="faq__a-in"><p class="faq__a-txt">Avec ton téléphone, dans ton environnement habituel. On t'accompagne sur le cadrage et les conditions de tournage si besoin. Pas besoin de studio.</p></div></div></div>
-      <div class="faq__item rv d2"><button class="faq__q" aria-expanded="false"><span>Vous garantissez des résultats en vues ou en abonnés ?</span><span class="faq__ic"></span></button><div class="faq__a" role="region"><div class="faq__a-in"><p class="faq__a-txt">Non — et on t'explique pourquoi c'est honnête. L'algorithme ne se contrôle pas. Ce qu'on garantit : la qualité des vidéos livrées, la cohérence de ta direction artistique, et le respect des délais. C'est ce qui dépend de nous — et on l'assume à 100%.</p></div></div></div>
-      <div class="faq__item rv"><button class="faq__q" aria-expanded="false"><span>C'est quoi concrètement la « première vidéo gratuite » ?</span><span class="faq__ic"></span></button><div class="faq__a" role="region"><div class="faq__a-in"><p class="faq__a-txt">Tu nous envoies une idée ou un brief. On monte, on livre en 48h. Tu demandes autant de révisions que tu veux jusqu'à ce que ce soit parfait. Si ça te convient, on signe. Sinon, tu repars avec une vidéo gratuite.</p></div></div></div>
-      <div class="faq__item rv d1"><button class="faq__q" aria-expanded="false"><span>Et si je veux arrêter ?</span><span class="faq__ic"></span></button><div class="faq__a" role="region"><div class="faq__a-in"><p class="faq__a-txt">Préavis 30 jours, c'est tout. Pas de contrat longue durée, pas de pénalité. Tu restes parce que t'es satisfait — pas parce que t'es bloqué.</p></div></div></div>
-    </div>
+<!-- Section placeholder : Offres -->
+<section class="section" id="offres">
+  <div class="wrap" style="text-align:center;padding:120px 0;opacity:.3">
+    <p class="s-tag">À venir</p>
+    <p style="font-family:var(--font-h);font-size:32px;font-weight:600">Section Offres & Pricing</p>
   </div>
 </section>
 
-<!-- CTA FINAL -->
-<section class="cta-f" id="cta">
-  <div class="container">
-    <h2 class="cta-f__t rv">Tu passes 20h par mois à monter tes vidéos. Ce temps-là, tu pourrais le passer sur ton business.</h2>
-    <p class="cta-f__sub rv d1">Commence par ta première vidéo gratuite — livrée en 48h, révisée jusqu'à ce que ce soit parfait.</p>
-    <div class="rv d2"><a href="https://calendly.com/irysagency" target="_blank" rel="noopener" class="btn btn--r">Réserver un appel gratuit</a><p class="cta-f__trust">30 minutes · Sans engagement · On répond à toutes tes questions</p></div>
-    <div class="cta-f__cal" id="cal-container"><div class="cta-f__cal-ph"><p>Chargement du calendrier...</p><p style="margin-top:8px;font-size:12px">Si le calendrier ne s'affiche pas, <a href="https://calendly.com/irysagency" target="_blank" rel="noopener">clique ici</a>.</p></div></div>
+<!-- Section placeholder : FAQ -->
+<section class="section" id="faq" style="background:var(--dark)">
+  <div class="wrap" style="text-align:center;padding:120px 0;opacity:.3">
+    <p class="s-tag">À venir</p>
+    <p style="font-family:var(--font-h);font-size:32px;font-weight:600;color:#fff">Section FAQ</p>
+  </div>
+</section>
+
+<!-- Section placeholder : CTA Final -->
+<section class="section" id="contact">
+  <div class="wrap" style="text-align:center;padding:120px 0;opacity:.3">
+    <p class="s-tag">À venir</p>
+    <p style="font-family:var(--font-h);font-size:32px;font-weight:600">Section CTA Final + Calendly</p>
   </div>
 </section>
 
 </main>
 
-<!-- FOOTER -->
-<footer class="foot">
-  <div class="container foot__in">
-    <div class="foot__logo">IRYS.</div>
-    <p class="foot__tag">Ton contenu vidéo. Sans y passer ta vie.</p>
-    <div class="foot__soc">
-      <a href="https://instagram.com/irysagency" target="_blank" rel="noopener" class="foot__s" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-      <a href="https://tiktok.com/@irysagency" target="_blank" rel="noopener" class="foot__s" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.88-2.88 2.89 2.89 0 0 1 2.88-2.88c.28 0 .55.04.81.1v-3.5a6.37 6.37 0 0 0-.81-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.19a8.16 8.16 0 0 0 4.76 1.53v-3.4a4.85 4.85 0 0 1-1-.63z"/></svg></a>
-      <a href="https://linkedin.com/company/irysagency" target="_blank" rel="noopener" class="foot__s" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-    </div>
-    <nav class="foot__links"><a href="mentions-legales.html" class="foot__lk">Mentions légales</a><a href="mentions-legales.html" class="foot__lk">Confidentialité</a><a href="mentions-legales.html" class="foot__lk">CGV</a></nav>
-    <p class="foot__copy">© 2026 Irys Agency — Tous droits réservés</p>
-  </div>
+<!-- Footer placeholder -->
+<footer style="background:var(--dark);padding:40px 0;text-align:center">
+  <p style="font-family:var(--font-h);font-size:16px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.6)">IRYS.</p>
+  <p style="font-size:12px;color:rgba(255,255,255,.2);margin-top:8px">© 2026 Irys Agency — Tous droits réservés</p>
 </footer>
-
-<!-- VIDEO OVERLAY -->
-<div class="vid" id="vid" role="dialog" aria-label="Lecteur vidéo"><button class="vid__x" aria-label="Fermer">✕</button><div class="vid__f" id="vid-f"></div></div>
 
 <script src="script.js"></script>
 </body>
