@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://irysagency.com
+
+# Sitemaps
+Sitemap: https://irysagency.com/sitemap.xml
