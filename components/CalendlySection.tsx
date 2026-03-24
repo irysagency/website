@@ -99,7 +99,7 @@ export default function CalendlySection() {
                 🎁 Première vidéo offerte
               </p>
               <p className="text-xs text-[var(--color-text-muted)]">
-                Tu nous envoies une idée. On monte en 48h. Si c'est pas parfait, tu repars sans rien signer — et avec une vidéo gratuite.
+                Tu nous envoies une idée. On monte rapidement. Si c'est pas parfait, tu repars sans rien signer — et avec une vidéo gratuite.
               </p>
             </div>
           </div>

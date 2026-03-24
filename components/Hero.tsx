@@ -31,10 +31,7 @@ export default function Hero() {
         {/* Subline */}
         <p className="text-lg sm:text-xl text-[var(--color-text-muted)] max-w-2xl mb-10 leading-relaxed">
           Tu filmes, tu envoies, on livre.{' '}
-          <strong className="text-[var(--color-text)] font-medium">
-            En 48h chrono
-          </strong>
-          , sans engagement, sans brief de 12 pages. Ton contenu publie, ton audience grandit, ton CA décolle — toi tu fais ce que t'as toujours voulu faire.
+          sans engagement, sans brief de 12 pages. Ton contenu publie, ton audience grandit, ton CA décolle — toi tu fais ce que t'as toujours voulu faire.
         </p>
 
         {/* CTAs */}
@@ -54,7 +51,7 @@ export default function Hero() {
         </div>
 
         {/* Stats */}
-        <div className="flex flex-col sm:flex-row gap-8 sm:gap-12 pt-8 border-t border-[var(--color-separator)]/15">
+        <div className="flex flex-col sm:flex-row gap-8 sm:gap-12 pt-8">
           {STATS.map(({ value, label }) => (
             <div key={label} className="flex flex-col gap-1">
               <span className="text-3xl sm:text-4xl font-bold text-[var(--color-text)] tracking-tight">
@@ -68,11 +65,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll hint */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[var(--color-text-muted)] opacity-60">
-        <span className="text-xs tracking-wide">Scroll</span>
-        <span className="w-px h-8 bg-current" />
-      </div>
     </section>
   )
 }

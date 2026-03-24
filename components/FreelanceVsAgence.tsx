@@ -9,7 +9,7 @@ const COMPARISON = [
   },
   {
     pain: 'Rendu en 5 à 10 jours ouvrés',
-    gain: 'Livraison en 48h chrono, garanti',
+    gain: 'Livraison rapide, semaine après semaine',
   },
   {
     pain: "Une seule paire d'yeux sur ton contenu",
@@ -23,12 +23,16 @@ const COMPARISON = [
     pain: 'Tu gères les allers-retours, les fichiers, les deadlines',
     gain: 'Tu envoies tes rushs — on gère tout le reste',
   },
+  {
+    pain: 'Tu dois coordonner plusieurs prestataires (monteur, minimaker, motion designer...)',
+    gain: 'Tous les talents sont chez nous — un seul interlocuteur',
+  },
 ]
 
 const ARGUMENTS = [
   {
     icon: '⚡',
-    title: 'Livraison 48h',
+    title: 'Livraison rapide',
     description:
       'Tes vidéos sortent quand tu en as besoin. Pas quand ton freelance daigne répondre.',
   },
@@ -42,7 +46,7 @@ const ARGUMENTS = [
     icon: '📦',
     title: 'Tout inclus',
     description:
-      'Montage, motion, sous-titres, thumbnail. Un seul interlocuteur, zéro coordination.',
+      "Un freelance fait la vidéo YouTube. Chez nous, tu reçois la vidéo YouTube, les shorts qui vont avec, le teaser, le thumbnail — tout sort en même temps. Une seule équipe, zéro coordination de ta part.",
   },
 ]
 
@@ -71,7 +75,7 @@ export default function FreelanceVsAgence() {
           {/* Headers */}
           <div className="bg-[var(--color-surface)] px-6 py-4 flex items-center gap-2">
             <span className="w-5 h-5 rounded-full bg-red-100 flex items-center justify-center text-red-500 text-xs font-bold">✕</span>
-            <span className="font-semibold text-[var(--color-text)]">Avec un freelance</span>
+            <span className="font-semibold text-[var(--color-text)]">Seul ou avec un freelance</span>
           </div>
           <div className="bg-[var(--color-surface)] px-6 py-4 flex items-center gap-2">
             <span className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-xs font-bold">✓</span>

@@ -21,7 +21,7 @@ const FAQS = [
   {
     question: "C'est quoi concrètement la première vidéo gratuite ?",
     answer:
-      "Tu nous envoies une idée ou un brief. On monte, on livre en 48h. Tu demandes autant de révisions que tu veux jusqu'à ce que ce soit parfait. Si ça te convient, on signe. Sinon, tu repars avec une vidéo gratuite.",
+      "Tu nous envoies une idée ou un brief. On monte, on livre rapidement. Tu demandes autant de révisions que tu veux jusqu'à ce que ce soit parfait. Si ça te convient, on signe. Sinon, tu repars avec une vidéo gratuite.",
   },
   {
     question: 'Et si je veux arrêter ?',

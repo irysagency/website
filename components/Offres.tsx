@@ -3,6 +3,7 @@
 import { useState } from 'react'
 
 type Tab = 'abonnements' | 'packs'
+type Quality = 'standard' | 'premium'
 
 const ABONNEMENTS = [
   {
@@ -52,13 +53,150 @@ const ABONNEMENTS = [
   },
 ]
 
-const PACKS = [
-  { name: 'Pack 8 Shorts (Reels / TikTok / Shorts)', standard: '360', premium: '720' },
-  { name: 'Pack 4 ADS Vidéo (avec variations de hooks)', standard: '480', premium: null },
-  { name: 'Pack 2 Vidéos YouTube', standard: '590', premium: '1 180' },
-  { name: 'Podcast Vidéo (miniature YT + 5 Shorts + wav + teaser)', standard: '590', premium: null },
-  { name: 'VSL — Vidéo de Vente', standard: '590', premium: '1 180' },
+interface Pack {
+  icon: string
+  name: string
+  tagline: string
+  standard: string
+  premium: string | null
+  features: string[]
+}
+
+const PACKS: Pack[] = [
+  {
+    icon: '📱',
+    name: 'Pack 8 Shorts',
+    tagline: 'Reels / TikTok / Shorts',
+    standard: '360',
+    premium: '720',
+    features: [
+      '8 vidéos courtes format vertical',
+      'Frame.io inclus',
+      'Sous-titres + transitions',
+    ],
+  },
+  {
+    icon: '📣',
+    name: 'Pack 4 ADS Vidéo',
+    tagline: 'Avec variations de hooks',
+    standard: '480',
+    premium: null,
+    features: [
+      '4 publicités vidéo',
+      'Variations de hooks testables',
+      'Frame.io inclus',
+    ],
+  },
+  {
+    icon: '▶️',
+    name: 'Pack 2 Vidéos YouTube',
+    tagline: 'Long format, rétention optimisée',
+    standard: '590',
+    premium: '1 180',
+    features: [
+      '2 vidéos YouTube longue durée',
+      'Frame.io inclus',
+      'Chapitres + sous-titres',
+    ],
+  },
+  {
+    icon: '🎙️',
+    name: 'Podcast Vidéo',
+    tagline: 'Miniature YT + 5 Shorts + wav + teaser',
+    standard: '590',
+    premium: null,
+    features: [
+      '1 épisode podcast monté',
+      '5 shorts extraits',
+      'Fichier wav + teaser',
+      'Frame.io inclus',
+    ],
+  },
+  {
+    icon: '🎯',
+    name: 'VSL — Vidéo de Vente',
+    tagline: '2 à 5 minutes, conçue pour convertir',
+    standard: '590',
+    premium: '1 180',
+    features: [
+      'Script vidéo optimisé conversion',
+      'Montage structuré par étapes de vente',
+      'Frame.io inclus',
+    ],
+  },
 ]
+
+const PREMIUM_MENTION = '+ sous-titres animés, SFX complets, B-rolls poussés, Motion Design soft'
+
+function PackCard({ pack }: { pack: Pack }) {
+  const [quality, setQuality] = useState<Quality>('standard')
+  const isPremium = quality === 'premium'
+  const price = isPremium && pack.premium ? pack.premium : pack.standard
+  const hasPremium = pack.premium !== null
+
+  return (
+    <div className="relative rounded-2xl p-8 border flex flex-col bg-[var(--color-surface)] border-[var(--color-separator)]/10 text-[var(--color-text)]">
+      {/* Toggle Standard / Premium */}
+      {hasPremium && (
+        <div className="absolute top-5 right-5 flex rounded-full border border-[var(--color-separator)]/15 overflow-hidden text-xs font-semibold">
+          <button
+            type="button"
+            onClick={() => setQuality('standard')}
+            className={`px-3 py-1 transition-colors ${
+              !isPremium
+                ? 'bg-[var(--color-text)] text-white'
+                : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
+            }`}
+          >
+            Standard
+          </button>
+          <button
+            type="button"
+            onClick={() => setQuality('premium')}
+            className={`px-3 py-1 transition-colors ${
+              isPremium
+                ? 'bg-[var(--color-accent)] text-white'
+                : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
+            }`}
+          >
+            Premium ✦
+          </button>
+        </div>
+      )}
+
+      <div className="text-3xl mb-4">{pack.icon}</div>
+      <h3 className="text-xl font-bold mb-1 pr-32">{pack.name}</h3>
+      <p className="text-sm mb-6 text-[var(--color-text-muted)]">{pack.tagline}</p>
+
+      <div className="mb-6">
+        <span className="text-4xl font-bold">{price} €</span>
+        <span className="text-sm ml-1 text-[var(--color-text-muted)]">HT</span>
+      </div>
+
+      {isPremium && (
+        <p className="text-xs text-[var(--color-accent)] font-medium mb-4 leading-relaxed">
+          ✦ {PREMIUM_MENTION}
+        </p>
+      )}
+
+      <ul className="flex flex-col gap-3 flex-1 mb-8">
+        {pack.features.map((f) => (
+          <li key={f} className="flex items-start gap-2 text-sm">
+            <span className="mt-0.5 text-xs text-emerald-500">✓</span>
+            <span>{f}</span>
+          </li>
+        ))}
+      </ul>
+
+      <a
+        href="#calendly"
+        className="block text-center py-3 rounded-full text-sm font-semibold transition-opacity hover:opacity-90 border border-[var(--color-separator)]/20 text-[var(--color-text)] hover:border-[var(--color-separator)]/50"
+      >
+        Commander
+      </a>
+    </div>
+  )
+}
 
 export default function Offres() {
   const [activeTab, setActiveTab] = useState<Tab>('abonnements')
@@ -90,7 +228,7 @@ export default function Offres() {
               key={tab}
               type="button"
               onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2 rounded-full text-sm font-semibold capitalize transition-all ${
+              className={`px-6 py-2 rounded-full text-sm font-semibold transition-all ${
                 activeTab === tab
                   ? 'bg-[var(--color-accent)] text-white shadow-sm'
                   : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
@@ -123,21 +261,13 @@ export default function Offres() {
 
                 <div className="text-3xl mb-4">{icon}</div>
                 <h3 className="text-xl font-bold mb-1">{name}</h3>
-                <p
-                  className={`text-sm mb-6 ${
-                    recommended ? 'text-white/70' : 'text-[var(--color-text-muted)]'
-                  }`}
-                >
+                <p className={`text-sm mb-6 ${recommended ? 'text-white/70' : 'text-[var(--color-text-muted)]'}`}>
                   {tagline}
                 </p>
 
                 <div className="mb-6">
                   <span className="text-4xl font-bold">{price} €</span>
-                  <span
-                    className={`text-sm ml-1 ${
-                      recommended ? 'text-white/70' : 'text-[var(--color-text-muted)]'
-                    }`}
-                  >
+                  <span className={`text-sm ml-1 ${recommended ? 'text-white/70' : 'text-[var(--color-text-muted)]'}`}>
                     HT/mois
                   </span>
                 </div>
@@ -145,11 +275,7 @@ export default function Offres() {
                 <ul className="flex flex-col gap-3 flex-1 mb-8">
                   {features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm">
-                      <span
-                        className={`mt-0.5 text-xs ${
-                          recommended ? 'text-[var(--color-accent)]' : 'text-emerald-500'
-                        }`}
-                      >
+                      <span className={`mt-0.5 text-xs ${recommended ? 'text-[var(--color-accent)]' : 'text-emerald-500'}`}>
                         ✓
                       </span>
                       <span className={recommended ? 'text-white/90' : ''}>{f}</span>
@@ -172,54 +298,20 @@ export default function Offres() {
           </div>
         )}
 
-        {/* Packs One-Shot */}
+        {/* Packs One-Shot — même format card que les abonnements */}
         {activeTab === 'packs' && (
-          <div className="bg-[var(--color-surface)] rounded-2xl border border-[var(--color-separator)]/10 overflow-hidden">
-            <div className="grid grid-cols-3 px-6 py-4 border-b border-[var(--color-separator)]/10">
-              <span className="font-semibold text-sm text-[var(--color-text)]">Format</span>
-              <span className="font-semibold text-sm text-[var(--color-text)] text-center">Standard HT</span>
-              <span className="font-semibold text-sm text-[var(--color-text)] text-center">Premium HT</span>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {PACKS.map((pack) => (
+                <PackCard key={pack.name} pack={pack} />
+              ))}
             </div>
-            {PACKS.map(({ name, standard, premium }) => (
-              <div
-                key={name}
-                className="grid grid-cols-3 px-6 py-5 border-b border-[var(--color-separator)]/10 last:border-0 items-center"
-              >
-                <span className="text-sm text-[var(--color-text)] pr-4">{name}</span>
-                <span className="text-sm font-bold text-[var(--color-text)] text-center">
-                  {standard} €
-                </span>
-                <span className="text-sm font-bold text-[var(--color-text)] text-center">
-                  {premium ? `${premium} €` : '—'}
-                </span>
-              </div>
-            ))}
-            <div className="px-6 py-5 bg-[var(--color-bg)] rounded-b-2xl">
+            <div className="mt-6 bg-[var(--color-surface)] rounded-xl px-5 py-4 border border-[var(--color-separator)]/10">
               <p className="text-xs text-[var(--color-text-muted)]">
                 Frame.io inclus dans tous les packs. Hub Notion, Slack dédié et programmation automatique sont exclusifs aux abonnements.
               </p>
             </div>
-          </div>
-        )}
-
-        {/* Quality note */}
-        {activeTab === 'abonnements' && (
-          <div className="mt-8 bg-[var(--color-surface)] rounded-xl p-5 border border-[var(--color-separator)]/10">
-            <div className="flex flex-col sm:flex-row gap-4 text-sm">
-              <div className="flex-1">
-                <span className="font-bold text-[var(--color-text)]">⚡ STANDARD</span>
-                <p className="text-[var(--color-text-muted)] mt-1">
-                  Montage dynamique, sous-titres, émojis, transitions fluides et SFX légers.
-                </p>
-              </div>
-              <div className="flex-1">
-                <span className="font-bold text-[var(--color-text)]">✨ PREMIUM</span>
-                <p className="text-[var(--color-text-muted)] mt-1">
-                  Idem + sous-titres animés, SFX complets, B-rolls poussés, Motion Design soft. Prix doublés.
-                </p>
-              </div>
-            </div>
-          </div>
+          </>
         )}
 
         {/* CTA */}
