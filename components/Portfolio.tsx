@@ -104,15 +104,17 @@ export default function Portfolio() {
       ([entry]) => {
         const videos = videoRefs.current.filter(Boolean) as HTMLVideoElement[]
         if (entry.isIntersecting) {
-          const connection = (navigator as Navigator & { connection?: { saveData?: boolean } })
-            .connection
-          if (connection?.saveData) return
-          videos.forEach((v) => v.play().catch(() => null))
+          videos.forEach((v) => {
+            v.muted = true;
+            v.play().catch((err) => {
+              console.warn("Autoplay was blocked or failed:", err);
+            });
+          });
         } else {
           videos.forEach((v) => v.pause())
         }
       },
-      { threshold: 0.2 },
+      { threshold: 0.1 },
     )
 
     observer.observe(section)
