@@ -4,79 +4,61 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { SectionHeader } from '@/components/ui/SectionHeader'
+import useEmblaCarousel from 'embla-carousel-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import SpotlightCard from './ui/SpotlightCard'
 
 type TabKey = 'reels' | 'ads' | 'youtube'
 
 interface PortfolioItem {
   id: number
   src: string
+  youtubeId?: string // Link to the full video on YouTube
   typeKey: TabKey
   clientName: string
   details: string
   offerName: string
 }
 
-// TODO: REPLACE — placeholder data, swap with real client work
+import MagneticButton from './ui/MagneticButton'
+
+// Expanded data to better showcase the carousel
+// Expanded data to reflect the new Vercel Blob storage
 const VIDEO_DATA: PortfolioItem[] = [
-  // ── Reels & Shorts
-  {
-    id: 1,
-    src: '/videos/portfolio-1.mp4',
-    typeKey: 'reels',
-    clientName: 'PIMP MY BRAND',
-    details: 'E-commerce · 12 Reels/mois · hooks + CC',
-    offerName: 'Offre Starter Growth',
-  },
-  {
-    id: 2,
-    src: '/videos/portfolio-2.mp4',
-    typeKey: 'reels',
-    clientName: 'MAXIME COACH',
-    details: 'Coaching · 8 Shorts/mois · montage + musique',
-    offerName: 'Offre Starter Growth',
-  },
-  {
-    id: 3,
-    src: '/videos/portfolio-3.mp4',
-    typeKey: 'reels',
-    clientName: 'LA FORMULE',
-    details: 'Formation · 15 Reels/mois · full pack',
-    offerName: 'Offre Scale',
-  },
-  // ── Ads & VSL
-  {
-    id: 4,
-    src: '/videos/portfolio-4.mp4',
-    typeKey: 'ads',
-    clientName: 'CHATIFY',
-    details: 'SaaS · 3 ads Meta · tournage + montage',
-    offerName: 'Offre One-Shot',
-  },
-  {
-    id: 5,
-    src: '/videos/portfolio-5.mp4',
-    typeKey: 'ads',
-    clientName: 'ALEX VENTES',
-    details: 'Formation · VSL 8 min · €997 funnel',
-    offerName: 'Offre One-Shot',
-  },
-  // ── YouTube & Vlogs
-  {
-    id: 6,
-    src: '/videos/portfolio-6.mp4',
-    typeKey: 'youtube',
-    clientName: 'NICOLAS FINTECH',
-    details: 'Finance · 4 vidéos/mois · full edit',
-    offerName: 'Offre Scale',
-  },
-  {
-    id: 7,
-    src: '/videos/portfolio-6.mp4',
-    typeKey: 'youtube',
-    clientName: 'CLÉMENT BUILD',
-    details: 'Tech · 2 vidéos/mois · talking head',
-    offerName: 'Offre Starter Growth',
-  },
+  // ── First 4 specific (Imposés)
+  { id: 1, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_27.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM', details: 'Business · Focus · Edit Dynamique', offerName: 'Offre Starter + 8' },
+  { id: 2, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/LES%20MATHS.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'IRYS TUTO', details: 'Effets Visuels · Motion Design', offerName: 'Mastery' },
+  { id: 3, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Nico_Lancement.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'ads', clientName: 'NICO', details: 'E-commerce · Lancement · Storytelling', offerName: 'One-Shot' },
+  { id: 4, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Ernesto_Investir.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'youtube', clientName: 'ERNESTO.IMMO', details: 'Immobilier · Investissement', offerName: 'Offre Scale' },
+
+  // ── Interleaved remaining (Diversité)
+  { id: 5, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Mixe.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ', details: 'Short Content · 16 Reels/mois', offerName: 'Offre Starter + 8' },
+  { id: 6, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_ILYES.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: '350 BARBER', details: 'Coiffure · Lifestyle', offerName: 'Offre Starter + 8' },
+  { id: 7, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Versus.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'CECCA', details: 'Podcast · Multi-cam · Dynamic', offerName: 'Pack Podcast' },
+  { id: 8, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/JO_PB.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'youtube', clientName: 'JONATHAN KHALFA', details: 'Business · 16 Reels + 2 YT', offerName: 'Offre Scale' },
+  { id: 9, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_Enfant.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM', details: 'Business · Hook Captivation', offerName: 'Offre Starter + 8' },
+  { id: 10, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Gratuit.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ', details: 'Short Content · Psychology', offerName: 'Offre Starter + 8' },
+  { id: 11, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_CONCOUR.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'ads', clientName: '350 BARBER', details: 'Event · Jeu Concours', offerName: 'Offre Starter + 8' },
+  { id: 12, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Focus.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'CECCA', details: 'Podcast · Zoom Intro', offerName: 'Pack Podcast' },
+  { id: 13, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Nico_Annonce.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'ads', clientName: 'NICO', details: 'Automobile · Teasing Annonce', offerName: 'One-Shot' },
+  { id: 14, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Ernesto_Podcast.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'youtube', clientName: 'ERNESTO.IMMO', details: 'Podcast · Immobilier Tips', offerName: 'Offre Scale' },
+  { id: 15, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_France.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM', details: 'Business · Storytelling', offerName: 'Offre Starter + 8' },
+  { id: 16, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_LOCKIN.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ', details: 'Short Content · High Temp', offerName: 'Offre Starter + 8' },
+  { id: 17, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_DINOR.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: '350 BARBER', details: 'Coiffure · Celebrity ITW', offerName: 'Offre Starter + 8' },
+  { id: 18, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Rebond.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'CECCA', details: 'Podcast · Montage CC', offerName: 'Pack Podcast' },
+  { id: 19, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/TUTO_PHONE%20EFFECT.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'IRYS TUTO', details: 'Transitions · Creative', offerName: 'Mastery' },
+  { id: 20, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_M.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM', details: 'Business · Motivation', offerName: 'Offre Starter + 8' },
+  { id: 21, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Facture%20.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ', details: 'Short Content · Finance', offerName: 'Offre Starter + 8' },
+  { id: 22, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_SOSO.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: '350 BARBER', details: 'Coiffure · Lifestyle 2', offerName: 'Offre Starter + 8' },
+  { id: 23, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Multi.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'CECCA', details: 'Podcast · Transition multi', offerName: 'Pack Podcast' },
+  { id: 24, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/TUTO_UNDERWATTER.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'IRYS TUTO', details: 'VFX · Creative Edit', offerName: 'Mastery' },
+  { id: 25, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_Passion.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM', details: 'Business · Mastery', offerName: 'Offre Starter + 8' },
+  { id: 26, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Xen_Prix.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ', details: 'Short Content · Sales', offerName: 'Offre Starter + 8' },
+  { id: 27, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_ITW.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: '350 BARBER', details: 'Workplace · Team Spirit', offerName: 'Offre Starter + 8' },
+  { id: 28, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_De%20vinci.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM', details: 'Business · History', offerName: 'Offre Starter + 8' },
+  { id: 29, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Solitude.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ', details: 'Short Content · Deep', offerName: 'Offre Starter + 8' },
+  { id: 30, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_PB_CREATEUR.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM', details: 'Business · Creator Economy', offerName: 'Offre Starter + 8' },
+  { id: 31, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_%20Unmployed.mp4', youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM', details: 'Business · Mindset', offerName: 'Offre Starter + 8' },
 ]
 
 export default function Portfolio() {
@@ -94,15 +76,24 @@ export default function Portfolio() {
   ]
 
   const filtered = VIDEO_DATA.filter((v) => v.typeKey === activeTab)
-
   const isVertical = activeTab === 'reels' || activeTab === 'ads'
   const aspectClass = isVertical ? 'aspect-[9/16]' : 'aspect-video'
-  const gridClass = isVertical
-    ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'
-    : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    containScroll: 'trimSnaps',
+    dragFree: true,
+  })
+
+  useEffect(() => {
+    if (emblaApi) emblaApi.reInit()
+  }, [emblaApi, filtered])
+
+  const scrollPrev = () => emblaApi && emblaApi.scrollPrev()
+  const scrollNext = () => emblaApi && emblaApi.scrollNext()
   const modalAspectClass = modalItem && (modalItem.typeKey === 'reels' || modalItem.typeKey === 'ads')
-    ? 'max-w-sm aspect-[9/16]'
-    : 'max-w-3xl aspect-video'
+    ? 'max-w-[400px] aspect-[9/16]'
+    : 'max-w-5xl aspect-video'
 
   // Simultaneous autoplay when section enters viewport
   useEffect(() => {
@@ -134,6 +125,18 @@ export default function Portfolio() {
     videos.forEach((v) => v.play().catch(() => null))
   }, [activeTab])
 
+  // Modal focus trap + Escape key
+  useEffect(() => {
+    if (!modalItem) return
+    const closeBtn = document.getElementById('modal-close-btn')
+    closeBtn?.focus()
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setModalItem(null)
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [modalItem])
+
   return (
     <section
       id="portfolio"
@@ -151,9 +154,10 @@ export default function Portfolio() {
             <span
               className="h-4 w-4 rounded-sm flex items-center justify-center text-[10px] font-bold"
               style={{
-                background: 'linear-gradient(135deg, var(--color-accent), rgba(232,23,93,0.5))',
+                background: 'linear-gradient(135deg, var(--color-accent), rgba(238,29,82,0.5))',
                 color: '#fff',
               }}
+              aria-hidden="true"
             >
               ▶
             </span>
@@ -163,96 +167,158 @@ export default function Portfolio() {
           subtitle={t('subtitle')}
           revealFn={revealHeader}
           className="mb-10"
+          subtitleClassName="text-lg text-white/80 max-w-2xl mx-auto"
         />
 
         {/* Tab switcher */}
         <div ref={revealHeader(3)} className="flex items-center justify-center mt-4 mb-10">
           <div
-            className="irys-conic-border rounded-full inline-flex overflow-hidden"
+            className="irys-conic-border rounded-full inline-flex overflow-hidden p-1"
             style={{ background: 'rgba(255,255,255,0.04)' }}
           >
             {TABS.map(({ key, label }) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setActiveTab(key)}
-                className="px-5 py-2.5 text-[13px] font-medium rounded-full transition-all duration-200 text-white"
-                style={{
-                  background: activeTab === key ? 'var(--color-accent)' : 'transparent',
-                }}
-              >
-                {label}
-              </button>
+              <MagneticButton key={key}>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab(key)}
+                  className={`px-5 py-2.5 text-[13px] font-medium rounded-full transition-all duration-300 ${activeTab === key ? 'text-white' : 'text-subdued hover:text-white'}`}
+                  style={{
+                    background: activeTab === key ? 'var(--color-accent)' : 'transparent',
+                    boxShadow: activeTab === key ? '0 0 20px rgba(238, 29, 82, 0.4)' : 'none',
+                  }}
+                >
+                  {label}
+                </button>
+              </MagneticButton>
             ))}
           </div>
         </div>
 
-        {/* Grid */}
-        <div className={`grid ${gridClass} gap-4 mb-6`}>
-          {filtered.map((item, idx) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setModalItem(item)}
-              className="irys-card group flex flex-col cursor-pointer overflow-hidden text-left"
-            >
-              {/* Video wrapper */}
-              <div className={`relative ${aspectClass} overflow-hidden flex-shrink-0`}>
-                <video
-                  ref={(el) => {
-                    videoRefs.current[idx] = el
-                  }}
-                  src={item.src}
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                {/* Hover overlay */}
-                <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/50 transition-colors duration-300">
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-white font-semibold text-sm px-4 py-2 rounded-full bg-accent">
-                    ▶ Voir
-                  </span>
-                </div>
-              </div>
+        {/* Carousel Viewport */}
+        <div className="relative group px-1 sm:px-4">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex gap-4">
+              {filtered.map((item, idx) => (
+                <div
+                  key={item.id}
+                  className={`flex-[0_0_80%] sm:flex-[0_0_45%] lg:flex-[0_0_24%] min-w-0 ${!isVertical ? 'lg:flex-[0_0_45%]' : ''} group/card`}
+                >
+                  <SpotlightCard
+                    className="p-0.5 cursor-pointer overflow-hidden rounded-2xl relative"
+                    spotlightColor="rgba(238, 29, 82, 0.15)"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setModalItem(item)}
+                      className="w-full h-full flex flex-col text-left"
+                    >
+                      {/* Video wrapper */}
+                      <div className={`relative ${aspectClass} overflow-hidden flex-shrink-0 rounded-xl bg-white/5`}>
+                        <video
+                          ref={(el) => {
+                            videoRefs.current[idx] = el
+                          }}
+                          src={item.src}
+                          muted
+                          loop
+                          playsInline
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-105"
+                        />
+                        {/* Hover overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/40 transition-colors duration-300 opacity-0 group-hover/card:opacity-100">
+                          <span className="text-white font-semibold text-[11px] px-4 py-2 rounded-full bg-accent shadow-lg shadow-accent/20">
+                            <span aria-hidden="true">▶</span> Voir
+                          </span>
+                        </div>
+                      </div>
 
-              {/* Info block */}
-              <div className="px-3 py-2.5">
-                <p className="font-heading font-bold text-[13px] text-text leading-tight truncate">
-                  {item.clientName}
-                </p>
-                <p className="text-[11px] text-subdued mt-0.5 truncate">
-                  {item.details}
-                </p>
-                <p className="text-[11px] text-accent font-semibold mt-1.5">
-                  {item.offerName}
-                </p>
-              </div>
-            </button>
-          ))}
+                      {/* Info block */}
+                      <div className="px-3 py-4 mt-1">
+                        <p className="font-heading font-bold text-[13.5px] text-text leading-tight truncate uppercase tracking-tight">
+                          {item.clientName}
+                        </p>
+                        <p className="text-[10px] text-subdued mt-1 truncate uppercase opacity-60">
+                          {item.details}
+                        </p>
+                        <div className="flex items-center gap-2 mt-3">
+                          <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                          <p className="text-[11px] text-accent font-bold uppercase italic tracking-wider">
+                            {item.offerName}
+                          </p>
+                        </div>
+                      </div>
+                    </button>
+                  </SpotlightCard>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation Controls */}
+          {filtered.length > 1 && (
+            <>
+              <button
+                onClick={scrollPrev}
+                className="absolute left-[-10px] sm:left-[-20px] top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center text-white backdrop-blur-md opacity-60 hover:opacity-100 focus:opacity-100 transition-opacity disabled:opacity-0"
+                aria-label="Previous"
+              >
+                <ChevronLeft className="w-6 h-6" aria-hidden="true" />
+              </button>
+              <button
+                onClick={scrollNext}
+                className="absolute right-[-10px] sm:right-[-20px] top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center text-white backdrop-blur-md opacity-60 hover:opacity-100 focus:opacity-100 transition-opacity disabled:opacity-0"
+                aria-label="Next"
+              >
+                <ChevronRight className="w-6 h-6" aria-hidden="true" />
+              </button>
+            </>
+          )}
         </div>
+      </div>
+
+      {/* Button with white glow */}
+      <div className="flex justify-center mt-12 pb-12">
+        <MagneticButton>
+          <a
+            href="https://youtube.com/@irysagency"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-4 rounded-full text-sm font-bold bg-white text-black hover:bg-white/90 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center gap-2"
+          >
+            <span aria-hidden="true">▶</span> {t('cta')}
+          </a>
+        </MagneticButton>
       </div>
 
       {/* Modal */}
       {modalItem && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(12px)' }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-xl bg-black/80 animate-in fade-in duration-300"
+          role="dialog"
+          aria-modal="true"
+          aria-label={modalItem?.clientName}
           onClick={() => setModalItem(null)}
         >
           <div
-            className={`relative w-full ${modalAspectClass} rounded-2xl overflow-hidden`}
+            className={`relative w-full ${modalAspectClass} rounded-2xl overflow-hidden shadow-2xl shadow-accent/10 border border-white/5`}
             onClick={(e) => e.stopPropagation()}
           >
-            <video src={modalItem.src} autoPlay controls className="w-full h-full object-cover" />
+            <iframe
+              src={`https://www.youtube.com/embed/${modalItem.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+              title={modalItem.clientName}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full border-0"
+            />
             <button
+              id="modal-close-btn"
               type="button"
               onClick={() => setModalItem(null)}
-              className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-colors"
-              style={{ background: 'rgba(0,0,0,0.6)', color: '#fff' }}
+              className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-90"
+              style={{ background: 'rgba(0,0,0,0.6)', color: '#fff', backdropFilter: 'blur(10px)' }}
               aria-label="Fermer"
             >
-              ×
+              <span aria-hidden="true" className="text-xl">×</span>
             </button>
           </div>
         </div>

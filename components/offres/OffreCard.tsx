@@ -1,6 +1,9 @@
 'use client'
 
 import { CheckCircle2, Star } from 'lucide-react'
+import SpotlightCard from '../ui/SpotlightCard'
+import MagneticButton from '../ui/MagneticButton'
+import { motion } from 'framer-motion'
 
 export interface Offre {
   name: string
@@ -33,70 +36,55 @@ export function OffreCard({ offre, labelHtMonth, labelRecommended, labelCta }: O
           </span>
         </div>
       )}
-      <div
-        className={`${recommended ? 'irys-card' : 'irys-card-simple'} p-4 sm:p-6 text-left flex flex-col h-full`}
-        style={
-          recommended
-            ? {
-                background: 'rgba(232,23,93,0.06)',
-                border: '1px solid rgba(232,23,93,0.25)',
-                boxShadow: '0 0 0 1px rgba(232,23,93,0.3)',
-                transition: 'box-shadow 0.3s ease, transform 0.25s cubic-bezier(0.16,1,0.3,1)',
-              }
-            : {}
-        }
-        onMouseEnter={
-          recommended
-            ? (e) => { ;(e.currentTarget as HTMLDivElement).style.boxShadow = '0 8px 32px rgba(232,23,93,0.15)' }
-            : undefined
-        }
-        onMouseLeave={
-          recommended
-            ? (e) => { ;(e.currentTarget as HTMLDivElement).style.boxShadow = '0 0 0 1px rgba(232,23,93,0.3)' }
-            : undefined
-        }
+      <SpotlightCard
+        className={`p-6 sm:p-8 text-left flex flex-col h-full min-h-[550px] sm:min-h-[620px] transition-all duration-500 ${
+          recommended ? '!border-[rgba(238,29,82,0.4)] shadow-[0_0_30px_rgba(238,29,82,0.15)]' : ''
+        }`}
+        spotlightColor={recommended ? 'rgba(238, 29, 82, 0.4)' : 'rgba(255, 255, 255, 0.1)'}
       >
-        <h3 className="font-heading text-lg font-bold mb-1 text-text">
+        <h3 className="font-heading text-xl font-bold mb-1 text-text uppercase tracking-tight">
           {name}
         </h3>
-        <p className="text-[12px] mb-5 leading-relaxed text-subdued">
+        <p className="text-[12px] mb-8 uppercase tracking-[0.2em] opacity-60 text-subdued leading-relaxed">
           {tagline}
         </p>
 
-        <div className="flex items-baseline gap-1 mb-5">
-          <span className="font-heading text-[32px] sm:text-[40px] font-bold text-text">
+        <div className="flex items-baseline gap-1 mb-8">
+          <span className="font-heading text-[40px] sm:text-[48px] font-bold text-text">
             {price}
           </span>
-          <span className="text-[13px] text-subdued">
+          <span className="text-[13px] text-subdued font-medium uppercase tracking-widest">
             {labelHtMonth}
           </span>
         </div>
 
-        <div className="irys-glow-line my-5" />
+        <div className="irys-glow-line my-8" />
 
-        <ul className="flex flex-col gap-2.5 flex-1 mb-6">
+        <ul className="flex flex-col gap-4 flex-1 mb-10">
           {features.map((f) => (
-            <li key={f} className="flex items-start gap-2.5">
+            <li key={f} className="flex items-start gap-3">
               <CheckCircle2
-                className="h-4 w-4 flex-shrink-0 mt-0.5"
-                style={{ color: recommended ? 'var(--color-accent)' : '#22c55e' }}
+                className="h-5 w-5 flex-shrink-0 mt-0.5"
+                style={{ color: recommended ? 'var(--color-accent)' : 'white' }}
               />
-              <span className="text-[13px] text-muted">{f}</span>
+              <span className={`text-[14px] ${recommended ? 'text-text' : 'text-subdued'}`}>{f}</span>
             </li>
           ))}
         </ul>
 
-        <a
-          href="#calendly"
-          className={
-            recommended
-              ? 'irys-btn-accent-filled w-full justify-center py-3 text-[13px]'
-              : 'irys-btn-accent-outline-large text-[13px]'
-          }
-        >
-          {labelCta}
-        </a>
-      </div>
+        <MagneticButton className="w-full">
+          <a
+            href="#calendly"
+            className={`w-full py-4 text-[13px] font-bold uppercase tracking-[0.2em] rounded-full text-center flex items-center justify-center transition-all duration-300
+              ${recommended
+                ? 'bg-accent text-white shadow-[0_0_25px_rgba(238,29,82,0.4)]'
+                : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
+              }`}
+          >
+            {labelCta}
+          </a>
+        </MagneticButton>
+      </SpotlightCard>
     </div>
   )
 }

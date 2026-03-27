@@ -52,21 +52,16 @@ export const metadata: Metadata = {
     title: 'Irys Agency — Post-production vidéo Done-For-You',
     description:
       'Agence de montage vidéo pour infopreneurs et créateurs. +54 clients, +1 600 vidéos livrées. Première vidéo offerte.',
-    images: [
-      {
-        url: '/og-image.jpg', // TODO: REPLACE
-        width: 1200,
-        height: 630,
-        alt: 'Irys Agency — Post-production vidéo Done-For-You',
-      },
-    ],
+    // TODO: Créer /public/og-image.jpg (1200×630) avant le lancement
+    // images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Irys Agency — Post-production vidéo Done-For-You' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Irys Agency — Post-production vidéo Done-For-You',
     description:
       'Tu filmes, on livre. Montage vidéo pro pour infopreneurs francophones.',
-    images: ['/og-image.jpg'], // TODO: REPLACE
+    // TODO: Créer /public/og-image.jpg avant le lancement
+    // images: ['/og-image.jpg'],
   },
   robots: {
     index: true,
@@ -82,8 +77,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://irysagency.com',
     languages: {
-      'x-default': 'https://irysagency.com',
       'fr': 'https://irysagency.com',
+      'en': 'https://irysagency.com',
+      'x-default': 'https://irysagency.com',
     },
   },
 }
@@ -172,7 +168,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr" className={`${inter.variable} ${dmSans.variable} ${outfit.variable} h-full`}>
+    <html lang="fr" suppressHydrationWarning className={`${inter.variable} ${dmSans.variable} ${outfit.variable} h-full`}>
       <head>
         <script
           type="application/ld+json"

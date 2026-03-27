@@ -110,7 +110,7 @@ export default function ProcessSwimlane() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 50% 30% at 50% 50%, rgba(232, 23, 93, 0.05) 0%, transparent 100%)',
+          background: 'radial-gradient(ellipse 50% 30% at 50% 50%, rgba(238, 29, 82, 0.05) 0%, transparent 100%)',
         }}
       />
 
@@ -162,8 +162,8 @@ export default function ProcessSwimlane() {
                       width: '12px',
                       height: '12px',
                       borderRadius: '50%',
-                      background: '#E8175D',
-                      boxShadow: '0 0 8px rgba(232,23,93,0.4)',
+                      background: 'var(--color-accent)',
+                      boxShadow: '0 0 8px rgba(238,29,82,0.4)',
                       zIndex: 2,
                     }}
                   />
@@ -185,7 +185,7 @@ export default function ProcessSwimlane() {
                         style={{
                           fontSize: '11px',
                           fontWeight: 500,
-                          color: '#E8175D',
+                          color: 'var(--color-accent)',
                           opacity: 0.7,
                           letterSpacing: '0.1em',
                           textTransform: 'uppercase',
@@ -197,7 +197,7 @@ export default function ProcessSwimlane() {
                         className="px-3 py-0.5 rounded-full text-[11px] font-medium flex-shrink-0"
                         style={
                           actor === 'irys'
-                            ? { background: 'rgba(232,23,93,0.12)', color: '#E8175D', border: '0.5px solid rgba(232,23,93,0.25)' }
+                            ? { background: 'rgba(238,29,82,0.12)', color: 'var(--color-accent)', border: '0.5px solid rgba(238,29,82,0.25)' }
                             : { background: 'rgba(255,255,255,0.07)', color: 'rgba(245,240,232,0.6)', border: '0.5px solid rgba(255,255,255,0.1)' }
                         }
                       >
@@ -254,9 +254,9 @@ export default function ProcessSwimlane() {
             <span
               className="px-5 py-2.5 rounded-full text-[13px] font-medium"
               style={{
-                background: 'rgba(232,23,93,0.08)',
-                border: '0.5px solid rgba(232,23,93,0.25)',
-                color: '#E8175D',
+                background: 'rgba(238,29,82,0.08)',
+                border: '0.5px solid rgba(238,29,82,0.25)',
+                color: 'var(--color-accent)',
               }}
             >
               {t('bilan_irys_pill')}

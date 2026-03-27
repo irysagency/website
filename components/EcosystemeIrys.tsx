@@ -6,16 +6,16 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 
 const TOOL_ICONS = [
   // Frame.io — flèche diagonale ↗
-  <svg key="frameio" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg key="frameio" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M4 12L12 4M12 4H6.5M12 4V9.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>,
   // Notion — carré avec N
-  <svg key="notion" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg key="notion" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <rect x="2.5" y="2.5" width="11" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2"/>
     <path d="M5.5 5.5L8 10.5L10.5 5.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>,
   // Slack — hash #
-  <svg key="slack" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg key="slack" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <line x1="5.5" y1="3" x2="5.5" y2="13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
     <line x1="10.5" y1="3" x2="10.5" y2="13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
     <line x1="2.5" y1="6.5" x2="13.5" y2="6.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
@@ -55,7 +55,7 @@ export default function EcosystemeIrys() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 50% 40% at 50% 50%, rgba(232, 23, 93, 0.06) 0%, transparent 100%)',
+            'radial-gradient(ellipse 50% 40% at 50% 50%, rgba(238, 29, 82, 0.06) 0%, transparent 100%)',
         }}
       />
 
@@ -94,7 +94,7 @@ export default function EcosystemeIrys() {
                   fontSize: '11px',
                   fontWeight: 500,
                   letterSpacing: '0.1em',
-                  color: '#E8175D',
+                  color: 'var(--color-accent)',
                   opacity: 0.8,
                   textAlign: 'right',
                   textTransform: 'uppercase',
@@ -149,9 +149,9 @@ export default function EcosystemeIrys() {
                       className="rounded-full text-[11px] font-medium"
                       style={{
                         padding: '6px 14px',
-                        background: 'rgba(232,23,93,0.08)',
-                        color: '#E8175D',
-                        border: '0.5px solid rgba(232,23,93,0.3)',
+                        background: 'rgba(238,29,82,0.08)',
+                        color: 'var(--color-accent)',
+                        border: '0.5px solid rgba(238,29,82,0.3)',
                       }}
                     >
                       {tag}

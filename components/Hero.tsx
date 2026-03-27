@@ -2,6 +2,8 @@
 
 import { Fragment, type CSSProperties } from 'react'
 import { useTranslations } from 'next-intl'
+import DustParticles from './ui/DustParticles'
+import MagneticButton from './ui/MagneticButton'
 
 function fadeUp(delay: number): CSSProperties {
   return {
@@ -24,12 +26,16 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex flex-col overflow-hidden"
     >
+      {/* Particules webGL premium en parallax */}
+      <DustParticles />
+
       {/* Radial glow rose global — animated pulse */}
       <div
         className="absolute inset-0 pointer-events-none irys-halo-animated"
         style={{
           background:
-            'radial-gradient(ellipse 65% 50% at 50% 90%, rgba(232, 23, 93, 0.18) 0%, transparent 70%)',
+            'radial-gradient(ellipse 65% 50% at 50% 90%, rgba(238, 29, 82, 0.22) 0%, transparent 70%)',
+          zIndex: 1
         }}
       />
 
@@ -57,7 +63,12 @@ export default function Hero() {
           >
             <span
               className="font-heading font-bold"
-              style={{ ...fadeUp(100), display: 'block', color: 'var(--color-text)' }}
+              style={{ 
+                ...fadeUp(100), 
+                display: 'block', 
+                color: 'var(--color-text)',
+                textShadow: '0 0 60px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.1)' /* Bloom effect */
+              }}
             >
               {t('h1_line1_a')}
             </span>
@@ -78,14 +89,15 @@ export default function Hero() {
           </p>
 
           {/* CTAs */}
-          <div style={fadeUp(480)} className="flex items-center justify-center gap-3 sm:gap-6 flex-wrap">
-            <a href="#portfolio" className="irys-btn-outline text-[13px]">
+          <div style={fadeUp(480)} className="flex items-center justify-center gap-3 sm:gap-6 flex-wrap relative z-20">
+            <MagneticButton href="#portfolio" className="irys-btn-outline text-[13px]">
               {t('cta_secondary')}
-            </a>
-            <a href="#calendly" className="irys-btn-accent text-[13px]">
+            </MagneticButton>
+            <MagneticButton href="#calendly" className="irys-btn-accent-filled text-[13px]">
               {t('cta_primary')}
-            </a>
+            </MagneticButton>
           </div>
+
         </div>
       </div>
 
@@ -99,7 +111,7 @@ export default function Hero() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse 70% 100% at 50% 50%, rgba(232, 23, 93, 0.14) 0%, transparent 100%)',
+              'radial-gradient(ellipse 70% 100% at 50% 50%, rgba(238, 29, 82, 0.14) 0%, transparent 100%)',
           }}
         />
 
@@ -120,7 +132,7 @@ export default function Hero() {
                 <span
                   className="font-heading tracking-tight"
                   style={{
-                    color: '#FFFFFF',
+                    color: 'var(--color-text)',
                     fontWeight: 600,
                     fontSize: 'clamp(28px, 3vw, 40px)',
                   }}

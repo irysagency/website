@@ -20,6 +20,7 @@ interface SectionHeaderProps {
   /** Fonction de scroll reveal (useScrollReveal) — indices 0=badge, 1=h2, 2=subtitle */
   revealFn?: RevealFn
   className?: string
+  subtitleClassName?: string
 }
 
 export function SectionHeader({
@@ -32,6 +33,7 @@ export function SectionHeader({
   align = 'center',
   revealFn,
   className = '',
+  subtitleClassName = 'text-[14px] text-subdued',
 }: SectionHeaderProps) {
   const alignClass = align === 'left' ? 'text-left' : 'text-center'
   const badgeClass =
@@ -68,7 +70,7 @@ export function SectionHeader({
       {subtitle && (
         <p
           ref={revealFn?.(2)}
-          className="text-[14px] leading-relaxed text-subdued"
+          className={`${subtitleClassName} leading-relaxed`}
         >
           {subtitle}
         </p>

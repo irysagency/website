@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Smartphone, Megaphone, Play, Mic, Crosshair, Calendar, Gift } from 'lucide-react'
+import { Calendar, Gift } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { useTranslations } from 'next-intl'
@@ -45,15 +45,14 @@ export default function Offres() {
 
   const PACKS: Pack[] = [
     {
-      icon: <Smartphone {...ICON_PROPS} />,
       name: t('pack1_name'),
       tagline: t('pack1_sub'),
       standard: t('pack1_price_std'),
       premium: t('pack1_price_prem'),
       features: [t('pack1_f1'), t('pack1_f2'), t('pack1_f3')],
+      features_prem: [t('pack1_f1_prem'), t('pack1_f2_prem'), t('pack1_f3_prem')],
     },
     {
-      icon: <Megaphone {...ICON_PROPS} />,
       name: t('pack2_name'),
       tagline: t('pack2_sub'),
       standard: t('pack2_price_std'),
@@ -61,15 +60,14 @@ export default function Offres() {
       features: [t('pack2_f1'), t('pack2_f2'), t('pack2_f3')],
     },
     {
-      icon: <Play {...ICON_PROPS} />,
       name: t('pack3_name'),
       tagline: t('pack3_sub'),
       standard: t('pack3_price_std'),
       premium: t('pack3_price_prem'),
       features: [t('pack3_f1'), t('pack3_f2'), t('pack3_f3')],
+      features_prem: [t('pack3_f1_prem'), t('pack3_f2_prem'), t('pack3_f3_prem')],
     },
     {
-      icon: <Mic {...ICON_PROPS} />,
       name: t('pack4_name'),
       tagline: t('pack4_sub'),
       standard: t('pack4_price_std'),
@@ -77,14 +75,17 @@ export default function Offres() {
       features: [t('pack4_f1'), t('pack4_f2'), t('pack4_f3'), t('pack4_f4')],
     },
     {
-      icon: <Crosshair {...ICON_PROPS} />,
       name: t('pack5_name'),
       tagline: t('pack5_sub'),
       standard: t('pack5_price_std'),
       premium: t('pack5_price_prem'),
       features: [t('pack5_f1'), t('pack5_f2'), t('pack5_f3')],
+      features_prem: [t('pack5_f1_prem'), t('pack5_f2_prem'), t('pack5_f3_prem')],
     },
   ]
+
+  const premiumPacks = PACKS.filter((p) => p.premium !== null)
+  const standardPacks = PACKS.filter((p) => p.premium === null)
 
   return (
     <section id="offres" className="relative py-24 px-4">
@@ -92,12 +93,11 @@ export default function Offres() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 50% 30% at 50% 10%, rgba(232, 23, 93, 0.08) 0%, transparent 100%)',
+            'radial-gradient(ellipse 50% 30% at 50% 10%, rgba(238, 29, 82, 0.08) 0%, transparent 100%)',
         }}
       />
 
       <div className="max-w-[1100px] mx-auto text-center relative z-10">
-        {/* Header */}
         <SectionHeader
           badgeText={t('label')}
           titlePart1={t('h2_part1')}
@@ -106,6 +106,18 @@ export default function Offres() {
           revealFn={revealHeader}
           className="mb-8"
         />
+
+        {/* Benefits Badges - Elevated from footer to header area */}
+        <div ref={revealHeader(2)} className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 mb-12">
+          <div className="flex items-center gap-2 text-white/40 tracking-[0.2em] text-[10px] font-bold">
+            <Calendar size={12} strokeWidth={2} className="text-accent" aria-hidden="true" />
+            {t('trust_no_commitment')}
+          </div>
+          <div className="flex items-center gap-2 text-white/40 tracking-[0.2em] text-[10px] font-bold">
+            <Gift size={12} strokeWidth={2} className="text-accent" aria-hidden="true" />
+            {t('trust_first_video')}
+          </div>
+        </div>
 
         {/* Tab switcher */}
         <div ref={revealHeader(3)} className="flex items-center justify-center mb-12">
@@ -163,7 +175,22 @@ export default function Offres() {
               transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {PACKS.map((pack) => (
+                {premiumPacks.map((pack) => (
+                  <PackCard
+                    key={pack.name}
+                    pack={pack}
+                    premiumMention={t('premium_mention')}
+                    labelStandard={t('standard')}
+                    labelPremium={t('premium')}
+                    labelHt={t('ht')}
+                    labelOrder={t('cta_commander')}
+                  />
+                ))}
+              </div>
+              
+              {/* Deuxième ligne centrée pour les packs sans mode premium */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 max-w-2xl mx-auto">
+                {standardPacks.map((pack) => (
                   <PackCard
                     key={pack.name}
                     pack={pack}
@@ -189,29 +216,6 @@ export default function Offres() {
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* CTA */}
-        <div className="mt-12">
-          <p className="text-[13px] mb-4 text-subdued">
-            {t('cta_help')}
-          </p>
-          <a href="#calendly" className="irys-btn-accent-filled px-10 py-4 text-sm">
-            {t('cta_bottom')}
-          </a>
-        </div>
-
-        {/* Trust badges */}
-        <div className="flex items-center justify-center gap-6 mt-8">
-          <span className="flex items-center gap-2 text-[13px] text-subdued">
-            <Calendar size={14} strokeWidth={1.5} />
-            {t('trust_no_commitment')}
-          </span>
-          <span className="text-faint">·</span>
-          <span className="flex items-center gap-2 text-[13px] text-subdued">
-            <Gift size={14} strokeWidth={1.5} />
-            {t('trust_first_video')}
-          </span>
-        </div>
       </div>
     </section>
   )

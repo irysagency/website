@@ -24,10 +24,14 @@ export default function CalendlySection() {
   const t = useTranslations('booking')
   const containerRef = useRef<HTMLDivElement>(null)
 
+  const calendlyUrl =
+    process.env.NEXT_PUBLIC_CALENDLY_URL ||
+    'https://calendly.com/contact-irysagency/30min'
+
   const handleCalendlyLoad = () => {
     if (window.Calendly && containerRef.current) {
       window.Calendly.initInlineWidget({
-        url: 'https://calendly.com/contact-irysagency/30min',
+        url: calendlyUrl,
         parentElement: containerRef.current,
       })
     }
@@ -59,7 +63,7 @@ export default function CalendlySection() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232, 23, 93, 0.06) 0%, transparent 70%)',
+            'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(238, 29, 82, 0.06) 0%, transparent 70%)',
         }}
       />
 
@@ -131,7 +135,7 @@ export default function CalendlySection() {
                     cursor: 'default',
                   }}
                   onMouseEnter={e => {
-                    (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,23,93,0.25)'
+                    (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(238,29,82,0.25)'
                   }}
                   onMouseLeave={e => {
                     (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.08)'
@@ -149,7 +153,7 @@ export default function CalendlySection() {
                         style={{
                           width: '72px',
                           height: '72px',
-                          border: '2px solid rgba(232,23,93,0.3)',
+                          border: '2px solid rgba(238,29,82,0.3)',
                         }}
                       />
                     </div>
@@ -157,11 +161,11 @@ export default function CalendlySection() {
                       <p style={{ fontSize: '17px', fontWeight: 600, color: 'var(--color-text)', lineHeight: 1.2 }}>
                         {name}
                       </p>
-                      <p style={{ fontSize: '12px', fontWeight: 500, color: '#E8175D', letterSpacing: '0.02em', marginTop: '3px' }}>
+                      <p style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-accent)', letterSpacing: '0.02em', marginTop: '3px' }}>
                         {role}
                       </p>
-                      <p style={{ fontSize: '10px', color: '#E8175D', opacity: 0.8, marginTop: '4px', letterSpacing: '0.05em' }}>
-                        ★★★★★
+                      <p style={{ fontSize: '10px', color: 'var(--color-accent)', opacity: 0.8, marginTop: '4px', letterSpacing: '0.05em' }}>
+                        <span aria-hidden="true">★★★★★</span>
                       </p>
                     </div>
                   </div>
@@ -176,7 +180,7 @@ export default function CalendlySection() {
 
                   {/* Stat clé */}
                   <div>
-                    <p style={{ fontSize: '22px', fontWeight: 700, color: '#E8175D', lineHeight: 1 }}>
+                    <p style={{ fontSize: '22px', fontWeight: 700, color: 'var(--color-accent)', lineHeight: 1 }}>
                       {stat}
                     </p>
                     <p style={{ fontSize: '11px', color: 'rgba(245,240,232,0.5)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: '4px' }}>
@@ -192,8 +196,8 @@ export default function CalendlySection() {
               className="rounded-2xl mt-4"
               style={{
                 padding: '20px 24px',
-                background: 'rgba(232,23,93,0.06)',
-                border: '1px solid rgba(232,23,93,0.2)',
+                background: 'rgba(238,29,82,0.06)',
+                border: '1px solid rgba(238,29,82,0.2)',
               }}
             >
               <p className="text-sm font-semibold mb-1 flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
@@ -201,6 +205,7 @@ export default function CalendlySection() {
                   size={16}
                   strokeWidth={1.5}
                   className="irys-pulse-video"
+                  aria-hidden="true"
                 />
                 {t('first_video_title')}
               </p>

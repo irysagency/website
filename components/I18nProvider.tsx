@@ -42,6 +42,11 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     setLocaleState(lang.startsWith('en') ? 'en' : 'fr')
   }, [])
 
+  // Sync lang attribute on html element
+  useEffect(() => {
+    document.documentElement.lang = locale
+  }, [locale])
+
   const setLocale = (next: Locale) => {
     setLocaleState(next)
     localStorage.setItem('irys-locale', next)
@@ -49,7 +54,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <I18nContext.Provider value={{ locale, setLocale }}>
-      <NextIntlClientProvider locale={locale} messages={MESSAGES[locale]}>
+      <NextIntlClientProvider locale={locale} messages={MESSAGES[locale]} timeZone="Europe/Paris">
         {children}
       </NextIntlClientProvider>
     </I18nContext.Provider>

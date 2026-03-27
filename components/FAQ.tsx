@@ -28,7 +28,7 @@ export default function FAQ() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 50% 50% at 50% 100%, rgba(232, 23, 93, 0.08) 0%, transparent 70%)',
+            'radial-gradient(ellipse 50% 50% at 50% 100%, rgba(238, 29, 82, 0.08) 0%, transparent 70%)',
         }}
       />
 

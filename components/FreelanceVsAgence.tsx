@@ -47,7 +47,7 @@ export default function FreelanceVsAgence() {
                 className="flex-shrink-0 h-5 w-5 rounded-full flex items-center justify-center"
                 style={{ background: 'rgba(255,50,50,0.15)', border: '1px solid rgba(255,50,50,0.3)' }}
               >
-                <X className="h-3 w-3" style={{ color: '#ff3232' }} />
+                <X className="h-3 w-3" style={{ color: 'var(--color-danger)' }} aria-hidden="true" />
               </div>
               <span className="text-[13px] font-semibold text-text">
                 {t('col_freelance')}
@@ -58,7 +58,7 @@ export default function FreelanceVsAgence() {
                 className="flex-shrink-0 h-5 w-5 rounded-full flex items-center justify-center"
                 style={{ background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)' }}
               >
-                <CheckCircle2 className="h-3 w-3" style={{ color: '#22c55e' }} />
+                <CheckCircle2 className="h-3 w-3" style={{ color: 'var(--color-success)' }} aria-hidden="true" />
               </div>
               <span className="text-[13px] font-semibold text-text">
                 {t('col_irys')}
@@ -82,6 +82,7 @@ export default function FreelanceVsAgence() {
                   <X
                     className="h-4 w-4 flex-shrink-0 mt-0.5"
                     style={{ color: 'rgba(255,80,80,0.7)' }}
+                    aria-hidden="true"
                   />
                   <p className="text-[13px] text-subdued">
                     {pain}
@@ -90,7 +91,8 @@ export default function FreelanceVsAgence() {
                 <div className="flex items-start gap-3">
                   <CheckCircle2
                     className="h-4 w-4 flex-shrink-0 mt-0.5"
-                    style={{ color: '#22c55e' }}
+                    style={{ color: 'var(--color-success)' }}
+                    aria-hidden="true"
                   />
                   <p className="text-[13px] font-medium text-text">
                     {gain}
