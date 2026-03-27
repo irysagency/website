@@ -1,41 +1,59 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import Script from 'next/script'
 import { Video } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 
-declare global {
-  interface Window {
-    Calendly: {
-      initInlineWidget: (options: {
-        url: string
-        parentElement: HTMLElement | null
-        prefill?: object
-        utm?: object
-      }) => void
-    }
-  }
-}
-
 export default function CalendlySection() {
   const t = useTranslations('booking')
+  const sectionRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [shouldLoad, setShouldLoad] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
-  const calendlyUrl =
-    process.env.NEXT_PUBLIC_CALENDLY_URL ||
-    'https://calendly.com/contact-irysagency/30min'
+  // Charge Calendly seulement quand la section entre dans le viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '200px' }
+    )
+    if (sectionRef.current) observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
 
-  const handleCalendlyLoad = () => {
-    if (window.Calendly && containerRef.current) {
-      window.Calendly.initInlineWidget({
-        url: calendlyUrl,
-        parentElement: containerRef.current,
-      })
+  // Injecte le script et initialise le widget
+  useEffect(() => {
+    if (!shouldLoad) return
+
+    const script = document.createElement('script')
+    script.src = 'https://assets.calendly.com/assets/external/widget.js'
+    script.async = true
+    script.onload = () => {
+      if (window.Calendly && containerRef.current) {
+        window.Calendly.initInlineWidget({
+          url:
+            process.env.NEXT_PUBLIC_CALENDLY_URL ||
+            'https://calendly.com/contact-irysagency/30min',
+          parentElement: containerRef.current,
+        })
+        setIsLoaded(true)
+      }
     }
-  }
+    document.head.appendChild(script)
+
+    return () => {
+      if (document.head.contains(script)) {
+        document.head.removeChild(script)
+      }
+    }
+  }, [shouldLoad])
 
   const FOUNDERS = [
     {
@@ -57,7 +75,7 @@ export default function CalendlySection() {
   ]
 
   return (
-    <section id="calendly" className="relative py-24 px-4">
+    <section id="calendly" className="relative py-24 px-4" ref={sectionRef}>
       {/* Radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -86,7 +104,7 @@ export default function CalendlySection() {
               className="mb-8"
             />
 
-            {/* Native Calendly embed */}
+            {/* Native Calendly embed — chargé lazy via IntersectionObserver */}
             <div
               ref={containerRef}
               className="w-full overflow-hidden"
@@ -95,12 +113,23 @@ export default function CalendlySection() {
                 height: 'var(--calendly-height)',
                 borderRadius: '16px',
               }}
-            />
-            <Script
-              src="https://assets.calendly.com/assets/external/widget.js"
-              strategy="afterInteractive"
-              onLoad={handleCalendlyLoad}
-            />
+            >
+              {!isLoaded && (
+                <div
+                  style={{
+                    height: '700px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    opacity: 0.4,
+                    fontSize: '14px',
+                    color: 'var(--color-text)',
+                  }}
+                >
+                  Chargement du calendrier...
+                </div>
+              )}
+            </div>
           </div>
 
           {/* ── Right — Founders ── */}
