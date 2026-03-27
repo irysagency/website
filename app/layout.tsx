@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, DM_Sans, Outfit } from 'next/font/google'
 import Script from 'next/script'
+import { I18nProvider } from '@/components/I18nProvider'
 import './globals.css'
 
 const inter = Inter({
@@ -9,14 +10,28 @@ const inter = Inter({
   display: 'swap',
 })
 
+const dmSans = DM_Sans({
+  variable: '--font-dm-sans',
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '500', '700'],
+})
+
+const outfit = Outfit({
+  variable: '--font-outfit',
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700', '800'],
+})
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://irysagency.com'),
   title: {
-    default: 'Irys Agency — Post-production vidéo Done-For-You pour infopreneurs',
-    template: '%s | Irys Agency',
+    default: 'Agence montage vidéo pour infopreneurs | Irys',
+    template: '%s | Irys',
   },
   description:
-    'Irys Agency prend en charge tout ton montage vidéo. Tu filmes, on livre. Réservé aux coaches, formateurs et consultants francophones qui veulent scaler sans sacrifier leur temps.',
+    'Arrête de perdre du temps sur Premiere Pro. Délègue ta post-production à notre agence montage vidéo pour infopreneur. Réserve ton appel gratuit !',
   keywords: [
     'montage vidéo',
     'post-production vidéo',
@@ -36,7 +51,7 @@ export const metadata: Metadata = {
     siteName: 'Irys Agency',
     title: 'Irys Agency — Post-production vidéo Done-For-You',
     description:
-      'Tu filmes, on livre. Montage vidéo professionnel pour infopreneurs francophones. +54 clients, +1600 vidéos livrées.',
+      'Agence de montage vidéo pour infopreneurs et créateurs. +54 clients, +1 600 vidéos livrées. Première vidéo offerte.',
     images: [
       {
         url: '/og-image.jpg', // TODO: REPLACE
@@ -66,23 +81,89 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://irysagency.com',
+    languages: {
+      'x-default': 'https://irysagency.com',
+      'fr': 'https://irysagency.com',
+    },
   },
 }
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
+  '@type': ['Organization', 'ProfessionalService'],
+  '@id': 'https://irysagency.com/#organization',
   name: 'Irys Agency',
   url: 'https://irysagency.com',
+  logo: 'https://irysagency.com/images/logo.png',
   description:
-    'Agence de post-production vidéo Done-For-You pour infopreneurs francophones.',
-  areaServed: 'FR',
-  serviceType: 'Post-production vidéo',
+    'Agence de montage vidéo spécialisée pour les infopreneurs, coaches et formateurs francophones. Shorts, YouTube, Ads, VSL — done-for-you.',
+  founder: [
+    {
+      '@type': 'Person',
+      name: 'Kilian Adam',
+      jobTitle: 'Co-fondateur & Directeur créatif',
+    },
+    {
+      '@type': 'Person',
+      name: 'Quentin',
+      jobTitle: 'Co-fondateur & Directeur de production',
+    },
+  ],
+  serviceType: 'Video Editing',
+  areaServed: ['FR', 'BE', 'CH', 'CA'],
+  priceRange: '€€',
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'EUR',
     availability: 'https://schema.org/InStock',
   },
+}
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Je garde le dernier mot sur mes vidéos ?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Absolument. On définit ta patte visuelle ensemble au départ. Rien ne sort sans ton accord final. Tu restes le seul maître à bord.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'J\'ai besoin d\'une caméra à 3000 euros ?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Non. Ton smartphone suffit largement pour commencer. On t\'aide à trouver la bonne lumière. Le contenu bat toujours le matériel de pointe.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Le montage garantit-il des millions de vues ?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'L\'algorithme décide des vues. Notre agence vidéo infopreneur garantit une rétention maximale. Une vidéo bien montée retient l\'attention et génère de la confiance.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Comment fonctionne cette fameuse vidéo offerte ?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Confie-nous un fichier brut. On applique notre méthode. Si le résultat te plaît, on démarre l\'abonnement. Sinon, tu gardes la vidéo gratuitement.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Suis-je coincé si je m\'abonne ?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Jamais. Tu as juste un préavis de 30 jours pour stopper. Nos clients restent pour la qualité de notre travail. Pas par obligation légale.',
+      },
+    },
+  ],
 }
 
 export default function RootLayout({
@@ -91,22 +172,28 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr" className={`${inter.variable} h-full`}>
+    <html lang="fr" className={`${inter.variable} ${dmSans.variable} ${outfit.variable} h-full`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
       </head>
       <body className="min-h-full flex flex-col">
-        {children}
-        {/* Plausible Analytics — cookieless, pas de banner RGPD */}
-        <Script
-          defer
-          data-domain="irysagency.com"
-          src="https://plausible.io/js/script.js"
-          strategy="afterInteractive"
-        />
+        <I18nProvider>
+          {children}
+          {/* Plausible Analytics — cookieless, pas de banner RGPD */}
+          <Script
+            defer
+            data-domain="irysagency.com"
+            src="https://plausible.io/js/script.js"
+            strategy="afterInteractive"
+          />
+        </I18nProvider>
       </body>
     </html>
   )

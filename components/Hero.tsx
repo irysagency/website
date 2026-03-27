@@ -1,70 +1,143 @@
-import Link from 'next/link'
+'use client'
 
-const STATS = [
-  { value: '+54', label: 'clients actifs' },
-  { value: '+1 600', label: 'vidéos livrées' },
-  { value: '+2 500h', label: 'de rushs traités' },
-]
+import { Fragment, type CSSProperties } from 'react'
+import { useTranslations } from 'next-intl'
+
+function fadeUp(delay: number): CSSProperties {
+  return {
+    animation: `irys-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms both`,
+  }
+}
 
 export default function Hero() {
+  const t = useTranslations('hero')
+
+  const STATS = [
+    { value: t('stat1_number'), label: t('stat1_label') },
+    { value: t('stat2_number'), label: t('stat2_label') },
+    { value: t('stat3_number'), label: t('stat3_label') },
+    { value: t('stat4_number'), label: t('stat4_label') },
+  ]
+
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center bg-[var(--color-bg)] pt-20 pb-16 px-4 sm:px-6 lg:px-8"
+      className="relative min-h-screen flex flex-col overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto w-full">
-        {/* Eyebrow */}
-        <p className="text-xs font-semibold tracking-widest uppercase text-[var(--color-accent)] mb-6">
-          Agence DFY · Post-production vidéo
-        </p>
+      {/* Radial glow rose global — animated pulse */}
+      <div
+        className="absolute inset-0 pointer-events-none irys-halo-animated"
+        style={{
+          background:
+            'radial-gradient(ellipse 65% 50% at 50% 90%, rgba(232, 23, 93, 0.18) 0%, transparent 70%)',
+        }}
+      />
 
-        {/* H1 dual-font */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[var(--color-text)] leading-[1.1] tracking-tight mb-8 max-w-4xl">
-          Le montage,{' '}
-          <span className="font-display-italic font-light text-[var(--color-accent)]">
-            c'est notre problème.
-          </span>
-          <br />
-          Pas le tien.
-        </h1>
+      {/* Contenu principal */}
+      <div className="flex-1 flex flex-col items-center justify-center pt-[108px] pb-4 px-4">
+        <div className="relative z-10 text-center max-w-[1000px] mx-auto w-full">
 
-        {/* Subline */}
-        <p className="text-lg sm:text-xl text-[var(--color-text-muted)] max-w-2xl mb-10 leading-relaxed">
-          Tu filmes, tu envoies, on livre.{' '}
-          sans engagement, sans brief de 12 pages. Ton contenu publie, ton audience grandit, ton CA décolle — toi tu fais ce que t'as toujours voulu faire.
-        </p>
+          {/* Eyebrow badge */}
+          <div style={fadeUp(0)} className="irys-section-badge mb-10 mx-auto w-fit text-[13px]">
+            <span
+              className="h-2 w-2 rounded-full inline-block flex-shrink-0"
+              style={{ background: 'var(--color-accent)' }}
+            />
+            {t('label')}
+          </div>
 
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-20">
-          <a
-            href="#calendly"
-            className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[var(--color-accent)] text-white font-semibold text-base hover:opacity-90 transition-opacity"
+          {/* H1 dual-font */}
+          <h1
+            className="tracking-tight mb-6"
+            style={{
+              fontSize: 'clamp(64px, 7vw, 88px)',
+              lineHeight: '1.06',
+              letterSpacing: '-0.02em',
+            }}
           >
-            Réserver mon appel gratuit
-          </a>
-          <a
-            href="#portfolio"
-            className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-[var(--color-separator)]/30 text-[var(--color-text)] font-medium text-base hover:border-[var(--color-separator)] transition-colors"
-          >
-            Voir le portfolio →
-          </a>
-        </div>
+            <span
+              className="font-heading font-bold"
+              style={{ ...fadeUp(100), display: 'block', color: 'var(--color-text)' }}
+            >
+              {t('h1_line1_a')}
+            </span>
+            <span
+              className="font-display-italic"
+              style={{ ...fadeUp(200), display: 'block', color: 'var(--color-accent)', fontWeight: 300 }}
+            >
+              {t('h1_line2')}
+            </span>
+          </h1>
 
-        {/* Stats */}
-        <div className="flex flex-col sm:flex-row gap-8 sm:gap-12 pt-8">
-          {STATS.map(({ value, label }) => (
-            <div key={label} className="flex flex-col gap-1">
-              <span className="text-3xl sm:text-4xl font-bold text-[var(--color-text)] tracking-tight">
-                {value}
-              </span>
-              <span className="text-sm text-[var(--color-text-muted)]">
-                {label}
-              </span>
-            </div>
-          ))}
+          {/* Subline */}
+          <p
+            className="text-[15px] sm:text-[17px] leading-relaxed mb-10 max-w-[500px] mx-auto"
+            style={{ ...fadeUp(350), color: 'rgba(245,240,232,0.55)' }}
+          >
+            {t('subtitle')}
+          </p>
+
+          {/* CTAs */}
+          <div style={fadeUp(480)} className="flex items-center justify-center gap-3 sm:gap-6 flex-wrap">
+            <a href="#portfolio" className="irys-btn-outline text-[13px]">
+              {t('cta_secondary')}
+            </a>
+            <a href="#calendly" className="irys-btn-accent text-[13px]">
+              {t('cta_primary')}
+            </a>
+          </div>
         </div>
       </div>
 
+      {/* Bandeau stats */}
+      <div className="relative w-full">
+        {/* Glow line top */}
+        <div className="absolute top-0 left-0 right-0 irys-glow-line-top" />
+
+        {/* Radial glow rose centré */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse 70% 100% at 50% 50%, rgba(232, 23, 93, 0.14) 0%, transparent 100%)',
+          }}
+        />
+
+        {/* Stats */}
+        <div className="relative z-10 max-w-[1000px] mx-auto px-4 py-8 flex items-center justify-center md:justify-between flex-wrap gap-x-6 gap-y-5">
+          {STATS.map(({ value, label }, i) => (
+            <Fragment key={i}>
+              {i > 0 && (
+                <div
+                  className="hidden sm:block w-px self-stretch"
+                  style={{ background: 'rgba(245,240,232,0.1)' }}
+                />
+              )}
+              <div
+                className="flex flex-col items-center gap-1 w-[45%] sm:w-auto sm:flex-1"
+                style={fadeUp(600 + i * 60)}
+              >
+                <span
+                  className="font-heading tracking-tight"
+                  style={{
+                    color: '#FFFFFF',
+                    fontWeight: 600,
+                    fontSize: 'clamp(28px, 3vw, 40px)',
+                  }}
+                >
+                  {value}
+                </span>
+                <span
+                  className="text-[12px] whitespace-nowrap"
+                  style={{ color: 'rgba(255,255,255,0.7)' }}
+                >
+                  {label}
+                </span>
+              </div>
+            </Fragment>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }

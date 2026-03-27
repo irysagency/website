@@ -1,330 +1,216 @@
 'use client'
 
 import { useState } from 'react'
+import { Smartphone, Megaphone, Play, Mic, Crosshair, Calendar, Gift } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { useTranslations } from 'next-intl'
+import { OffreCard } from './offres/OffreCard'
+import { PackCard } from './offres/PackCard'
+import type { Pack } from './offres/PackCard'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 
 type Tab = 'abonnements' | 'packs'
-type Quality = 'standard' | 'premium'
 
-const ABONNEMENTS = [
-  {
-    icon: '📱',
-    name: 'Machine à Shorts',
-    tagline: 'Le minimum vital pour inonder les algorithmes.',
-    price: '425',
-    recommended: false,
-    features: [
-      '8 Reels/Shorts par mois',
-      'Espace Frame.io dédié',
-      'Hub Notion (suivi & scripts)',
-      'Canal Slack privé',
-      'Programmation auto sur tes réseaux',
-      'Reporting mensuel',
-      'Retours illimités (3 allers-retours)',
-    ],
-  },
-  {
-    icon: '⚖️',
-    name: 'Croissance Totale',
-    tagline: 'Le combo parfait : viralité Shorts + rétention YouTube.',
-    price: '1 325',
-    recommended: true,
-    features: [
-      '16 Reels/Shorts par mois',
-      '2 Vidéos YouTube par mois',
-      'Miniatures YouTube A/B Testing (2 + 4 variantes)',
-      "Tout l'écosystème Frame.io + Notion + Slack",
-      'Programmation auto + Reporting mensuel',
-      "Jusqu'à 3 AR courts / 5 AR longs",
-    ],
-  },
-  {
-    icon: '🌍',
-    name: 'Conversion Max',
-    tagline: 'Pour les créateurs qui veulent dominer leur niche.',
-    price: '1 625',
-    recommended: false,
-    features: [
-      '8 Ads/Shorts par mois',
-      '1 VSL (Vidéo de Vente — 2 à 5 min.)',
-      "Tout l'écosystème Frame.io + Notion + Slack",
-      'Programmation auto + Reporting mensuel',
-      "Jusqu'à 3 AR courts / 5 AR VSL",
-    ],
-  },
-]
-
-interface Pack {
-  icon: string
-  name: string
-  tagline: string
-  standard: string
-  premium: string | null
-  features: string[]
-}
-
-const PACKS: Pack[] = [
-  {
-    icon: '📱',
-    name: 'Pack 8 Shorts',
-    tagline: 'Reels / TikTok / Shorts',
-    standard: '360',
-    premium: '720',
-    features: [
-      '8 vidéos courtes format vertical',
-      'Frame.io inclus',
-      'Sous-titres + transitions',
-    ],
-  },
-  {
-    icon: '📣',
-    name: 'Pack 4 ADS Vidéo',
-    tagline: 'Avec variations de hooks',
-    standard: '480',
-    premium: null,
-    features: [
-      '4 publicités vidéo',
-      'Variations de hooks testables',
-      'Frame.io inclus',
-    ],
-  },
-  {
-    icon: '▶️',
-    name: 'Pack 2 Vidéos YouTube',
-    tagline: 'Long format, rétention optimisée',
-    standard: '590',
-    premium: '1 180',
-    features: [
-      '2 vidéos YouTube longue durée',
-      'Frame.io inclus',
-      'Chapitres + sous-titres',
-    ],
-  },
-  {
-    icon: '🎙️',
-    name: 'Podcast Vidéo',
-    tagline: 'Miniature YT + 5 Shorts + wav + teaser',
-    standard: '590',
-    premium: null,
-    features: [
-      '1 épisode podcast monté',
-      '5 shorts extraits',
-      'Fichier wav + teaser',
-      'Frame.io inclus',
-    ],
-  },
-  {
-    icon: '🎯',
-    name: 'VSL — Vidéo de Vente',
-    tagline: '2 à 5 minutes, conçue pour convertir',
-    standard: '590',
-    premium: '1 180',
-    features: [
-      'Script vidéo optimisé conversion',
-      'Montage structuré par étapes de vente',
-      'Frame.io inclus',
-    ],
-  },
-]
-
-const PREMIUM_MENTION = '+ sous-titres animés, SFX complets, B-rolls poussés, Motion Design soft'
-
-function PackCard({ pack }: { pack: Pack }) {
-  const [quality, setQuality] = useState<Quality>('standard')
-  const isPremium = quality === 'premium'
-  const price = isPremium && pack.premium ? pack.premium : pack.standard
-  const hasPremium = pack.premium !== null
-
-  return (
-    <div className="relative rounded-2xl p-8 border flex flex-col bg-[var(--color-surface)] border-[var(--color-separator)]/10 text-[var(--color-text)]">
-      {/* Toggle Standard / Premium */}
-      {hasPremium && (
-        <div className="absolute top-5 right-5 flex rounded-full border border-[var(--color-separator)]/15 overflow-hidden text-xs font-semibold">
-          <button
-            type="button"
-            onClick={() => setQuality('standard')}
-            className={`px-3 py-1 transition-colors ${
-              !isPremium
-                ? 'bg-[var(--color-text)] text-white'
-                : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
-            }`}
-          >
-            Standard
-          </button>
-          <button
-            type="button"
-            onClick={() => setQuality('premium')}
-            className={`px-3 py-1 transition-colors ${
-              isPremium
-                ? 'bg-[var(--color-accent)] text-white'
-                : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
-            }`}
-          >
-            Premium ✦
-          </button>
-        </div>
-      )}
-
-      <div className="text-3xl mb-4">{pack.icon}</div>
-      <h3 className="text-xl font-bold mb-1 pr-32">{pack.name}</h3>
-      <p className="text-sm mb-6 text-[var(--color-text-muted)]">{pack.tagline}</p>
-
-      <div className="mb-6">
-        <span className="text-4xl font-bold">{price} €</span>
-        <span className="text-sm ml-1 text-[var(--color-text-muted)]">HT</span>
-      </div>
-
-      {isPremium && (
-        <p className="text-xs text-[var(--color-accent)] font-medium mb-4 leading-relaxed">
-          ✦ {PREMIUM_MENTION}
-        </p>
-      )}
-
-      <ul className="flex flex-col gap-3 flex-1 mb-8">
-        {pack.features.map((f) => (
-          <li key={f} className="flex items-start gap-2 text-sm">
-            <span className="mt-0.5 text-xs text-emerald-500">✓</span>
-            <span>{f}</span>
-          </li>
-        ))}
-      </ul>
-
-      <a
-        href="#calendly"
-        className="block text-center py-3 rounded-full text-sm font-semibold transition-opacity hover:opacity-90 border border-[var(--color-separator)]/20 text-[var(--color-text)] hover:border-[var(--color-separator)]/50"
-      >
-        Commander
-      </a>
-    </div>
-  )
-}
+const ICON_PROPS = { size: 20, strokeWidth: 1.5 } as const
 
 export default function Offres() {
+  const t = useTranslations('offres')
   const [activeTab, setActiveTab] = useState<Tab>('abonnements')
+  const revealHeader = useScrollReveal({ staggerDelay: 80 })
+
+  const ABONNEMENTS = [
+    {
+      name: t('o1_name'),
+      tagline: t('o1_tag'),
+      price: t('o1_price'),
+      recommended: false,
+      features: [t('o1_f1'), t('o1_f2'), t('o1_f3'), t('o1_f4'), t('o1_f5'), t('o1_f6'), t('o1_f7')],
+    },
+    {
+      name: t('o2_name'),
+      tagline: t('o2_tag'),
+      price: t('o2_price'),
+      recommended: true,
+      features: [t('o2_f1'), t('o2_f2'), t('o2_f3'), t('o2_f4'), t('o2_f5'), t('o2_f6')],
+    },
+    {
+      name: t('o3_name'),
+      tagline: t('o3_tag'),
+      price: t('o3_price'),
+      recommended: false,
+      features: [t('o3_f1'), t('o3_f2'), t('o3_f3'), t('o3_f4'), t('o3_f5')],
+    },
+  ]
+
+  const PACKS: Pack[] = [
+    {
+      icon: <Smartphone {...ICON_PROPS} />,
+      name: t('pack1_name'),
+      tagline: t('pack1_sub'),
+      standard: t('pack1_price_std'),
+      premium: t('pack1_price_prem'),
+      features: [t('pack1_f1'), t('pack1_f2'), t('pack1_f3')],
+    },
+    {
+      icon: <Megaphone {...ICON_PROPS} />,
+      name: t('pack2_name'),
+      tagline: t('pack2_sub'),
+      standard: t('pack2_price_std'),
+      premium: null,
+      features: [t('pack2_f1'), t('pack2_f2'), t('pack2_f3')],
+    },
+    {
+      icon: <Play {...ICON_PROPS} />,
+      name: t('pack3_name'),
+      tagline: t('pack3_sub'),
+      standard: t('pack3_price_std'),
+      premium: t('pack3_price_prem'),
+      features: [t('pack3_f1'), t('pack3_f2'), t('pack3_f3')],
+    },
+    {
+      icon: <Mic {...ICON_PROPS} />,
+      name: t('pack4_name'),
+      tagline: t('pack4_sub'),
+      standard: t('pack4_price_std'),
+      premium: null,
+      features: [t('pack4_f1'), t('pack4_f2'), t('pack4_f3'), t('pack4_f4')],
+    },
+    {
+      icon: <Crosshair {...ICON_PROPS} />,
+      name: t('pack5_name'),
+      tagline: t('pack5_sub'),
+      standard: t('pack5_price_std'),
+      premium: t('pack5_price_prem'),
+      features: [t('pack5_f1'), t('pack5_f2'), t('pack5_f3')],
+    },
+  ]
 
   return (
-    <section
-      id="offres"
-      className="bg-[var(--color-bg)] py-24 px-4 sm:px-6 lg:px-8"
-    >
-      <div className="max-w-6xl mx-auto">
+    <section id="offres" className="relative py-24 px-4">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 50% 30% at 50% 10%, rgba(232, 23, 93, 0.08) 0%, transparent 100%)',
+        }}
+      />
+
+      <div className="max-w-[1100px] mx-auto text-center relative z-10">
         {/* Header */}
-        <div className="mb-12">
-          <p className="text-xs font-semibold tracking-widest uppercase text-[var(--color-accent)] mb-3">
-            Offres
-          </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text)]">
-            Des offres pensées{' '}
-            <span className="font-display-italic font-light">pour scaler.</span>
-          </h2>
-          <p className="mt-4 text-[var(--color-text-muted)] max-w-xl">
-            Tu choisis ton niveau d'engagement — on s'adapte. Tous les prix sont en HT.
-          </p>
-        </div>
+        <SectionHeader
+          badgeText={t('label')}
+          titlePart1={t('h2_part1')}
+          titleItalic={t('h2_part2')}
+          subtitle={t('subtitle')}
+          revealFn={revealHeader}
+          className="mb-8"
+        />
 
         {/* Tab switcher */}
-        <div className="inline-flex rounded-full bg-[var(--color-surface)] border border-[var(--color-separator)]/10 p-1 mb-12">
-          {(['abonnements', 'packs'] as Tab[]).map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2 rounded-full text-sm font-semibold transition-all ${
-                activeTab === tab
-                  ? 'bg-[var(--color-accent)] text-white shadow-sm'
-                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
-              }`}
-            >
-              {tab === 'abonnements' ? 'Abonnements' : 'Packs One-Shot'}
-            </button>
-          ))}
-        </div>
-
-        {/* Abonnements */}
-        {activeTab === 'abonnements' && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {ABONNEMENTS.map(({ icon, name, tagline, price, recommended, features }) => (
-              <div
-                key={name}
-                className={`relative rounded-2xl p-8 border flex flex-col ${
-                  recommended
-                    ? 'bg-[var(--color-text)] border-[var(--color-text)] text-white'
-                    : 'bg-[var(--color-surface)] border-[var(--color-separator)]/10 text-[var(--color-text)]'
-                }`}
+        <div ref={revealHeader(3)} className="flex items-center justify-center mb-12">
+          <div
+            className="irys-conic-border rounded-full inline-flex overflow-hidden"
+            style={{ background: 'rgba(255,255,255,0.04)' }}
+          >
+            {(['abonnements', 'packs'] as Tab[]).map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setActiveTab(tab)}
+                className="px-5 py-2.5 text-[13px] font-semibold rounded-full transition-all duration-200"
+                style={{
+                  background: activeTab === tab ? 'var(--color-accent)' : 'transparent',
+                  color: '#fff',
+                }}
               >
-                {recommended && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="bg-[var(--color-accent)] text-white text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap">
-                      ⭐ RECOMMANDÉ
-                    </span>
-                  </div>
-                )}
-
-                <div className="text-3xl mb-4">{icon}</div>
-                <h3 className="text-xl font-bold mb-1">{name}</h3>
-                <p className={`text-sm mb-6 ${recommended ? 'text-white/70' : 'text-[var(--color-text-muted)]'}`}>
-                  {tagline}
-                </p>
-
-                <div className="mb-6">
-                  <span className="text-4xl font-bold">{price} €</span>
-                  <span className={`text-sm ml-1 ${recommended ? 'text-white/70' : 'text-[var(--color-text-muted)]'}`}>
-                    HT/mois
-                  </span>
-                </div>
-
-                <ul className="flex flex-col gap-3 flex-1 mb-8">
-                  {features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm">
-                      <span className={`mt-0.5 text-xs ${recommended ? 'text-[var(--color-accent)]' : 'text-emerald-500'}`}>
-                        ✓
-                      </span>
-                      <span className={recommended ? 'text-white/90' : ''}>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href="#calendly"
-                  className={`block text-center py-3 rounded-full text-sm font-semibold transition-opacity hover:opacity-90 ${
-                    recommended
-                      ? 'bg-[var(--color-accent)] text-white'
-                      : 'border border-[var(--color-separator)]/20 text-[var(--color-text)] hover:border-[var(--color-separator)]/50'
-                  }`}
-                >
-                  Démarrer
-                </a>
-              </div>
+                {tab === 'abonnements' ? t('tab_abo') : t('tab_packs')}
+              </button>
             ))}
           </div>
-        )}
+        </div>
 
-        {/* Packs One-Shot — même format card que les abonnements */}
-        {activeTab === 'packs' && (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {PACKS.map((pack) => (
-                <PackCard key={pack.name} pack={pack} />
-              ))}
-            </div>
-            <div className="mt-6 bg-[var(--color-surface)] rounded-xl px-5 py-4 border border-[var(--color-separator)]/10">
-              <p className="text-xs text-[var(--color-text-muted)]">
-                Frame.io inclus dans tous les packs. Hub Notion, Slack dédié et programmation automatique sont exclusifs aux abonnements.
-              </p>
-            </div>
-          </>
-        )}
+        {/* Tab content */}
+        <AnimatePresence mode="wait">
+          {activeTab === 'abonnements' && (
+            <motion.div
+              key="abonnements"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-5">
+                {ABONNEMENTS.map((offre) => (
+                  <OffreCard
+                    key={offre.name}
+                    offre={offre}
+                    labelHtMonth={t('ht_month')}
+                    labelRecommended={t('recommended')}
+                    labelCta={t('cta_card')}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'packs' && (
+            <motion.div
+              key="packs"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {PACKS.map((pack) => (
+                  <PackCard
+                    key={pack.name}
+                    pack={pack}
+                    premiumMention={t('premium_mention')}
+                    labelStandard={t('standard')}
+                    labelPremium={t('premium')}
+                    labelHt={t('ht')}
+                    labelOrder={t('cta_commander')}
+                  />
+                ))}
+              </div>
+              <div
+                className="mt-5 rounded-xl px-5 py-4"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                }}
+              >
+                <p className="text-[12px] text-subdued">
+                  {t('packs_note')}
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* CTA */}
-        <div className="mt-12 text-center">
-          <p className="text-[var(--color-text-muted)] mb-4 text-sm">
-            Tu ne sais pas quelle offre choisir ?
+        <div className="mt-12">
+          <p className="text-[13px] mb-4 text-subdued">
+            {t('cta_help')}
           </p>
-          <a
-            href="#calendly"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[var(--color-accent)] text-white font-semibold hover:opacity-90 transition-opacity"
-          >
-            On en parle — appel gratuit 30 min
+          <a href="#calendly" className="irys-btn-accent-filled px-10 py-4 text-sm">
+            {t('cta_bottom')}
           </a>
+        </div>
+
+        {/* Trust badges */}
+        <div className="flex items-center justify-center gap-6 mt-8">
+          <span className="flex items-center gap-2 text-[13px] text-subdued">
+            <Calendar size={14} strokeWidth={1.5} />
+            {t('trust_no_commitment')}
+          </span>
+          <span className="text-faint">·</span>
+          <span className="flex items-center gap-2 text-[13px] text-subdued">
+            <Gift size={14} strokeWidth={1.5} />
+            {t('trust_first_video')}
+          </span>
         </div>
       </div>
     </section>

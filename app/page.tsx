@@ -2,7 +2,8 @@ import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import Portfolio from '@/components/Portfolio'
 import FreelanceVsAgence from '@/components/FreelanceVsAgence'
-import Methode from '@/components/Methode'
+import EcosystemeIrys from '@/components/EcosystemeIrys'
+import ProcessSwimlaneClient from '@/components/ProcessSwimlaneClient'
 import Offres from '@/components/Offres'
 import CalendlySection from '@/components/CalendlySection'
 import FAQ from '@/components/FAQ'
@@ -16,7 +17,8 @@ export default function Home() {
         <Hero />
         <Portfolio />
         <FreelanceVsAgence />
-        <Methode />
+        <EcosystemeIrys />
+        <ProcessSwimlaneClient />
         <Offres />
         <CalendlySection />
         <FAQ />

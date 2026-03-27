@@ -1,94 +1,104 @@
 'use client'
 
 import { useState } from 'react'
-
-const FAQS = [
-  {
-    question: 'Est-ce que je garde le contrôle sur mes vidéos ?',
-    answer:
-      "Complètement. On définit ta direction artistique ensemble au kick-off, et rien n'est lancé sans ta validation. Tu restes l'auteur de ton contenu — on est juste l'équipe derrière.",
-  },
-  {
-    question: 'Je dois filmer avec quoi ?',
-    answer:
-      "Avec ton téléphone, dans ton environnement habituel. On t'accompagne sur le cadrage et les conditions de tournage si besoin. Pas besoin de studio, pas besoin de matériel pro.",
-  },
-  {
-    question: 'Vous garantissez des résultats en vues ou en abonnés ?',
-    answer:
-      "Non — et on t'explique pourquoi c'est honnête. L'algorithme ne se contrôle pas. Ce qu'on garantit : la qualité des vidéos livrées, la cohérence de ta DA, et le respect des délais. C'est ce qui dépend de nous — et on l'assume à 100%.",
-  },
-  {
-    question: "C'est quoi concrètement la première vidéo gratuite ?",
-    answer:
-      "Tu nous envoies une idée ou un brief. On monte, on livre rapidement. Tu demandes autant de révisions que tu veux jusqu'à ce que ce soit parfait. Si ça te convient, on signe. Sinon, tu repars avec une vidéo gratuite.",
-  },
-  {
-    question: 'Et si je veux arrêter ?',
-    answer:
-      "Préavis 30 jours, c'est tout. Pas de contrat longue durée, pas de pénalité. Tu restes parce que t'es satisfait — pas parce que t'es bloqué.",
-  },
-]
+import { ChevronDown } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { useTranslations } from 'next-intl'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 
 export default function FAQ() {
+  const t = useTranslations('faq')
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const revealHeader = useScrollReveal({ staggerDelay: 80 })
+  const revealItems = useScrollReveal({ staggerDelay: 60 })
+
+  const FAQS = [
+    { question: t('q1'), answer: t('a1') },
+    { question: t('q2'), answer: t('a2') },
+    { question: t('q3'), answer: t('a3') },
+    { question: t('q4'), answer: t('a4') },
+    { question: t('q5'), answer: t('a5') },
+  ]
 
   return (
-    <section
-      id="faq"
-      className="bg-[var(--color-bg)] py-24 px-4 sm:px-6 lg:px-8"
-    >
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-12 text-center">
-          <p className="text-xs font-semibold tracking-widest uppercase text-[var(--color-accent)] mb-3">
-            FAQ
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--color-text)]">
-            Les questions qu&apos;on nous pose{' '}
-            <span className="font-display-italic font-light">tout le temps.</span>
-          </h2>
-        </div>
+    <section id="faq" className="relative py-24 px-4">
+      {/* Glow bottom */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 50% 50% at 50% 100%, rgba(232, 23, 93, 0.08) 0%, transparent 70%)',
+        }}
+      />
 
-        <div className="flex flex-col divide-y divide-[var(--color-separator)]/10">
+      <div className="max-w-[800px] mx-auto text-center relative z-10">
+        {/* Header */}
+        <SectionHeader
+          badgeText={t('label')}
+          titlePart1={t('h2_part1')}
+          titleItalic={t('h2_part2')}
+          revealFn={revealHeader}
+          className="mb-12"
+        />
+
+        {/* Accordion */}
+        <div className="space-y-3 text-left">
           {FAQS.map(({ question, answer }, i) => (
-            <div key={question}>
+            <div key={question} ref={revealItems(i)} className="irys-card-simple overflow-hidden">
               <button
                 type="button"
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between py-5 text-left gap-4"
+                className="w-full flex items-center justify-between p-5 text-left"
                 aria-expanded={openIndex === i}
+                aria-controls={`faq-panel-${i}`}
+                id={`faq-btn-${i}`}
               >
-                <span className="font-semibold text-[var(--color-text)] text-base">
+                <span
+                  className="text-[14px] font-medium pr-4 text-secondary"
+                  style={{ wordBreak: 'break-word' }}
+                >
                   {question}
                 </span>
-                <span
-                  className={`flex-shrink-0 w-6 h-6 rounded-full border border-[var(--color-separator)]/20 flex items-center justify-center text-[var(--color-text-muted)] text-xs transition-transform ${
-                    openIndex === i ? 'rotate-45' : ''
-                  }`}
-                >
-                  +
-                </span>
+                <ChevronDown
+                  className="h-5 w-5 flex-shrink-0 transition-transform duration-300 text-subdued"
+                  style={{
+                    transform: openIndex === i ? 'rotate(180deg)' : 'rotate(0deg)',
+                  }}
+                />
               </button>
-              {openIndex === i && (
-                <div className="pb-5">
-                  <p className="text-[var(--color-text-muted)] leading-relaxed text-sm">
-                    {answer}
-                  </p>
-                </div>
-              )}
+              <AnimatePresence initial={false}>
+                {openIndex === i && (
+                  <motion.div
+                    key="content"
+                    id={`faq-panel-${i}`}
+                    role="region"
+                    aria-labelledby={`faq-btn-${i}`}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-5 pb-5">
+                      <p className="text-[13px] leading-relaxed text-subdued">
+                        {answer}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ))}
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-[var(--color-text-muted)] text-sm mb-4">
-            Une question qui n&apos;est pas là ?
-          </p>
           <a
+            ref={revealHeader(2)}
             href="#calendly"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[var(--color-accent)] text-white font-semibold hover:opacity-90 transition-opacity"
+            className="irys-btn-accent-filled px-10 py-4 text-sm"
           >
-            Pose-la directement →
+            {t('cta')}
           </a>
         </div>
       </div>

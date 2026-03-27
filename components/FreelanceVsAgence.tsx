@@ -1,118 +1,114 @@
-const COMPARISON = [
-  {
-    pain: 'Disponibilité aléatoire — il disparaît en vacances',
-    gain: 'Une équipe dédiée, disponible 5j/7',
-  },
-  {
-    pain: 'Tu passes 1h à briefer pour chaque vidéo',
-    gain: 'On retient ton style dès la première semaine',
-  },
-  {
-    pain: 'Rendu en 5 à 10 jours ouvrés',
-    gain: 'Livraison rapide, semaine après semaine',
-  },
-  {
-    pain: "Une seule paire d'yeux sur ton contenu",
-    gain: 'Équipe de monteurs, motion designers, réviseurs',
-  },
-  {
-    pain: 'Facturation à la vidéo — imprévisible',
-    gain: "Abonnement fixe, budgétable à l'avance",
-  },
-  {
-    pain: 'Tu gères les allers-retours, les fichiers, les deadlines',
-    gain: 'Tu envoies tes rushs — on gère tout le reste',
-  },
-  {
-    pain: 'Tu dois coordonner plusieurs prestataires (monteur, minimaker, motion designer...)',
-    gain: 'Tous les talents sont chez nous — un seul interlocuteur',
-  },
-]
+'use client'
 
-const ARGUMENTS = [
-  {
-    icon: '⚡',
-    title: 'Livraison rapide',
-    description:
-      'Tes vidéos sortent quand tu en as besoin. Pas quand ton freelance daigne répondre.',
-  },
-  {
-    icon: '🎯',
-    title: 'Style mémorisé',
-    description:
-      'Après 3 vidéos, on connaît tes intros, tes cuts, ta musique. Zéro brief répété.',
-  },
-  {
-    icon: '📦',
-    title: 'Tout inclus',
-    description:
-      "Un freelance fait la vidéo YouTube. Chez nous, tu reçois la vidéo YouTube, les shorts qui vont avec, le teaser, le thumbnail — tout sort en même temps. Une seule équipe, zéro coordination de ta part.",
-  },
-]
+import { X, CheckCircle2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 
 export default function FreelanceVsAgence() {
-  return (
-    <section
-      id="freelance-vs-agence"
-      className="bg-[var(--color-bg)] py-24 px-4 sm:px-6 lg:px-8"
-    >
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-14">
-          <p className="text-xs font-semibold tracking-widest uppercase text-[var(--color-accent)] mb-3">
-            Pourquoi pas un freelance ?
-          </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text)]">
-            Ce que tu vis en ce moment.{' '}
-            <span className="font-display-italic font-light">
-              Et ce que ça donne avec Irys.
-            </span>
-          </h2>
-        </div>
+  const t = useTranslations('freelance')
+  const revealHeader = useScrollReveal({ staggerDelay: 80 })
+  const revealRows = useScrollReveal({ staggerDelay: 60 })
+  const revealArgs = useScrollReveal({ staggerDelay: 80 })
 
-        {/* Comparison table */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--color-separator)]/10 rounded-2xl overflow-hidden mb-16">
-          {/* Headers */}
-          <div className="bg-[var(--color-surface)] px-6 py-4 flex items-center gap-2">
-            <span className="w-5 h-5 rounded-full bg-red-100 flex items-center justify-center text-red-500 text-xs font-bold">✕</span>
-            <span className="font-semibold text-[var(--color-text)]">Seul ou avec un freelance</span>
-          </div>
-          <div className="bg-[var(--color-surface)] px-6 py-4 flex items-center gap-2">
-            <span className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-xs font-bold">✓</span>
-            <span className="font-semibold text-[var(--color-text)]">Avec Irys</span>
+  const COMPARISON = [
+    { pain: t('f1'), gain: t('i1') },
+    { pain: t('f2'), gain: t('i2') },
+    { pain: t('f3'), gain: t('i3') },
+    { pain: t('f4'), gain: t('i4') },
+    { pain: t('f5'), gain: t('i5') },
+    { pain: t('f6'), gain: t('i6') },
+  ]
+
+  const ARGUMENTS = [
+    { title: t('arg1_title'), description: t('arg1_desc') },
+    { title: t('arg2_title'), description: t('arg2_desc') },
+    { title: t('arg3_title'), description: t('arg3_desc') },
+  ]
+
+  return (
+    <section id="freelance-vs-agence" className="relative py-24 px-4">
+      <div className="max-w-[900px] mx-auto text-center">
+        {/* Header */}
+        <SectionHeader
+          badgeText={t('label')}
+          titlePart1={t('h2_part1')}
+          titleItalic={t('h2_part2')}
+          revealFn={revealHeader}
+          className="mb-3"
+        />
+
+        {/* Comparison card */}
+        <div ref={revealHeader(2)} className="irys-card p-5 sm:p-8 md:p-10 mb-14 text-left">
+          {/* Column headers */}
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-6 pb-4 border-b border-white/[0.08]">
+            <div className="flex items-center gap-2">
+              <div
+                className="flex-shrink-0 h-5 w-5 rounded-full flex items-center justify-center"
+                style={{ background: 'rgba(255,50,50,0.15)', border: '1px solid rgba(255,50,50,0.3)' }}
+              >
+                <X className="h-3 w-3" style={{ color: '#ff3232' }} />
+              </div>
+              <span className="text-[13px] font-semibold text-text">
+                {t('col_freelance')}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div
+                className="flex-shrink-0 h-5 w-5 rounded-full flex items-center justify-center"
+                style={{ background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)' }}
+              >
+                <CheckCircle2 className="h-3 w-3" style={{ color: '#22c55e' }} />
+              </div>
+              <span className="text-[13px] font-semibold text-text">
+                {t('col_irys')}
+              </span>
+            </div>
           </div>
 
           {/* Rows */}
-          {COMPARISON.map(({ pain, gain }, i) => (
-            <>
+          <div className="space-y-0">
+            {COMPARISON.map(({ pain, gain }, i) => (
               <div
-                key={`pain-${i}`}
-                className="bg-[var(--color-surface)] px-6 py-4 flex items-start gap-3 border-t border-[var(--color-separator)]/10"
+                key={i}
+                ref={revealRows(i)}
+                className="grid grid-cols-2 gap-3 sm:gap-6 py-4"
+                style={{
+                  borderBottom:
+                    i < COMPARISON.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                }}
               >
-                <span className="mt-0.5 text-red-400 text-sm">✕</span>
-                <p className="text-sm text-[var(--color-text-muted)]">{pain}</p>
+                <div className="flex items-start gap-3">
+                  <X
+                    className="h-4 w-4 flex-shrink-0 mt-0.5"
+                    style={{ color: 'rgba(255,80,80,0.7)' }}
+                  />
+                  <p className="text-[13px] text-subdued">
+                    {pain}
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2
+                    className="h-4 w-4 flex-shrink-0 mt-0.5"
+                    style={{ color: '#22c55e' }}
+                  />
+                  <p className="text-[13px] font-medium text-text">
+                    {gain}
+                  </p>
+                </div>
               </div>
-              <div
-                key={`gain-${i}`}
-                className="bg-[var(--color-surface)] px-6 py-4 flex items-start gap-3 border-t border-[var(--color-separator)]/10"
-              >
-                <span className="mt-0.5 text-emerald-500 text-sm">✓</span>
-                <p className="text-sm text-[var(--color-text)] font-medium">{gain}</p>
-              </div>
-            </>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Argument cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {ARGUMENTS.map(({ icon, title, description }) => (
-            <div
-              key={title}
-              className="bg-[var(--color-surface)] rounded-2xl p-6 border border-[var(--color-separator)]/10"
-            >
-              <div className="text-3xl mb-4">{icon}</div>
-              <h3 className="font-bold text-[var(--color-text)] mb-2">{title}</h3>
-              <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          {ARGUMENTS.map(({ title, description }, i) => (
+            <div key={title} ref={revealArgs(i)} className="irys-card-simple p-6 text-left">
+              <h3 className="font-heading text-base font-bold mb-2 text-text">
+                {title}
+              </h3>
+              <p className="text-[13px] leading-relaxed text-subdued">
                 {description}
               </p>
             </div>

@@ -1,108 +1,215 @@
 'use client'
 
-import { InlineWidget } from 'react-calendly'
+import { useRef } from 'react'
 import Image from 'next/image'
+import Script from 'next/script'
+import { Video } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import { SectionHeader } from '@/components/ui/SectionHeader'
 
-// TODO: REPLACE — bios founders
-const FOUNDERS = [
-  {
-    name: 'Kilian Adam',
-    role: 'Co-fondateur & Directeur créatif',
-    photo: '/images/kilian-placeholder.png', // TODO: REPLACE
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Kilian accompagne les infopreneurs dans la construction de leur présence vidéo depuis plusieurs années.',
-  },
-  {
-    name: 'Quentin',
-    role: 'Co-fondateur & Directeur de production',
-    photo: '/images/quentin-placeholder.png', // TODO: REPLACE
-    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quentin gère la production et s'assure que chaque livraison respecte les standards Irys.",
-  },
-]
+declare global {
+  interface Window {
+    Calendly: {
+      initInlineWidget: (options: {
+        url: string
+        parentElement: HTMLElement | null
+        prefill?: object
+        utm?: object
+      }) => void
+    }
+  }
+}
 
 export default function CalendlySection() {
-  return (
-    <section
-      id="calendly"
-      className="bg-[var(--color-surface)] py-24 px-4 sm:px-6 lg:px-8"
-    >
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left — Calendly */}
-          <div>
-            <p className="text-xs font-semibold tracking-widest uppercase text-[var(--color-accent)] mb-3">
-              Prendre rendez-vous
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--color-text)] mb-2">
-              30 minutes pour{' '}
-              <span className="font-display-italic font-light">te lancer.</span>
-            </h2>
-            <p className="text-[var(--color-text-muted)] mb-8">
-              Gratuit, sans engagement. On regarde ensemble si Irys est fait pour toi.
-            </p>
+  const t = useTranslations('booking')
+  const containerRef = useRef<HTMLDivElement>(null)
 
-            <div className="rounded-2xl overflow-hidden border border-[var(--color-separator)]/10">
-              {/* TODO: REPLACE — calendly URL */}
-              <InlineWidget
-                url="https://calendly.com/irysagency"
-                styles={{ height: '660px', minWidth: '320px' }}
-                pageSettings={{
-                  backgroundColor: 'ffffff',
-                  hideEventTypeDetails: false,
-                  hideLandingPageDetails: false,
-                  primaryColor: 'E8175D',
-                  textColor: '0D0D0D',
-                }}
-              />
-            </div>
+  const handleCalendlyLoad = () => {
+    if (window.Calendly && containerRef.current) {
+      window.Calendly.initInlineWidget({
+        url: 'https://calendly.com/contact-irysagency/30min',
+        parentElement: containerRef.current,
+      })
+    }
+  }
+
+  const FOUNDERS = [
+    {
+      name: t('kilian_name'),
+      role: t('kilian_title'),
+      photo: '/images/kilian-placeholder.png', // TODO: REPLACE
+      bio: t('kilian_bio'),
+      stat: '1,7M',
+      statLabel: 'vues générées en 3 mois',
+    },
+    {
+      name: t('quentin_name'),
+      role: t('quentin_title'),
+      photo: '/images/quentin-placeholder.png', // TODO: REPLACE
+      bio: t('quentin_bio'),
+      stat: '6 clients',
+      statLabel: 'signés en 2 mois avec 300 abonnés',
+    },
+  ]
+
+  return (
+    <section id="calendly" className="relative py-24 px-4">
+      {/* Radial glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232, 23, 93, 0.06) 0%, transparent 70%)',
+        }}
+      />
+
+      <div className="max-w-[1100px] mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+
+          {/* ── Left — Calendly ── */}
+          <div>
+            <SectionHeader
+              badgeText={t('label')}
+              badgeIcon={
+                <span
+                  className="h-2 w-2 rounded-full flex-shrink-0 bg-accent"
+                />
+              }
+              titlePart1={t('h2_part1')}
+              titleItalic={t('h2_part2')}
+              subtitle={t('subtitle')}
+              align="left"
+              className="mb-8"
+            />
+
+            {/* Native Calendly embed */}
+            <div
+              ref={containerRef}
+              className="w-full overflow-hidden"
+              style={{
+                minWidth: '320px',
+                height: 'var(--calendly-height)',
+                borderRadius: '16px',
+              }}
+            />
+            <Script
+              src="https://assets.calendly.com/assets/external/widget.js"
+              strategy="afterInteractive"
+              onLoad={handleCalendlyLoad}
+            />
           </div>
 
-          {/* Right — Founders */}
-          <div className="flex flex-col gap-10 lg:pt-20">
-            <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-[var(--color-accent)] mb-3">
-                L'équipe
-              </p>
-              <h3 className="text-2xl font-bold text-[var(--color-text)] mb-2">
-                Pas une agence anonyme.
+          {/* ── Right — Founders ── */}
+          <div className="flex flex-col">
+            {/* Header */}
+            <div className="mb-6">
+              <div className="irys-section-badge mb-4 w-fit text-[13px]">
+                {t('team_label')}
+              </div>
+              <h3
+                className="font-heading text-2xl font-bold mb-2"
+                style={{ color: 'var(--color-text)' }}
+              >
+                {t('team_title')}
               </h3>
-              <p className="text-[var(--color-text-muted)]">
-                Tu parles directement à ceux qui vont travailler sur ton contenu.
+              <p className="text-[14px] text-subdued">
+                {t('team_subtitle')}
               </p>
             </div>
 
-            {FOUNDERS.map(({ name, role, photo, bio }) => (
-              <div key={name} className="flex gap-5">
-                <div className="flex-shrink-0">
-                  <Image
-                    src={photo}
-                    alt={name}
-                    width={80}
-                    height={80}
-                    className="rounded-full object-cover w-20 h-20"
-                  />
-                </div>
-                <div>
-                  <p className="font-bold text-[var(--color-text)]">{name}</p>
-                  <p className="text-xs text-[var(--color-accent)] font-semibold mb-2">
-                    {role}
-                  </p>
-                  <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
+            {/* Founder cards */}
+            <div className="flex flex-col gap-4">
+              {FOUNDERS.map(({ name, role, photo, bio, stat, statLabel }) => (
+                <div
+                  key={name}
+                  style={{
+                    padding: '24px',
+                    background: 'var(--color-surface)',
+                    border: '0.5px solid rgba(255,255,255,0.08)',
+                    borderRadius: '16px',
+                    transition: 'border-color 0.25s ease',
+                    cursor: 'default',
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,23,93,0.25)'
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.08)'
+                  }}
+                >
+                  {/* Photo + infos */}
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <Image
+                        src={photo}
+                        alt={name}
+                        width={72}
+                        height={72}
+                        className="rounded-full object-cover"
+                        style={{
+                          width: '72px',
+                          height: '72px',
+                          border: '2px solid rgba(232,23,93,0.3)',
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <p style={{ fontSize: '17px', fontWeight: 600, color: 'var(--color-text)', lineHeight: 1.2 }}>
+                        {name}
+                      </p>
+                      <p style={{ fontSize: '12px', fontWeight: 500, color: '#E8175D', letterSpacing: '0.02em', marginTop: '3px' }}>
+                        {role}
+                      </p>
+                      <p style={{ fontSize: '10px', color: '#E8175D', opacity: 0.8, marginTop: '4px', letterSpacing: '0.05em' }}>
+                        ★★★★★
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Bio */}
+                  <p style={{ fontSize: '13px', lineHeight: '1.6', color: 'rgba(245,240,232,0.65)', marginTop: '12px' }}>
                     {bio}
                   </p>
+
+                  {/* Séparateur */}
+                  <div style={{ borderTop: '0.5px solid rgba(255,255,255,0.08)', margin: '16px 0' }} />
+
+                  {/* Stat clé */}
+                  <div>
+                    <p style={{ fontSize: '22px', fontWeight: 700, color: '#E8175D', lineHeight: 1 }}>
+                      {stat}
+                    </p>
+                    <p style={{ fontSize: '11px', color: 'rgba(245,240,232,0.5)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: '4px' }}>
+                      {statLabel}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
 
             {/* Trust badge */}
-            <div className="rounded-xl bg-[var(--color-bg)] p-5 border border-[var(--color-separator)]/10">
-              <p className="text-sm font-semibold text-[var(--color-text)] mb-1">
-                🎁 Première vidéo offerte
+            <div
+              className="rounded-2xl mt-4"
+              style={{
+                padding: '20px 24px',
+                background: 'rgba(232,23,93,0.06)',
+                border: '1px solid rgba(232,23,93,0.2)',
+              }}
+            >
+              <p className="text-sm font-semibold mb-1 flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
+                <Video
+                  size={16}
+                  strokeWidth={1.5}
+                  className="irys-pulse-video"
+                />
+                {t('first_video_title')}
               </p>
-              <p className="text-xs text-[var(--color-text-muted)]">
-                Tu nous envoies une idée. On monte rapidement. Si c'est pas parfait, tu repars sans rien signer — et avec une vidéo gratuite.
+              <p className="text-[12px] text-subdued">
+                {t('first_video_desc')}
               </p>
             </div>
           </div>
+
         </div>
       </div>
     </section>
