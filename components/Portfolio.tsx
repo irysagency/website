@@ -222,6 +222,7 @@ export default function Portfolio() {
                           muted
                           loop
                           playsInline
+                          autoPlay
                           className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-105"
                         />
                         {/* Hover overlay */}
@@ -300,21 +301,38 @@ export default function Portfolio() {
           onClick={() => setModalItem(null)}
         >
           <div
-            className={`relative w-full ${modalAspectClass} rounded-2xl overflow-hidden shadow-2xl shadow-accent/10 border border-white/5`}
+            className={`relative w-full ${modalAspectClass} rounded-2xl overflow-hidden shadow-2xl shadow-accent/10 border border-white/5 bg-black`}
             onClick={(e) => e.stopPropagation()}
           >
-            <iframe
-              src={`https://www.youtube.com/embed/${modalItem.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
-              title={modalItem.clientName}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-full border-0"
-            />
+            {modalItem.youtubeId && modalItem.youtubeId !== 'VIDEO_ID_HERE' ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${modalItem.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+                title={modalItem.clientName}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full border-0"
+              />
+            ) : (
+              <div className="relative w-full h-full flex items-center justify-center">
+                <video 
+                  src={modalItem.src} 
+                  autoPlay 
+                  loop 
+                  controls 
+                  className="w-full h-full object-contain"
+                />
+                <div className="absolute top-10 left-0 right-0 text-center pointer-events-none">
+                  <span className="px-4 py-2 bg-black/60 backdrop-blur-md rounded-full text-[10px] text-white/60">
+                    Aperçu (ID YouTube manquant)
+                  </span>
+                </div>
+              </div>
+            )}
             <button
               id="modal-close-btn"
               type="button"
               onClick={() => setModalItem(null)}
-              className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-90"
+              className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-90 z-20"
               style={{ background: 'rgba(0,0,0,0.6)', color: '#fff', backdropFilter: 'blur(10px)' }}
               aria-label="Fermer"
             >
