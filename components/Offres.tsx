@@ -152,7 +152,21 @@ export default function Offres() {
               exit={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-5">
+              {/* Mobile: swipeable carousel */}
+              <div className="md:hidden flex gap-4 overflow-x-auto -mx-4 px-4 pb-4 snap-x snap-mandatory pt-5">
+                {ABONNEMENTS.map((offre) => (
+                  <div key={offre.name} className="flex-[0_0_82%] snap-center">
+                    <OffreCard
+                      offre={offre}
+                      labelHtMonth={t('ht_month')}
+                      labelRecommended={t('recommended')}
+                      labelCta={t('cta_card')}
+                    />
+                  </div>
+                ))}
+              </div>
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-3 gap-5 pt-5">
                 {ABONNEMENTS.map((offre) => (
                   <OffreCard
                     key={offre.name}
@@ -174,34 +188,52 @@ export default function Offres() {
               exit={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {premiumPacks.map((pack) => (
-                  <PackCard
-                    key={pack.name}
-                    pack={pack}
-                    premiumMention={t('premium_mention')}
-                    labelStandard={t('standard')}
-                    labelPremium={t('premium')}
-                    labelHt={t('ht')}
-                    labelOrder={t('cta_commander')}
-                  />
+              {/* Mobile: tous les packs en carousel horizontal */}
+              <div className="md:hidden flex gap-4 overflow-x-auto -mx-4 px-4 pb-4 snap-x snap-mandatory pt-5">
+                {PACKS.map((pack) => (
+                  <div key={pack.name} className="flex-[0_0_82%] snap-center">
+                    <PackCard
+                      pack={pack}
+                      premiumMention={t('premium_mention')}
+                      labelStandard={t('standard')}
+                      labelPremium={t('premium')}
+                      labelHt={t('ht')}
+                      labelOrder={t('cta_commander')}
+                    />
+                  </div>
                 ))}
               </div>
-              
-              {/* Deuxième ligne centrée pour les packs sans mode premium */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 max-w-2xl mx-auto">
-                {standardPacks.map((pack) => (
-                  <PackCard
-                    key={pack.name}
-                    pack={pack}
-                    premiumMention={t('premium_mention')}
-                    labelStandard={t('standard')}
-                    labelPremium={t('premium')}
-                    labelHt={t('ht')}
-                    labelOrder={t('cta_commander')}
-                  />
-                ))}
+
+              {/* Desktop: layout original en deux lignes */}
+              <div className="hidden md:block">
+                <div className="grid grid-cols-3 gap-5">
+                  {premiumPacks.map((pack) => (
+                    <PackCard
+                      key={pack.name}
+                      pack={pack}
+                      premiumMention={t('premium_mention')}
+                      labelStandard={t('standard')}
+                      labelPremium={t('premium')}
+                      labelHt={t('ht')}
+                      labelOrder={t('cta_commander')}
+                    />
+                  ))}
+                </div>
+                <div className="grid grid-cols-2 gap-5 mt-5 max-w-2xl mx-auto">
+                  {standardPacks.map((pack) => (
+                    <PackCard
+                      key={pack.name}
+                      pack={pack}
+                      premiumMention={t('premium_mention')}
+                      labelStandard={t('standard')}
+                      labelPremium={t('premium')}
+                      labelHt={t('ht')}
+                      labelOrder={t('cta_commander')}
+                    />
+                  ))}
+                </div>
               </div>
+
               <div
                 className="mt-5 rounded-xl px-5 py-4"
                 style={{

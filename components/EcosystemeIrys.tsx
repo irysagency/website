@@ -133,7 +133,7 @@ export default function EcosystemeIrys() {
                 <p
                   className="text-subdued"
                   style={{
-                    fontSize: '14px',
+                    fontSize: '15px',
                     marginTop: '6px',
                     lineHeight: '1.7',
                     maxWidth: '560px',

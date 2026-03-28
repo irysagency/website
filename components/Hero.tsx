@@ -40,7 +40,7 @@ export default function Hero() {
       />
 
       {/* Contenu principal */}
-      <div className="flex-1 flex flex-col items-center justify-center pt-[108px] pb-4 px-4">
+      <div className="flex-1 flex flex-col items-center justify-center pt-[108px] pb-4 px-5 sm:px-4">
         <div className="relative z-10 text-center max-w-[1000px] mx-auto w-full">
 
           {/* Eyebrow badge */}
@@ -115,39 +115,41 @@ export default function Hero() {
           }}
         />
 
-        {/* Stats */}
-        <div className="relative z-10 max-w-[1000px] mx-auto px-4 py-8 flex items-center justify-center md:justify-between flex-wrap gap-x-6 gap-y-5">
-          {STATS.map(({ value, label }, i) => (
-            <Fragment key={i}>
-              {i > 0 && (
+        {/* Stats — single scrollable row on mobile */}
+        <div className="relative z-10 max-w-[1000px] mx-auto py-8 overflow-x-auto">
+          <div className="flex items-center gap-8 sm:gap-0 sm:justify-between px-6 min-w-max sm:min-w-0">
+            {STATS.map(({ value, label }, i) => (
+              <Fragment key={i}>
+                {i > 0 && (
+                  <div
+                    className="hidden sm:block w-px self-stretch flex-shrink-0"
+                    style={{ background: 'rgba(245,240,232,0.1)' }}
+                  />
+                )}
                 <div
-                  className="hidden sm:block w-px self-stretch"
-                  style={{ background: 'rgba(245,240,232,0.1)' }}
-                />
-              )}
-              <div
-                className="flex flex-col items-center gap-1 w-[45%] sm:w-auto sm:flex-1"
-                style={fadeUp(600 + i * 60)}
-              >
-                <span
-                  className="font-heading tracking-tight"
-                  style={{
-                    color: 'var(--color-text)',
-                    fontWeight: 600,
-                    fontSize: 'clamp(28px, 3vw, 40px)',
-                  }}
+                  className="flex flex-col items-center gap-1 flex-shrink-0 sm:flex-1"
+                  style={fadeUp(600 + i * 60)}
                 >
-                  {value}
-                </span>
-                <span
-                  className="text-[12px] whitespace-nowrap"
-                  style={{ color: 'rgba(255,255,255,0.7)' }}
-                >
-                  {label}
-                </span>
-              </div>
-            </Fragment>
-          ))}
+                  <span
+                    className="font-heading tracking-tight"
+                    style={{
+                      color: 'var(--color-text)',
+                      fontWeight: 600,
+                      fontSize: 'clamp(26px, 3vw, 40px)',
+                    }}
+                  >
+                    {value}
+                  </span>
+                  <span
+                    className="text-[11px] sm:text-[12px] whitespace-nowrap"
+                    style={{ color: 'rgba(255,255,255,0.7)' }}
+                  >
+                    {label}
+                  </span>
+                </div>
+              </Fragment>
+            ))}
+          </div>
         </div>
       </div>
     </section>

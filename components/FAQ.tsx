@@ -55,7 +55,7 @@ export default function FAQ() {
                 id={`faq-btn-${i}`}
               >
                 <span
-                  className="text-[14px] font-medium pr-4 text-secondary"
+                  className="text-[15px] font-semibold pr-4 text-secondary"
                   style={{ wordBreak: 'break-word' }}
                 >
                   {question}
@@ -81,7 +81,7 @@ export default function FAQ() {
                     className="overflow-hidden"
                   >
                     <div className="px-5 pb-5">
-                      <p className="text-[13px] leading-relaxed text-subdued">
+                      <p className="text-[15px] leading-relaxed text-subdued/80">
                         {answer}
                       </p>
                     </div>

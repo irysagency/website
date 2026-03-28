@@ -121,15 +121,14 @@ export default function ProcessSwimlane() {
             {t('label')}
           </div>
           <h2
-            className="font-heading text-[36px] md:text-[48px] font-bold mb-2 leading-tight"
-            style={{ color: 'var(--color-text)' }}
+            className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-text"
           >
             {t('h2_part1')}{' '}
-            <span className="font-display-italic" style={{ color: 'var(--color-accent)' }}>
+            <span className="font-display-italic text-accent">
               {t('h2_part2')}
             </span>
           </h2>
-          <p className="text-[14px]" style={{ color: 'rgba(245,240,232,0.5)' }}>
+          <p className="text-[16px] md:text-[18px] leading-relaxed text-subdued max-w-2xl mx-auto">
             {t('subtitle')}
           </p>
         </div>
@@ -222,7 +221,7 @@ export default function ProcessSwimlane() {
                     {/* Description */}
                     <p
                       style={{
-                        fontSize: '14px',
+                        fontSize: '15px',
                         color: 'rgba(245,240,232,0.55)',
                         lineHeight: '1.7',
                         marginTop: '10px',

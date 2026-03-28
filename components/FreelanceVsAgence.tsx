@@ -49,7 +49,7 @@ export default function FreelanceVsAgence() {
               >
                 <X className="h-3 w-3" style={{ color: 'var(--color-danger)' }} aria-hidden="true" />
               </div>
-              <span className="text-[13px] font-semibold text-text">
+              <span className="text-[14px] font-semibold text-text">
                 {t('col_freelance')}
               </span>
             </div>
@@ -60,7 +60,7 @@ export default function FreelanceVsAgence() {
               >
                 <CheckCircle2 className="h-3 w-3" style={{ color: 'var(--color-success)' }} aria-hidden="true" />
               </div>
-              <span className="text-[13px] font-semibold text-text">
+              <span className="text-[14px] font-semibold text-text">
                 {t('col_irys')}
               </span>
             </div>
@@ -84,7 +84,7 @@ export default function FreelanceVsAgence() {
                     style={{ color: 'rgba(255,80,80,0.7)' }}
                     aria-hidden="true"
                   />
-                  <p className="text-[13px] text-subdued">
+                  <p className="text-[14px] text-subdued/90">
                     {pain}
                   </p>
                 </div>
@@ -94,7 +94,7 @@ export default function FreelanceVsAgence() {
                     style={{ color: 'var(--color-success)' }}
                     aria-hidden="true"
                   />
-                  <p className="text-[13px] font-medium text-text">
+                  <p className="text-[14px] font-medium text-text">
                     {gain}
                   </p>
                 </div>
@@ -110,7 +110,7 @@ export default function FreelanceVsAgence() {
               <h3 className="font-heading text-base font-bold mb-2 text-text">
                 {title}
               </h3>
-              <p className="text-[13px] leading-relaxed text-subdued">
+              <p className="text-[14px] leading-relaxed text-subdued/90">
                 {description}
               </p>
             </div>

@@ -24,42 +24,46 @@ import MagneticButton from './ui/MagneticButton'
 
 // Ordre imposé : #1 Kilian, #2 Quentin, #3 Nico, #4 Ernesto
 // Ensuite alternance clients — jamais 2 fois le même à la suite
-// Tous en reels (Ads & YouTube remplis ultérieurement)
+// src vide = blob pas encore uploadé → miniature YouTube affichée à la place
 const VIDEO_DATA: PortfolioItem[] = [
-  // ── Top 4 imposés
-  { id: 1,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_27.mp4',              youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Focus · Edit Dynamique',   offerName: 'Offre Starter + 8'  },
-  { id: 2,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/LES%20MATHS.mp4',        youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Accompagnement · Montage Expert',     offerName: 'Offre Starter + 16' },
-  { id: 3,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Nico_Lancement.mp4',     youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'NICO',             details: 'Automobile · Lancement · Storytelling', offerName: 'One-Shot'          },
-  { id: 4,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Ernesto_Investir.mp4',   youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'ERNESTO.IMMO',    details: 'Immobilier · Investissement',         offerName: 'Offre Scale'        },
-  // ── Suite alternée (jamais 2 clients identiques à la suite)
-  { id: 5,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_ILYES.mp4',          youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: '350 BARBER',      details: 'Coiffure · Lifestyle · Dynamic',      offerName: 'Offre Starter + 8'  },
-  { id: 6,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_Enfant.mp4',         youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Hook Captivation',         offerName: 'Offre Starter + 8'  },
-  { id: 7,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Versus.mp4',     youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'CECCA',           details: 'Podcast · Multi-cam · Dynamic',       offerName: 'Pack Podcast'       },
-  { id: 8,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Mixe.mp4',           youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · 16 Reels/mois',       offerName: 'Offre Starter + 8'  },
-  { id: 9,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_France.mp4',         youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Storytelling',             offerName: 'Offre Starter + 8'  },
-  { id: 10, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/JO_PB.mp4',              youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'JONATHAN KHALFA', details: 'Business · 16 Reels + 2 YT',          offerName: 'Offre Scale'        },
-  { id: 11, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Gratuit.mp4',        youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · Psychology',          offerName: 'Offre Starter + 8'  },
-  { id: 12, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_CONCOUR.mp4',        youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: '350 BARBER',      details: 'Event · Jeu Concours',                offerName: 'Offre Starter + 8'  },
-  { id: 13, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_M.mp4',              youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Motivation',               offerName: 'Offre Starter + 8'  },
-  { id: 14, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Focus.mp4',      youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'CECCA',           details: 'Podcast · Zoom Intro',                offerName: 'Pack Podcast'       },
-  { id: 15, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_LOCKIN.mp4',         youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · High Temp',           offerName: 'Offre Starter + 8'  },
-  { id: 16, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Nico_Annonce.mp4',       youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'NICO',            details: 'Automobile · Teasing Annonce',        offerName: 'One-Shot'           },
-  { id: 17, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_Passion.mp4',        youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Mastery',                  offerName: 'Offre Starter + 8'  },
-  { id: 18, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_DINOR.mp4',          youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: '350 BARBER',      details: 'Coiffure · Celebrity ITW',            offerName: 'Offre Starter + 8'  },
-  { id: 19, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/TUTO_PHONE%20EFFECT.mp4',youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Transitions · Creative',              offerName: 'Mastery'            },
-  { id: 20, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Rebond.mp4',     youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'CECCA',           details: 'Podcast · Montage CC',                offerName: 'Pack Podcast'       },
-  { id: 21, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_De%20vinci.mp4',     youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · History',                  offerName: 'Offre Starter + 8'  },
-  { id: 22, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Ernesto_Podcast.mp4',    youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'ERNESTO.IMMO',    details: 'Podcast · Immobilier Tips',           offerName: 'Offre Scale'        },
-  { id: 23, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Facture%20.mp4',     youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · Finance',             offerName: 'Offre Starter + 8'  },
-  { id: 24, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_SOSO.mp4',           youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: '350 BARBER',      details: 'Coiffure · Lifestyle',                offerName: 'Offre Starter + 8'  },
-  { id: 25, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_PB_CREATEUR.mp4',    youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Creator Economy',          offerName: 'Offre Starter + 8'  },
-  { id: 26, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/TUTO_UNDERWATTER.mp4',   youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'VFX · Creative Edit',                 offerName: 'Mastery'            },
-  { id: 27, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Multi.mp4',      youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'CECCA',           details: 'Podcast · Transition multi',          offerName: 'Pack Podcast'       },
-  { id: 28, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Nico_Main.mp4',          youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'NICO',            details: 'Automobile · Lancement',              offerName: 'One-Shot'           },
-  { id: 29, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_%20Unmployed.mp4',   youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Mindset',                  offerName: 'Offre Starter + 8'  },
-  { id: 30, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Xen_Prix.mp4',           youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · Sales',               offerName: 'Offre Starter + 8'  },
-  { id: 31, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_ITW.mp4',            youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: '350 BARBER',      details: 'Workplace · Team Spirit',             offerName: 'Offre Starter + 8'  },
-  { id: 32, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Solitude.mp4',       youtubeId: 'VIDEO_ID_HERE', typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · Deep',                offerName: 'Offre Starter + 8'  },
+  // ── Reels & Shorts ────────────────────────────────────────────────────────
+  { id: 1,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_27.mp4',               youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Focus · Edit Dynamique',     offerName: 'Offre Starter + 8'  },
+  { id: 2,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/LES%20MATHS.mp4',          youtubeId: '5Egg356Cq30',    typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Accompagnement · Montage Expert',       offerName: 'Offre Starter + 16' },
+  { id: 3,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Nico_Lancement.mp4',       youtubeId: 'fo_RbvFOATM',    typeKey: 'reels', clientName: 'NICO',             details: 'Automobile · Lancement · Storytelling', offerName: 'One-Shot'           },
+  { id: 4,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Ernesto_Investir.mp4',     youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'ERNESTO.IMMO',    details: 'Immobilier · Investissement',           offerName: 'Offre Scale'        },
+  { id: 5,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_ILYES.mp4',            youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: '350 BARBER',      details: 'Coiffure · Lifestyle · Dynamic',        offerName: 'Offre Starter + 8'  },
+  { id: 6,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_Enfant.mp4',           youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Hook Captivation',           offerName: 'Offre Starter + 8'  },
+  { id: 7,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Versus.mp4',       youtubeId: 'GkMIQ0STBLA',    typeKey: 'reels', clientName: 'CECCA',           details: 'Podcast · Multi-cam · Dynamic',         offerName: 'Pack Podcast'       },
+  { id: 8,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Mixe.mp4',             youtubeId: 'xDHijcJwJtQ',    typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · 16 Reels/mois',         offerName: 'Offre Starter + 8'  },
+  { id: 9,  src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_France.mp4',           youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Storytelling',               offerName: 'Offre Starter + 8'  },
+  { id: 10, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/JO_PB.mp4',                youtubeId: 'bxPuaMCtnZM',    typeKey: 'reels', clientName: 'JONATHAN KHALFA', details: 'Business · 16 Reels + 2 YT',            offerName: 'Offre Scale'        },
+  { id: 11, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Gratuit.mp4',          youtubeId: '9YMhzMPxPmE',    typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · Psychology',            offerName: 'Offre Starter + 8'  },
+  { id: 12, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_CONCOUR.mp4',          youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: '350 BARBER',      details: 'Event · Jeu Concours',                  offerName: 'Offre Starter + 8'  },
+  { id: 13, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_M.mp4',                youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Motivation',                 offerName: 'Offre Starter + 8'  },
+  { id: 14, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Focus.mp4',        youtubeId: 'xg1dwyJs8Gw',    typeKey: 'reels', clientName: 'CECCA',           details: 'Podcast · Zoom Intro',                  offerName: 'Pack Podcast'       },
+  { id: 15, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_LOCKIN.mp4',           youtubeId: 'qi6f0WRxpJM',    typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · High Temp',             offerName: 'Offre Starter + 8'  },
+  { id: 16, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Nico_Annonce.mp4',         youtubeId: 'UZ3SHFGWVV8',    typeKey: 'reels', clientName: 'NICO',            details: 'Automobile · Teasing Annonce',          offerName: 'One-Shot'           },
+  { id: 17, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_Passion.mp4',          youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Mastery',                    offerName: 'Offre Starter + 8'  },
+  { id: 18, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_DINOR.mp4',            youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: '350 BARBER',      details: 'Coiffure · Celebrity ITW',              offerName: 'Offre Starter + 8'  },
+  { id: 19, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/TUTO_PHONE%20EFFECT.mp4',  youtubeId: 'z468TW1K_Fc',    typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Transitions · Creative',                offerName: 'Mastery'            },
+  { id: 20, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Rebond.mp4',       youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'CECCA',           details: 'Podcast · Montage CC',                  offerName: 'Pack Podcast'       },
+  { id: 21, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_De%20vinci.mp4',       youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · History',                    offerName: 'Offre Starter + 8'  },
+  { id: 22, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Ernesto_Podcast.mp4',      youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'ERNESTO.IMMO',    details: 'Podcast · Immobilier Tips',             offerName: 'Offre Scale'        },
+  { id: 23, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Facture%20.mp4',       youtubeId: '8EFq7PFdbSs',    typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · Finance',               offerName: 'Offre Starter + 8'  },
+  { id: 24, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_SOSO.mp4',             youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: '350 BARBER',      details: 'Coiffure · Lifestyle',                  offerName: 'Offre Starter + 8'  },
+  { id: 25, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_PB_CREATEUR.mp4',      youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Creator Economy',            offerName: 'Offre Starter + 8'  },
+  { id: 26, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/TUTO_UNDERWATTER.mp4',     youtubeId: 'GSCR5mZBYiQ',    typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'VFX · Creative Edit',                   offerName: 'Mastery'            },
+  { id: 27, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Podcast_Multi.mp4',        youtubeId: 'ErBezTcgYl4',    typeKey: 'reels', clientName: 'CECCA',           details: 'Podcast · Transition multi',            offerName: 'Pack Podcast'       },
+  { id: 28, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Nico_Main.mp4',            youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'NICO',            details: 'Automobile · Lancement',                offerName: 'One-Shot'           },
+  { id: 29, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/KAA_%20Unmployed.mp4',     youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Mindset',                    offerName: 'Offre Starter + 8'  },
+  { id: 30, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/Xen_Prix.mp4',             youtubeId: 'SIf133Dfd3w',    typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · Sales',                 offerName: 'Offre Starter + 8'  },
+  { id: 31, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/350_ITW.mp4',              youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: '350 BARBER',      details: 'Workplace · Team Spirit',               offerName: 'Offre Starter + 8'  },
+  { id: 32, src: 'https://atkeqzzhhtmu8syd.public.blob.vercel-storage.com/XEN_Solitude.mp4',         youtubeId: 'twjEGMEez9w',    typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Short Content · Deep',                  offerName: 'Offre Starter + 8'  },
+  // ── Ads & VSL — src vide tant que le blob n'est pas uploadé ──────────────
+  { id: 33, src: '',                                                                                   youtubeId: '1f3T_Kghmpo',    typeKey: 'ads',   clientName: 'IRYS AGENCY',     details: 'VSL · Done-For-You · Montage',          offerName: 'Offre Scale'        },
+  { id: 34, src: '',                                                                                   youtubeId: 'vBARPUcjvf8',    typeKey: 'ads',   clientName: 'CECCA',           details: 'ADS · Organisme · Performance',         offerName: 'One-Shot'           },
+  { id: 35, src: '',                                                                                   youtubeId: 'WfBtXbMeSxI',    typeKey: 'ads',   clientName: 'CECCA',           details: 'ADS · E-Commerce · Conversion',         offerName: 'One-Shot'           },
+  { id: 36, src: '',                                                                                   youtubeId: '1xkFD_58Cpk',    typeKey: 'ads',   clientName: 'CECCA',           details: 'ADS · Pennylane · SaaS',                offerName: 'One-Shot'           },
 ]
 
 export default function Portfolio() {
@@ -170,7 +174,6 @@ export default function Portfolio() {
           subtitle={t('subtitle')}
           revealFn={revealHeader}
           className="mb-10"
-          subtitleClassName="text-lg text-white/80 max-w-2xl mx-auto"
         />
 
         {/* Tab switcher */}
@@ -228,17 +231,30 @@ export default function Portfolio() {
                     >
                       {/* Video wrapper */}
                       <div className={`relative ${aspectClass} overflow-hidden flex-shrink-0 rounded-xl bg-white/5`}>
-                        <video
-                          ref={(el) => {
-                            videoRefs.current[idx] = el
-                          }}
-                          src={item.src}
-                          muted
-                          loop
-                          playsInline
-                          autoPlay
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-105"
-                        />
+                        {item.src ? (
+                          <video
+                            ref={(el) => {
+                              videoRefs.current[idx] = el
+                              // Force play immédiatement au montage (contourne les restrictions autoplay mobile)
+                              if (el) {
+                                el.muted = true
+                                el.play().catch(() => null)
+                              }
+                            }}
+                            src={item.src}
+                            muted
+                            loop
+                            playsInline
+                            autoPlay
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-105"
+                          />
+                        ) : (
+                          <img
+                            src={`https://i.ytimg.com/vi/${item.youtubeId}/hqdefault.jpg`}
+                            alt={item.clientName}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-105"
+                          />
+                        )}
                         {/* Hover overlay */}
                         <div className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/40 transition-colors duration-300 opacity-0 group-hover/card:opacity-100">
                           <span className="text-white font-semibold text-[11px] px-4 py-2 rounded-full bg-accent shadow-lg shadow-accent/20">

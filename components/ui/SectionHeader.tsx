@@ -33,7 +33,7 @@ export function SectionHeader({
   align = 'center',
   revealFn,
   className = '',
-  subtitleClassName = 'text-[14px] text-subdued',
+  subtitleClassName = 'text-[16px] md:text-[18px] text-subdued',
 }: SectionHeaderProps) {
   const alignClass = align === 'left' ? 'text-left' : 'text-center'
   const badgeClass =
