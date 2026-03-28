@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: 'Irys Agency',
     title: 'Irys Agency — Post-production vidéo Done-For-You',
     description:
-      'Agence de montage vidéo pour infopreneurs et créateurs. +54 clients, +1 600 vidéos livrées. Première vidéo offerte.',
+      'Agence de montage vidéo pour infopreneurs et créateurs. +150 clients, +1 600 vidéos livrées. Première vidéo offerte.',
     // TODO: Créer /public/og-image.jpg (1200×630) avant le lancement
     // images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Irys Agency — Post-production vidéo Done-For-You' }],
   },
@@ -90,19 +90,19 @@ const jsonLd = {
   '@id': 'https://irysagency.com/#organization',
   name: 'Irys Agency',
   url: 'https://irysagency.com',
-  logo: 'https://irysagency.com/images/logo.png',
+  logo: 'https://irysagency.com/images/logo-irys.svg',
   description:
     'Agence de montage vidéo spécialisée pour les infopreneurs, coaches et formateurs francophones. Shorts, YouTube, Ads, VSL — done-for-you.',
   founder: [
     {
       '@type': 'Person',
       name: 'Kilian Adam',
-      jobTitle: 'Co-fondateur & Directeur créatif',
+      jobTitle: 'Co-fondateur · Expert Viralité & Contenu Organique',
     },
     {
       '@type': 'Person',
       name: 'Quentin',
-      jobTitle: 'Co-fondateur & Directeur de production',
+      jobTitle: 'Co-fondateur · Expert Montage Vidéo & Production',
     },
   ],
   serviceType: 'Video Editing',

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Calendar, Gift } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { useTranslations } from 'next-intl'
@@ -106,18 +105,6 @@ export default function Offres() {
           revealFn={revealHeader}
           className="mb-8"
         />
-
-        {/* Benefits Badges - Elevated from footer to header area */}
-        <div ref={revealHeader(2)} className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 mb-12">
-          <div className="flex items-center gap-2 text-white/40 tracking-[0.2em] text-[10px] font-bold">
-            <Calendar size={12} strokeWidth={2} className="text-accent" aria-hidden="true" />
-            {t('trust_no_commitment')}
-          </div>
-          <div className="flex items-center gap-2 text-white/40 tracking-[0.2em] text-[10px] font-bold">
-            <Gift size={12} strokeWidth={2} className="text-accent" aria-hidden="true" />
-            {t('trust_first_video')}
-          </div>
-        </div>
 
         {/* Tab switcher */}
         <div ref={revealHeader(3)} className="flex items-center justify-center mb-12">

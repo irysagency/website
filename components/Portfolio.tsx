@@ -73,6 +73,7 @@ export default function Portfolio() {
   const sectionRef = useRef<HTMLElement>(null)
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
   const revealHeader = useScrollReveal({ staggerDelay: 80 })
+  const [videoErrors, setVideoErrors] = useState<Record<number, boolean>>({})
 
   const TABS: { key: TabKey; label: string }[] = [
     { key: 'reels', label: t('filter_reels') },
@@ -231,23 +232,27 @@ export default function Portfolio() {
                     >
                       {/* Video wrapper */}
                       <div className={`relative ${aspectClass} overflow-hidden flex-shrink-0 rounded-xl bg-white/5`}>
-                        {item.src ? (
+                        {item.src && !videoErrors[item.id] ? (
                           <video
                             ref={(el) => {
                               videoRefs.current[idx] = el
-                              // Force play immédiatement au montage (contourne les restrictions autoplay mobile)
                               if (el) {
                                 el.muted = true
                                 el.play().catch(() => null)
                               }
                             }}
-                            src={item.src}
                             muted
                             loop
                             playsInline
                             autoPlay
+                            preload="metadata"
+                            onError={() => {
+                              setVideoErrors(prev => ({ ...prev, [item.id]: true }))
+                            }}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-105"
-                          />
+                          >
+                            <source src={item.src} type="video/mp4" />
+                          </video>
                         ) : (
                           <img
                             src={`https://i.ytimg.com/vi/${item.youtubeId}/hqdefault.jpg`}

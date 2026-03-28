@@ -63,14 +63,14 @@ export default function CalendlySection() {
       bio: t('kilian_bio'),
       stat: '1,7M',
       statLabel: 'vues générées en 3 mois',
+      instagramUrl: 'https://instagram.com/kilian.adam',
     },
     {
       name: t('quentin_name'),
       role: t('quentin_title'),
       photo: '/images/quentin-placeholder.png', // TODO: REPLACE
       bio: t('quentin_bio'),
-      stat: '6 clients',
-      statLabel: 'signés en 2 mois avec 300 abonnés',
+      instagramUrl: 'https://instagram.com/quentin.prproj',
     },
   ]
 
@@ -152,7 +152,9 @@ export default function CalendlySection() {
 
             {/* Founder cards */}
             <div className="flex flex-col gap-4">
-              {FOUNDERS.map(({ name, role, photo, bio, stat, statLabel }) => (
+              {FOUNDERS.map((founder) => {
+                const { name, role, photo, bio, stat, statLabel, instagramUrl } = founder as { name: string; role: string; photo: string; bio: string; stat?: string; statLabel?: string; instagramUrl?: string }
+                return (
                 <div
                   key={name}
                   style={{
@@ -170,8 +172,15 @@ export default function CalendlySection() {
                     (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.08)'
                   }}
                 >
-                  {/* Photo + infos */}
-                  <div className="flex items-start gap-4">
+                  {/* Photo + infos — cliquable si Instagram URL disponible */}
+                  <a
+                    href={instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-start gap-4 cursor-pointer"
+                    aria-label={`Voir le profil Instagram de ${name}`}
+                    style={{ textDecoration: 'none' }}
+                  >
                     <div className="flex-shrink-0">
                       <Image
                         src={photo}
@@ -197,27 +206,30 @@ export default function CalendlySection() {
                         <span aria-hidden="true">★★★★★</span>
                       </p>
                     </div>
-                  </div>
+                  </a>
 
                   {/* Bio */}
                   <p style={{ fontSize: '13px', lineHeight: '1.6', color: 'rgba(245,240,232,0.65)', marginTop: '12px' }}>
                     {bio}
                   </p>
 
-                  {/* Séparateur */}
-                  <div style={{ borderTop: '0.5px solid rgba(255,255,255,0.08)', margin: '16px 0' }} />
-
-                  {/* Stat clé */}
-                  <div>
-                    <p style={{ fontSize: '22px', fontWeight: 700, color: 'var(--color-accent)', lineHeight: 1 }}>
-                      {stat}
-                    </p>
-                    <p style={{ fontSize: '11px', color: 'rgba(245,240,232,0.5)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: '4px' }}>
-                      {statLabel}
-                    </p>
-                  </div>
+                  {/* Stat clé — affichée uniquement si présente */}
+                  {stat && statLabel && (
+                    <>
+                      <div style={{ borderTop: '0.5px solid rgba(255,255,255,0.08)', margin: '16px 0' }} />
+                      <div>
+                        <p style={{ fontSize: '22px', fontWeight: 700, color: 'var(--color-accent)', lineHeight: 1 }}>
+                          {stat}
+                        </p>
+                        <p style={{ fontSize: '11px', color: 'rgba(245,240,232,0.5)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: '4px' }}>
+                          {statLabel}
+                        </p>
+                      </div>
+                    </>
+                  )}
                 </div>
-              ))}
+                )
+              })}
             </div>
 
             {/* Trust badge */}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { LanguageSwitcher } from './LanguageSwitcher'
@@ -45,11 +46,17 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link
               href="/"
-              className="font-heading text-base font-bold tracking-tight"
-              style={{ color: 'var(--color-text)' }}
               onClick={() => setMobileOpen(false)}
+              aria-label="Irys Agency — Accueil"
             >
-              Irys<span style={{ color: 'var(--color-accent)' }}>.</span>
+              <Image
+                src="/images/logo-irys.svg"
+                alt="Irys Agency"
+                width={80}
+                height={32}
+                priority
+                className="object-contain"
+              />
             </Link>
           </div>
 

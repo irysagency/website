@@ -4,24 +4,6 @@ import { useTranslations } from 'next-intl'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 
-const TOOL_ICONS = [
-  // Frame.io — flèche diagonale ↗
-  <svg key="frameio" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M4 12L12 4M12 4H6.5M12 4V9.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>,
-  // Notion — carré avec N
-  <svg key="notion" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect x="2.5" y="2.5" width="11" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.2"/>
-    <path d="M5.5 5.5L8 10.5L10.5 5.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>,
-  // Slack — hash #
-  <svg key="slack" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <line x1="5.5" y1="3" x2="5.5" y2="13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="10.5" y1="3" x2="10.5" y2="13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="2.5" y1="6.5" x2="13.5" y2="6.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="2.5" y1="10" x2="13.5" y2="10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-  </svg>,
-]
 
 export default function EcosystemeIrys() {
   const t = useTranslations('eco')
@@ -105,30 +87,17 @@ export default function EcosystemeIrys() {
 
               {/* Content */}
               <div>
-                {/* Title row with icon */}
-                <div className="flex items-center gap-2">
-                  <h3
-                    className="font-heading text-text"
-                    style={{
-                      fontSize: '20px',
-                      fontWeight: 600,
-                      lineHeight: '1.3',
-                    }}
-                  >
-                    {title}
-                  </h3>
-                  <span
-                    style={{
-                      color: 'var(--color-text-muted)',
-                      opacity: 0.4,
-                      display: 'flex',
-                      alignItems: 'center',
-                      flexShrink: 0,
-                    }}
-                  >
-                    {TOOL_ICONS[i]}
-                  </span>
-                </div>
+                {/* Title */}
+                <h3
+                  className="font-heading text-text"
+                  style={{
+                    fontSize: '20px',
+                    fontWeight: 600,
+                    lineHeight: '1.3',
+                  }}
+                >
+                  {title}
+                </h3>
 
                 <p
                   className="text-subdued"
