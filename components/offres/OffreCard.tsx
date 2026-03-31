@@ -45,7 +45,7 @@ export function OffreCard({ offre, labelHtMonth, labelRecommended, labelCta }: O
         <h3 className="font-heading text-xl font-bold mb-1 text-text uppercase tracking-tight">
           {name}
         </h3>
-        <p className="text-[12px] mb-8 uppercase tracking-[0.2em] opacity-60 text-subdued leading-relaxed">
+        <p className="text-[12px] mb-8 uppercase tracking-[0.2em] opacity-60 text-subdued leading-relaxed min-h-[60px]">
           {tagline}
         </p>
 

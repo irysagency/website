@@ -1,81 +1,67 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import Image from 'next/image'
-import { Video } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 
+const CAL_NAMESPACE = 'appel-de-decouverte'
+const CAL_LINK = 'irys-agency/appel-de-decouverte'
+const CAL_ORIGIN = 'https://app.cal.com'
+
 export default function CalendlySection() {
   const t = useTranslations('booking')
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [shouldLoad, setShouldLoad] = useState(false)
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  // Charge Calendly seulement quand la section entre dans le viewport
+  // Injecte l'IIFE exact de Cal.com qui configure la queue puis charge embed.js
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShouldLoad(true)
-          observer.disconnect()
+    const bootstrap = document.createElement('script')
+    bootstrap.textContent = `
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.eu/embed/embed.js", "init");
+      Cal("init", "${CAL_NAMESPACE}", {origin:"${CAL_ORIGIN}"});
+      Cal.ns["${CAL_NAMESPACE}"]("inline", {
+        elementOrSelector:"#my-cal-inline-${CAL_NAMESPACE}",
+        config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"},
+        calLink: "${CAL_LINK}"
+      });
+      Cal.ns["${CAL_NAMESPACE}"]("ui", {"hideEventTypeDetails":true,"layout":"month_view"});
+    `
+    document.head.appendChild(bootstrap)
+
+    // Auto-resize : écoute les changements de hauteur de l'iframe Cal.com
+    const handleMessage = (e: MessageEvent) => {
+      if (e.data?.type === '__dimensionChanged' && e.data?.namespace === CAL_NAMESPACE) {
+        const el = document.getElementById(`my-cal-inline-${CAL_NAMESPACE}`)
+        if (el && e.data?.data?.height) {
+          el.style.height = e.data.data.height + 'px'
         }
-      },
-      { rootMargin: '200px' }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
-
-  // Injecte le script et initialise le widget
-  useEffect(() => {
-    if (!shouldLoad) return
-
-    const script = document.createElement('script')
-    script.src = 'https://assets.calendly.com/assets/external/widget.js'
-    script.async = true
-    script.onload = () => {
-      if (window.Calendly && containerRef.current) {
-        window.Calendly.initInlineWidget({
-          url:
-            process.env.NEXT_PUBLIC_CALENDLY_URL ||
-            'https://calendly.com/contact-irysagency/30min',
-          parentElement: containerRef.current,
-        })
-        setIsLoaded(true)
       }
     }
-    document.head.appendChild(script)
+    window.addEventListener('message', handleMessage)
 
     return () => {
-      if (document.head.contains(script)) {
-        document.head.removeChild(script)
-      }
+      if (document.head.contains(bootstrap)) document.head.removeChild(bootstrap)
+      window.removeEventListener('message', handleMessage)
     }
-  }, [shouldLoad])
+  }, [])
 
   const FOUNDERS = [
     {
       name: t('kilian_name'),
       role: t('kilian_title'),
-      photo: '/images/kilian-placeholder.png', // TODO: REPLACE
+      photo: '/images/KAA_PP.jpg',
       bio: t('kilian_bio'),
-      stat: '1,7M',
-      statLabel: 'vues générées en 3 mois',
       instagramUrl: 'https://instagram.com/kilian.adam',
     },
     {
       name: t('quentin_name'),
       role: t('quentin_title'),
-      photo: '/images/quentin-placeholder.png', // TODO: REPLACE
+      photo: '/images/XEN_PP.jpeg',
       bio: t('quentin_bio'),
       instagramUrl: 'https://instagram.com/quentin.prproj',
     },
   ]
 
   return (
-    <section id="calendly" className="relative py-24 px-4" ref={sectionRef}>
+    <section id="calendly" className="relative py-24 px-4">
       {/* Radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -104,31 +90,12 @@ export default function CalendlySection() {
               className="mb-8"
             />
 
-            {/* Native Calendly embed — chargé lazy via IntersectionObserver */}
-            <div
-              ref={containerRef}
-              className="w-full overflow-hidden"
-              style={{
-                minWidth: '320px',
-                height: 'var(--calendly-height)',
-                borderRadius: '16px',
-              }}
-            >
-              {!isLoaded && (
-                <div
-                  style={{
-                    height: '700px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    opacity: 0.4,
-                    fontSize: '14px',
-                    color: 'var(--color-text)',
-                  }}
-                >
-                  Chargement du calendrier...
-                </div>
-              )}
+            {/* Cal.com inline embed — wrapper clips hidden event-details top space */}
+            <div style={{ overflow: 'hidden', borderRadius: '16px' }}>
+              <div
+                id={`my-cal-inline-${CAL_NAMESPACE}`}
+                style={{ width: '100%', height: '950px', overflow: 'hidden', marginTop: '-200px' }}
+              />
             </div>
           </div>
 
@@ -153,7 +120,7 @@ export default function CalendlySection() {
             {/* Founder cards */}
             <div className="flex flex-col gap-4">
               {FOUNDERS.map((founder) => {
-                const { name, role, photo, bio, stat, statLabel, instagramUrl } = founder as { name: string; role: string; photo: string; bio: string; stat?: string; statLabel?: string; instagramUrl?: string }
+                const { name, role, photo, bio, instagramUrl } = founder
                 return (
                 <div
                   key={name}
@@ -172,7 +139,7 @@ export default function CalendlySection() {
                     (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.08)'
                   }}
                 >
-                  {/* Photo + infos — cliquable si Instagram URL disponible */}
+                  {/* Photo + infos */}
                   <a
                     href={instagramUrl}
                     target="_blank"
@@ -185,75 +152,42 @@ export default function CalendlySection() {
                       <Image
                         src={photo}
                         alt={name}
-                        width={72}
-                        height={72}
+                        width={96}
+                        height={96}
                         className="rounded-full object-cover"
                         style={{
-                          width: '72px',
-                          height: '72px',
+                          width: '96px',
+                          height: '96px',
                           border: '2px solid rgba(238,29,82,0.3)',
+                          objectPosition: 'center center',
                         }}
                       />
                     </div>
                     <div>
-                      <p style={{ fontSize: '17px', fontWeight: 600, color: 'var(--color-text)', lineHeight: 1.2 }}>
-                        {name}
-                      </p>
-                      <p style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-accent)', letterSpacing: '0.02em', marginTop: '3px' }}>
+                      <div className="flex items-center gap-1.5">
+                        <p style={{ fontSize: '17px', fontWeight: 600, color: 'var(--color-text)', lineHeight: 1.2 }}>
+                          {name}
+                        </p>
+                        {/* Instagram verified badge */}
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#3897f0" aria-label="Vérifié" role="img">
+                          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.293 7.293l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L10.586 12.172l4.293-4.293a1 1 0 011.414 1.414z"/>
+                        </svg>
+                      </div>
+                      <p style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-accent)', letterSpacing: '0.02em', marginTop: '4px' }}>
                         {role}
-                      </p>
-                      <p style={{ fontSize: '10px', color: 'var(--color-accent)', opacity: 0.8, marginTop: '4px', letterSpacing: '0.05em' }}>
-                        <span aria-hidden="true">★★★★★</span>
                       </p>
                     </div>
                   </a>
 
                   {/* Bio */}
-                  <p style={{ fontSize: '13px', lineHeight: '1.6', color: 'rgba(245,240,232,0.65)', marginTop: '12px' }}>
+                  <p style={{ fontSize: '13px', lineHeight: '1.6', color: 'rgba(245,240,232,0.65)', marginTop: '14px' }}>
                     {bio}
                   </p>
-
-                  {/* Stat clé — affichée uniquement si présente */}
-                  {stat && statLabel && (
-                    <>
-                      <div style={{ borderTop: '0.5px solid rgba(255,255,255,0.08)', margin: '16px 0' }} />
-                      <div>
-                        <p style={{ fontSize: '22px', fontWeight: 700, color: 'var(--color-accent)', lineHeight: 1 }}>
-                          {stat}
-                        </p>
-                        <p style={{ fontSize: '11px', color: 'rgba(245,240,232,0.5)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: '4px' }}>
-                          {statLabel}
-                        </p>
-                      </div>
-                    </>
-                  )}
                 </div>
                 )
               })}
             </div>
 
-            {/* Trust badge */}
-            <div
-              className="rounded-2xl mt-4"
-              style={{
-                padding: '20px 24px',
-                background: 'rgba(238,29,82,0.06)',
-                border: '1px solid rgba(238,29,82,0.2)',
-              }}
-            >
-              <p className="text-sm font-semibold mb-1 flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
-                <Video
-                  size={16}
-                  strokeWidth={1.5}
-                  className="irys-pulse-video"
-                  aria-hidden="true"
-                />
-                {t('first_video_title')}
-              </p>
-              <p className="text-[12px] text-subdued">
-                {t('first_video_desc')}
-              </p>
-            </div>
           </div>
 
         </div>

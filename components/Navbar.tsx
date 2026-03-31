@@ -47,15 +47,15 @@ export default function Navbar() {
             <Link
               href="/"
               onClick={() => setMobileOpen(false)}
-              aria-label="Irys Agency — Accueil"
+              aria-label="Irys Agency, Accueil"
             >
               <Image
-                src="/images/logo-irys.svg"
+                src="/images/Irys_logo_blanc_transparent.png"
                 alt="Irys Agency"
-                width={80}
-                height={32}
+                width={596}
+                height={298}
                 priority
-                className="object-contain"
+                style={{ height: '28px', width: 'auto' }}
               />
             </Link>
           </div>
