@@ -160,13 +160,13 @@ const faqJsonLd = {
   ],
 }
 
-export default function RootLayout({
+export default function SiteLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr" suppressHydrationWarning className={`${inter.variable} ${dmSans.variable} ${outfit.variable} h-full`}>
+    <div className={`${inter.variable} ${dmSans.variable} ${outfit.variable} min-h-full flex flex-col`}>
       <head>
         <script
           type="application/ld+json"
@@ -177,18 +177,16 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col">
-        <I18nProvider>
-          {children}
-          {/* Plausible Analytics — cookieless, pas de banner RGPD */}
-          <Script
-            defer
-            data-domain="irysagency.com"
-            src="https://plausible.io/js/script.js"
-            strategy="afterInteractive"
-          />
-        </I18nProvider>
-      </body>
-    </html>
+      <I18nProvider>
+        {children}
+        {/* Plausible Analytics — cookieless, pas de banner RGPD */}
+        <Script
+          defer
+          data-domain="irysagency.com"
+          src="https://plausible.io/js/script.js"
+          strategy="afterInteractive"
+        />
+      </I18nProvider>
+    </div>
   )
 }
