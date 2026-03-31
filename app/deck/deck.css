@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'IvyPresto';
+  src: url('/fonts/ivy-presto-display-light-italic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --color-bg: #080808;
+  --color-surface: #0d0d0d;
+  --color-accent: #EE1D52;
+  --color-text: #F5F0E8;
+  --color-text-muted: rgba(245, 240, 232, 0.55);
+  --color-border: rgba(255, 255, 255, 0.08);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
