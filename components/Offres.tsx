@@ -9,10 +9,9 @@ import { OffreCard } from './offres/OffreCard'
 import { PackCard } from './offres/PackCard'
 import type { Pack } from './offres/PackCard'
 import { SectionHeader } from '@/components/ui/SectionHeader'
+import MagneticButton from './ui/MagneticButton'
 
 type Tab = 'abonnements' | 'packs'
-
-const ICON_PROPS = { size: 20, strokeWidth: 1.5 } as const
 
 export default function Offres() {
   const t = useTranslations('offres')
@@ -110,22 +109,23 @@ export default function Offres() {
         {/* Tab switcher */}
         <div ref={revealHeader(3)} className="flex items-center justify-center mb-12">
           <div
-            className="irys-conic-border rounded-full inline-flex overflow-hidden"
+            className="irys-conic-border rounded-full inline-flex overflow-hidden p-1"
             style={{ background: 'rgba(255,255,255,0.04)' }}
           >
             {(['abonnements', 'packs'] as Tab[]).map((tab) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setActiveTab(tab)}
-                className="px-5 py-2.5 text-[13px] font-semibold rounded-full transition-all duration-200"
-                style={{
-                  background: activeTab === tab ? 'var(--color-accent)' : 'transparent',
-                  color: '#fff',
-                }}
-              >
-                {tab === 'abonnements' ? t('tab_abo') : t('tab_packs')}
-              </button>
+              <MagneticButton key={tab}>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-5 py-2.5 text-[13px] font-medium rounded-full transition-all duration-300 ${activeTab === tab ? 'text-white' : 'text-subdued hover:text-white'}`}
+                  style={{
+                    background: activeTab === tab ? 'var(--color-accent)' : 'transparent',
+                    boxShadow: activeTab === tab ? '0 0 20px rgba(238, 29, 82, 0.4)' : 'none',
+                  }}
+                >
+                  {tab === 'abonnements' ? t('tab_abo') : t('tab_packs')}
+                </button>
+              </MagneticButton>
             ))}
           </div>
         </div>

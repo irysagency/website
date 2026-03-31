@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { useTranslations } from 'next-intl'
 import { SectionHeader } from '@/components/ui/SectionHeader'
+import MagneticButton from './ui/MagneticButton'
 
 export default function FAQ() {
   const t = useTranslations('faq')
@@ -92,14 +93,10 @@ export default function FAQ() {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <a
-            ref={revealHeader(2)}
-            href="#calendly"
-            className="irys-btn-accent-filled px-10 py-4 text-sm"
-          >
+        <div ref={revealHeader(2)} className="mt-12 text-center">
+          <MagneticButton href="#calendly" className="irys-btn-accent-filled px-10 py-4 text-sm">
             {t('cta')}
-          </a>
+          </MagneticButton>
         </div>
       </div>
     </section>

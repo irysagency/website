@@ -2,11 +2,13 @@
 
 import { useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
+import MagneticButton from './ui/MagneticButton'
 
 export default function ProcessSwimlane() {
   const t = useTranslations('process')
   const stepRefs = useRef<(HTMLDivElement | null)[]>([])
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([])
+  const rowRefs = useRef<(HTMLDivElement | null)[]>([])
   const bilanRef = useRef<HTMLDivElement | null>(null)
 
   const STEPS = [
@@ -22,11 +24,23 @@ export default function ProcessSwimlane() {
     const ease = 'cubic-bezier(0.16, 1, 0.3, 1)'
     const transition = `opacity 0.55s ${ease}, transform 0.55s ${ease}`
 
+    // Position dots to align with the dashed line — same containing block
+    const positionDots = () => {
+      if (isMobile) return
+      rowRefs.current.forEach((row, i) => {
+        const dot = nodeRefs.current[i]
+        if (!row || !dot) return
+        dot.style.top = (row.offsetTop + 36) + 'px'
+      })
+    }
+    positionDots()
+    window.addEventListener('resize', positionDots)
+
     if (prefersReduced) {
       stepRefs.current.forEach(el => { if (el) { el.style.opacity = '1'; el.style.transform = 'none' } })
-      nodeRefs.current.forEach(el => { if (el) { el.style.opacity = '1'; el.style.transform = 'none' } })
+      nodeRefs.current.forEach(el => { if (el) { el.style.opacity = '1'; el.style.transform = 'translateX(-50%) scale(1)' } })
       if (bilanRef.current) { bilanRef.current.style.opacity = '1'; bilanRef.current.style.transform = 'none' }
-      return
+      return () => window.removeEventListener('resize', positionDots)
     }
 
     // Initial hidden states
@@ -37,7 +51,6 @@ export default function ProcessSwimlane() {
       if (isMobile) {
         el.style.transform = 'translateY(20px)'
       } else {
-        // indices 0,2 → droite (translateX positif) ; 1,3 → gauche (translateX négatif)
         el.style.transform = i % 2 === 0 ? 'translateX(32px)' : 'translateX(-32px)'
       }
     })
@@ -45,7 +58,7 @@ export default function ProcessSwimlane() {
     nodeRefs.current.forEach(el => {
       if (!el) return
       el.style.opacity = '0'
-      el.style.transform = 'scale(0)'
+      el.style.transform = 'translateX(-50%) scale(0)'
       el.style.transition = 'opacity 0.3s ease, transform 0.3s ease'
     })
 
@@ -64,12 +77,11 @@ export default function ProcessSwimlane() {
           el.style.opacity = '1'
           el.style.transform = 'none'
 
-          // Déclencher le nœud central 200ms après l'étape
           const idx = stepRefs.current.indexOf(el as HTMLDivElement)
           if (idx !== -1) {
             setTimeout(() => {
               const node = nodeRefs.current[idx]
-              if (node) { node.style.opacity = '1'; node.style.transform = 'scale(1)' }
+              if (node) { node.style.opacity = '1'; node.style.transform = 'translateX(-50%) scale(1)' }
             }, 200)
           }
 
@@ -81,7 +93,7 @@ export default function ProcessSwimlane() {
 
     stepRefs.current.forEach(el => { if (el) observer.observe(el) })
 
-    // Observer pour le bilan (délai 400ms)
+    // Observer pour le bilan
     if (bilanRef.current) {
       const bilanObs = new IntersectionObserver(
         (entries) => {
@@ -101,7 +113,10 @@ export default function ProcessSwimlane() {
       bilanObs.observe(bilanRef.current)
     }
 
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', positionDots)
+    }
   }, [])
 
   return (
@@ -110,7 +125,7 @@ export default function ProcessSwimlane() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 50% 30% at 50% 50%, rgba(232, 23, 93, 0.05) 0%, transparent 100%)',
+          background: 'radial-gradient(ellipse 50% 30% at 50% 50%, rgba(238, 29, 82, 0.05) 0%, transparent 100%)',
         }}
       />
 
@@ -121,15 +136,14 @@ export default function ProcessSwimlane() {
             {t('label')}
           </div>
           <h2
-            className="font-heading text-[36px] md:text-[48px] font-bold mb-2 leading-tight"
-            style={{ color: 'var(--color-text)' }}
+            className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-text"
           >
             {t('h2_part1')}{' '}
-            <span className="font-display-italic" style={{ color: 'var(--color-accent)' }}>
+            <span className="font-display-italic text-accent">
               {t('h2_part2')}
             </span>
           </h2>
-          <p className="text-[14px]" style={{ color: 'rgba(245,240,232,0.5)' }}>
+          <p className="text-[16px] md:text-[18px] leading-relaxed text-subdued max-w-2xl mx-auto">
             {t('subtitle')}
           </p>
         </div>
@@ -146,28 +160,31 @@ export default function ProcessSwimlane() {
             }}
           />
 
+          {/* Dots — siblings of the line, same containing block → perfect alignment */}
+          {STEPS.map((_, i) => (
+            <div
+              key={i}
+              ref={el => { nodeRefs.current[i] = el }}
+              className="absolute hidden md:block"
+              style={{
+                left: '50%',
+                top: '36px',
+                transform: 'translateX(-50%)',
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                background: 'var(--color-accent)',
+                boxShadow: '0 0 8px rgba(238,29,82,0.4)',
+                zIndex: 2,
+              }}
+            />
+          ))}
+
           <div className="flex flex-col gap-10 md:gap-14">
             {STEPS.map(({ num, actor, title, sub }, i) => {
-              const isRight = i % 2 === 0 // 0,2 → droite ; 1,3 → gauche
+              const isRight = i % 2 === 0
               return (
-                <div key={i} className="relative">
-                  {/* Nœud sur la ligne — desktop uniquement */}
-                  <div
-                    ref={el => { nodeRefs.current[i] = el }}
-                    className="absolute hidden md:block"
-                    style={{
-                      left: '50%',
-                      top: '36px',
-                      transform: 'translateX(-50%)',
-                      width: '12px',
-                      height: '12px',
-                      borderRadius: '50%',
-                      background: '#E8175D',
-                      boxShadow: '0 0 8px rgba(232,23,93,0.4)',
-                      zIndex: 2,
-                    }}
-                  />
-
+                <div key={i} ref={el => { rowRefs.current[i] = el }}>
                   {/* Bloc contenu */}
                   <div
                     ref={el => { stepRefs.current[i] = el }}
@@ -185,7 +202,7 @@ export default function ProcessSwimlane() {
                         style={{
                           fontSize: '11px',
                           fontWeight: 500,
-                          color: '#E8175D',
+                          color: 'var(--color-accent)',
                           opacity: 0.7,
                           letterSpacing: '0.1em',
                           textTransform: 'uppercase',
@@ -197,7 +214,7 @@ export default function ProcessSwimlane() {
                         className="px-3 py-0.5 rounded-full text-[11px] font-medium flex-shrink-0"
                         style={
                           actor === 'irys'
-                            ? { background: 'rgba(232,23,93,0.12)', color: '#E8175D', border: '0.5px solid rgba(232,23,93,0.25)' }
+                            ? { background: 'rgba(238,29,82,0.12)', color: 'var(--color-accent)', border: '0.5px solid rgba(238,29,82,0.25)' }
                             : { background: 'rgba(255,255,255,0.07)', color: 'rgba(245,240,232,0.6)', border: '0.5px solid rgba(255,255,255,0.1)' }
                         }
                       >
@@ -222,7 +239,7 @@ export default function ProcessSwimlane() {
                     {/* Description */}
                     <p
                       style={{
-                        fontSize: '14px',
+                        fontSize: '15px',
                         color: 'rgba(245,240,232,0.55)',
                         lineHeight: '1.7',
                         marginTop: '10px',
@@ -236,39 +253,13 @@ export default function ProcessSwimlane() {
             })}
           </div>
 
-          {/* Bilan pills */}
-          <div
-            ref={el => { bilanRef.current = el }}
-            className="flex flex-wrap items-center justify-center gap-3 mt-12"
-          >
-            <span
-              className="px-5 py-2.5 rounded-full text-[13px] font-medium"
-              style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '0.5px solid rgba(255,255,255,0.1)',
-                color: 'rgba(245,240,232,0.65)',
-              }}
-            >
-              {t('bilan_you_pill')}
-            </span>
-            <span
-              className="px-5 py-2.5 rounded-full text-[13px] font-medium"
-              style={{
-                background: 'rgba(232,23,93,0.08)',
-                border: '0.5px solid rgba(232,23,93,0.25)',
-                color: '#E8175D',
-              }}
-            >
-              {t('bilan_irys_pill')}
-            </span>
-          </div>
         </div>
 
         {/* CTA */}
         <div className="mt-14 text-center">
-          <a href="#calendly" className="irys-btn-accent-filled px-10 py-4 text-sm">
-            {t('cta')}
-          </a>
+          <MagneticButton href="#calendly" className="irys-btn-accent-filled px-10 py-4 text-sm">
+            Économiser 40h / mois →
+          </MagneticButton>
         </div>
       </div>
     </section>

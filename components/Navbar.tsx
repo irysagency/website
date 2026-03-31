@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { LanguageSwitcher } from './LanguageSwitcher'
@@ -29,7 +30,7 @@ export default function Navbar() {
       <div className="mx-auto max-w-[1200px] px-4 pt-4">
         {/* Pill */}
         <div
-          className="flex items-center justify-between rounded-full px-6 py-3"
+          className="relative flex items-center justify-between rounded-full px-6 py-3"
           style={{
             background: scrolled ? 'rgba(13, 13, 13, 0.92)' : 'rgba(13, 13, 13, 0.85)',
             backdropFilter: 'blur(40px)',
@@ -42,19 +43,25 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center flex-1">
             <Link
               href="/"
-              className="font-heading text-base font-bold tracking-tight"
-              style={{ color: 'var(--color-text)' }}
               onClick={() => setMobileOpen(false)}
+              aria-label="Irys Agency, Accueil"
             >
-              Irys<span style={{ color: 'var(--color-accent)' }}>.</span>
+              <Image
+                src="/images/Irys_logo_blanc_transparent.png"
+                alt="Irys Agency"
+                width={596}
+                height={298}
+                priority
+                style={{ height: '28px', width: 'auto' }}
+              />
             </Link>
           </div>
 
-          {/* Desktop links */}
-          <ul className="hidden lg:flex items-center gap-7">
+          {/* Desktop links — centré absolument dans la pill */}
+          <ul className="hidden lg:flex items-center gap-7 absolute left-1/2 -translate-x-1/2">
             {NAV_LINKS.map(({ label, href }) => (
               <li key={href}>
                 <a
@@ -76,7 +83,7 @@ export default function Navbar() {
           </ul>
 
           {/* Desktop right: lang switcher + CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3 flex-1 justify-end">
             <LanguageSwitcher />
             <a
               href="#calendly"
