@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react'
 
-export const TOTAL_SLIDES = 10
+export const TOTAL_SLIDES = 11
 
 interface DeckContextValue {
   currentSlide: number

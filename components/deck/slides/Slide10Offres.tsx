@@ -1,51 +1,49 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { CheckCircle2 } from 'lucide-react'
+import { CheckCircle2, Star } from 'lucide-react'
 
 const OFFRES = [
   {
     name: 'Machine à Shorts',
-    icon: '📱',
-    price: '425 €',
-    period: '/mois HT',
-    desc: 'Idéal pour commencer à déléguer',
+    tagline: 'Inonde TikTok, Reels et Shorts sans lever le petit doigt.',
+    price: '425',
     recommended: false,
     features: [
-      '8 Shorts / Reels par mois',
-      'Frame.io dédié',
-      'Hub Notion',
-      'Canal Slack privé',
-      'Programmation automatique',
-      'Reporting mensuel',
+      '8 vidéos courtes montées et livrées',
+      'Espace dédié Frame.IO',
+      'Espace dédié Notion',
+      "Communication directe avec l'équipe",
+      'Publication automatique sur tes réseaux',
+      'Rapport de performance mensuel',
+      '3 allers-retours (A/R) inclus',
     ],
   },
   {
-    name: 'Croissance Totale',
-    icon: '⚖️',
-    price: '1 325 €',
-    period: '/mois HT',
-    desc: 'Dominer sur les deux formats',
+    name: "L'Usine \u00e0 Contenu",
+    tagline: 'Domine les réseaux avec un mix Shorts + YouTube long format.',
+    price: '1 325',
     recommended: true,
     features: [
-      '16 Shorts / Reels par mois',
-      '2 vidéos YouTube par mois',
-      'Miniatures A/B testing',
-      'Tout ce qui est inclus dans Machine à Shorts',
+      '16 vidéos courtes montées et livrées',
+      '2 vidéos YouTube long format',
+      'Miniatures YouTube (A/B testing inclus)',
+      'Écosystème Frame + Notion + Slack complet',
+      'Automatisation totale des publications',
+      'Priorité maximale sur les livraisons',
     ],
   },
   {
     name: 'Conversion Max',
-    icon: '🌍',
-    price: '1 625 €',
-    period: '/mois HT',
-    desc: 'Pub, tunnels, lancements',
+    tagline: 'Transforme ton audience en clients fidèles avec des Ads & VSL.',
+    price: '1 625',
     recommended: false,
     features: [
-      '8 Ads / Shorts par mois',
-      '1 VSL complète (2–5 min)',
-      'Tunnels de vente et pub',
-      'Tout ce qui est inclus dans Machine à Shorts',
+      '8 publicités vidéo (Ads) orientées ROI',
+      '1 VSL (Vidéo de Vente) haute conversion',
+      'Scripts publicitaires optimisés inclus',
+      'Espace Frame.io dédié, tes rushs et vidéos au même endroit',
+      'Accompagnement stratégique sur tes hooks',
     ],
   },
 ]
@@ -59,8 +57,8 @@ export function Slide10Offres() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '40px 48px',
-        gap: '36px',
+        padding: '32px 48px',
+        gap: '24px',
       }}
     >
       {/* Title */}
@@ -70,6 +68,19 @@ export function Slide10Offres() {
         transition={{ duration: 0.4 }}
         style={{ textAlign: 'center' }}
       >
+        <div
+          style={{
+            fontSize: '11px',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            color: 'var(--color-accent)',
+            fontFamily: 'var(--font-dm-sans), sans-serif',
+            fontWeight: 600,
+            marginBottom: '8px',
+          }}
+        >
+          OFFRES & TARIFS
+        </div>
         <h2
           style={{
             fontFamily: 'var(--font-outfit), sans-serif',
@@ -79,7 +90,7 @@ export function Slide10Offres() {
             letterSpacing: '-0.02em',
           }}
         >
-          Choisis ton niveau de{' '}
+          La machine de guerre{' '}
           <span
             style={{
               fontFamily: 'IvyPresto, Georgia, serif',
@@ -88,7 +99,7 @@ export function Slide10Offres() {
               color: 'var(--color-accent)',
             }}
           >
-            délégation
+            pour ton personal branding.
           </span>
         </h2>
       </motion.div>
@@ -111,74 +122,82 @@ export function Slide10Offres() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.1 + i * 0.08 }}
             style={{
-              background: offre.recommended
-                ? 'rgba(238,29,82,0.06)'
-                : 'var(--color-surface)',
-              border: offre.recommended
-                ? '1px solid rgba(238,29,82,0.35)'
-                : '1px solid var(--color-border)',
+              background: offre.recommended ? 'rgba(238,29,82,0.06)' : 'var(--color-surface)',
+              border: offre.recommended ? '1px solid rgba(238,29,82,0.4)' : '1px solid var(--color-border)',
               borderRadius: '16px',
               padding: '28px 24px',
               display: 'flex',
               flexDirection: 'column',
-              gap: '20px',
+              gap: '16px',
               position: 'relative',
+              boxShadow: offre.recommended ? '0 0 30px rgba(238,29,82,0.15)' : 'none',
             }}
           >
             {offre.recommended && (
               <div
                 style={{
                   position: 'absolute',
-                  top: '-12px',
+                  top: '-13px',
                   left: '50%',
                   transform: 'translateX(-50%)',
                   background: 'var(--color-accent)',
                   color: '#fff',
-                  fontSize: '11px',
+                  fontSize: '10px',
                   fontWeight: 700,
                   padding: '3px 14px',
                   borderRadius: '999px',
                   fontFamily: 'var(--font-dm-sans), sans-serif',
                   whiteSpace: 'nowrap',
-                  letterSpacing: '0.05em',
+                  letterSpacing: '0.08em',
                   textTransform: 'uppercase',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
                 }}
               >
-                Recommandé
+                <Star size={10} strokeWidth={2} />
+                LE PLUS POPULAIRE
               </div>
             )}
 
+            {/* Name + tagline */}
             <div>
-              <div style={{ fontSize: '22px', marginBottom: '8px' }}>{offre.icon}</div>
-              <div
+              <h3
                 style={{
                   fontFamily: 'var(--font-outfit), sans-serif',
                   fontWeight: 700,
-                  fontSize: '17px',
+                  fontSize: '16px',
                   color: 'var(--color-text)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '-0.01em',
                   marginBottom: '4px',
                 }}
               >
                 {offre.name}
-              </div>
-              <div
+              </h3>
+              <p
                 style={{
-                  fontSize: '12px',
+                  fontSize: '11px',
                   color: 'var(--color-text-muted)',
                   fontFamily: 'var(--font-dm-sans), sans-serif',
+                  lineHeight: 1.5,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  minHeight: '36px',
                 }}
               >
-                {offre.desc}
-              </div>
+                {offre.tagline}
+              </p>
             </div>
 
+            {/* Price */}
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
               <span
                 style={{
                   fontFamily: 'var(--font-outfit), sans-serif',
-                  fontSize: '32px',
+                  fontSize: '40px',
                   fontWeight: 700,
-                  color: offre.recommended ? 'var(--color-accent)' : 'var(--color-text)',
+                  color: 'var(--color-text)',
                   letterSpacing: '-0.03em',
                   lineHeight: 1,
                 }}
@@ -187,38 +206,78 @@ export function Slide10Offres() {
               </span>
               <span
                 style={{
-                  fontSize: '13px',
+                  fontSize: '12px',
                   color: 'var(--color-text-muted)',
                   fontFamily: 'var(--font-dm-sans), sans-serif',
+                  fontWeight: 500,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
                 }}
               >
-                {offre.period}
+                € HT/mois
               </span>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
+            {/* Divider */}
+            <div
+              style={{
+                height: '1px',
+                background: offre.recommended ? 'rgba(238,29,82,0.2)' : 'var(--color-border)',
+              }}
+            />
+
+            {/* Features */}
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1, margin: 0, padding: 0, listStyle: 'none' }}>
               {offre.features.map((f) => (
-                <div
-                  key={f}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '8px',
-                    fontSize: '13px',
-                    color: 'var(--color-text)',
-                    fontFamily: 'var(--font-dm-sans), sans-serif',
-                    lineHeight: 1.4,
-                  }}
-                >
+                <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                   <CheckCircle2
-                    size={14}
-                    color="var(--color-accent)"
-                    style={{ marginTop: '1px', flexShrink: 0 }}
+                    size={15}
+                    style={{
+                      flexShrink: 0,
+                      marginTop: '1px',
+                      color: offre.recommended ? 'var(--color-accent)' : '#fff',
+                    }}
                   />
-                  {f}
-                </div>
+                  <span
+                    style={{
+                      fontSize: '12px',
+                      color: offre.recommended ? 'var(--color-text)' : 'var(--color-text-muted)',
+                      fontFamily: 'var(--font-dm-sans), sans-serif',
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {f}
+                  </span>
+                </li>
               ))}
-            </div>
+            </ul>
+
+            {/* CTA */}
+            <a
+              href="https://calendly.com/irysagency"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '14px',
+                borderRadius: '999px',
+                fontSize: '12px',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.15em',
+                fontFamily: 'var(--font-dm-sans), sans-serif',
+                textDecoration: 'none',
+                transition: 'all 0.3s',
+                background: offre.recommended ? 'var(--color-accent)' : 'rgba(255,255,255,0.05)',
+                color: '#fff',
+                border: offre.recommended ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                boxShadow: offre.recommended ? '0 0 25px rgba(238,29,82,0.4)' : 'none',
+              }}
+            >
+              Prendre ce plan
+            </a>
           </motion.div>
         ))}
       </div>
@@ -232,18 +291,16 @@ export function Slide10Offres() {
           background: 'rgba(238,29,82,0.08)',
           border: '1px solid rgba(238,29,82,0.2)',
           borderRadius: '12px',
-          padding: '14px 28px',
-          fontSize: '14px',
+          padding: '12px 24px',
+          fontSize: '13px',
           color: 'var(--color-text)',
           fontFamily: 'var(--font-dm-sans), sans-serif',
           textAlign: 'center',
         }}
       >
         🎁{' '}
-        <strong style={{ color: 'var(--color-accent)' }}>
-          1ère vidéo offerte
-        </strong>{' '}
-        · Livrée en 48h · Zéro engagement
+        <strong style={{ color: 'var(--color-accent)' }}>1ère vidéo offerte</strong>
+        {' '}· Livrée en 48h · Zéro engagement
       </motion.div>
     </div>
   )

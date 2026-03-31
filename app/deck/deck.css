@@ -12,6 +12,7 @@
   --color-accent: #EE1D52;
   --color-text: #F5F0E8;
   --color-text-muted: rgba(245, 240, 232, 0.55);
+  --color-text-subdued: rgba(245, 240, 232, 0.5);
   --color-border: rgba(255, 255, 255, 0.08);
 }
 

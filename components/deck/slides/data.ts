@@ -20,8 +20,10 @@ export const CLIENT_SLIDES: ClientSlideData[] = [
       { label: 'Vues', value: '1,7M' },
       { label: 'Abonnés gagnés', value: '+3 744' },
       { label: 'Durée', value: '3 mois' },
+      { label: 'Fréquence', value: '4×/sem' },
     ],
     quote: '[Témoignage Kylen — à remplir]',
+    videoSrc: '/videos/KAA_France.mp4',
   },
   {
     name: 'Client 2',
@@ -35,8 +37,10 @@ export const CLIENT_SLIDES: ClientSlideData[] = [
       { label: 'Vues', value: 'XXX' },
       { label: 'Abonnés gagnés', value: '+XXX' },
       { label: 'Durée', value: 'X mois' },
+      { label: 'Vidéos livrées', value: 'XX' },
     ],
     quote: '[Témoignage client 2 — à remplir]',
+    videoSrc: '/videos/XEN_Mixe.mp4',
   },
   {
     name: 'Quentin',
@@ -50,7 +54,9 @@ export const CLIENT_SLIDES: ClientSlideData[] = [
       { label: 'Clients signés', value: '6' },
       { label: 'Abonnés au départ', value: '300' },
       { label: 'Durée', value: '2 mois' },
+      { label: 'Reels livrés', value: '16' },
     ],
     quote: '[Témoignage Quentin — à remplir]',
+    videoSrc: '/videos/Xen_Prix.mp4',
   },
 ]

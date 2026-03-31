@@ -8,6 +8,7 @@ import { Slide07Portfolio } from '@/components/deck/slides/Slide07Portfolio'
 import { Slide08Workflow } from '@/components/deck/slides/Slide08Workflow'
 import { Slide09Kit } from '@/components/deck/slides/Slide09Kit'
 import { Slide10Offres } from '@/components/deck/slides/Slide10Offres'
+import { Slide11Packs } from '@/components/deck/slides/Slide11Packs'
 import { CLIENT_SLIDES } from '@/components/deck/slides/data'
 
 const SLIDES = [
@@ -21,6 +22,7 @@ const SLIDES = [
   <Slide08Workflow key="workflow" />,
   <Slide09Kit key="kit" />,
   <Slide10Offres key="offres" />,
+  <Slide11Packs key="packs" />,
 ]
 
 export default function DeckPage() {
