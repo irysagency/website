@@ -42,6 +42,8 @@ export default function Offres() {
     },
   ]
 
+  const ICON_PROPS = { size: 18, strokeWidth: 1.5 }
+
   const PACKS: Pack[] = [
     {
       icon: <Smartphone {...ICON_PROPS} />,
