@@ -4,7 +4,7 @@ import Portfolio from '@/components/Portfolio'
 import FreelanceVsAgence from '@/components/FreelanceVsAgence'
 import EcosystemeIrys from '@/components/EcosystemeIrys'
 import ProcessSwimlaneClient from '@/components/ProcessSwimlaneClient'
-import Offres from '@/components/Offres'
+// import Offres from '@/components/Offres' — temporairement masqué
 import CalendlySection from '@/components/CalendlySection'
 import FAQ from '@/components/FAQ'
 import Footer from '@/components/Footer'
@@ -19,7 +19,7 @@ export default function Home() {
         <FreelanceVsAgence />
         <EcosystemeIrys />
         <ProcessSwimlaneClient />
-        <Offres />
+        {/* <Offres /> — temporairement masqué */}
         <CalendlySection />
         <FAQ />
       </main>
