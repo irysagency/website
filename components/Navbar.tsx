@@ -21,7 +21,7 @@ export default function Navbar() {
   const NAV_LINKS = [
     { label: t('portfolio'), href: '#portfolio' },
     { label: t('methode'), href: '#methode' },
-    { label: t('offres'), href: '#offres' },
+    // { label: t('offres'), href: '#offres' }, — temporairement masqué
     { label: t('faq'), href: '#faq' },
   ]
 
