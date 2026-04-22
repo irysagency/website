@@ -10,7 +10,6 @@ const FreelanceVsAgence = dynamic(() => import('@/components/FreelanceVsAgence')
 const EcosystemeIrys = dynamic(() => import('@/components/EcosystemeIrys'))
 const Offres = dynamic(() => import('@/components/Offres'))
 const CalendlySection = dynamic(() => import('@/components/CalendlySection'))
-const AvisClients = dynamic(() => import('@/components/AvisClients'))
 const FAQ = dynamic(() => import('@/components/FAQ'))
 const Footer = dynamic(() => import('@/components/Footer'))
 
@@ -24,9 +23,8 @@ export default function Home() {
         <FreelanceVsAgence />
         <EcosystemeIrys />
         <ProcessSwimlaneClient />
-        {/* <Offres /> — temporairement masqué */}
+        <Offres />
         <CalendlySection />
-        <AvisClients />
         <FAQ />
       </main>
       <Footer />
