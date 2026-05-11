@@ -59,7 +59,7 @@ function VideoPlayer({
       muted
       loop
       playsInline
-      preload="none"
+      preload="metadata"
       poster={poster}
       onError={onError}
       className={className}
@@ -379,6 +379,7 @@ export default function Portfolio() {
                 title={modalItem.clientName}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                sandbox="allow-scripts allow-same-origin allow-presentation allow-fullscreen"
                 referrerPolicy="no-referrer"
                 className="w-full h-full border-0"
               />

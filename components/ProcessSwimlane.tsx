@@ -34,13 +34,26 @@ export default function ProcessSwimlane() {
       })
     }
     positionDots()
-    window.addEventListener('resize', positionDots)
+
+    // Throttle resize via requestAnimationFrame — synced to frames, prevents layout thrashing
+    let rafId: number | null = null
+    const handleResize = () => {
+      if (rafId !== null) cancelAnimationFrame(rafId)
+      rafId = requestAnimationFrame(() => {
+        positionDots()
+        rafId = null
+      })
+    }
+    window.addEventListener('resize', handleResize, { passive: true })
 
     if (prefersReduced) {
       stepRefs.current.forEach(el => { if (el) { el.style.opacity = '1'; el.style.transform = 'none' } })
       nodeRefs.current.forEach(el => { if (el) { el.style.opacity = '1'; el.style.transform = 'translateX(-50%) scale(1)' } })
       if (bilanRef.current) { bilanRef.current.style.opacity = '1'; bilanRef.current.style.transform = 'none' }
-      return () => window.removeEventListener('resize', positionDots)
+      return () => {
+        if (rafId !== null) cancelAnimationFrame(rafId)
+        window.removeEventListener('resize', handleResize)
+      }
     }
 
     // Initial hidden states
@@ -115,7 +128,8 @@ export default function ProcessSwimlane() {
 
     return () => {
       observer.disconnect()
-      window.removeEventListener('resize', positionDots)
+      if (rafId !== null) cancelAnimationFrame(rafId)
+      window.removeEventListener('resize', handleResize)
     }
   }, [])
 
