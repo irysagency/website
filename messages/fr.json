@@ -253,5 +253,10 @@
     "privacy": "Confidentialité",
     "cgv": "Conditions de vente",
     "copyright_suffix": "Irys Agency · Tous droits réservés"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "description": "Cette page n'existe pas ou plus. Pas grave — on te ramène à l'accueil.",
+    "cta": "Retour à l'accueil"
   }
 }

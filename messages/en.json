@@ -253,5 +253,10 @@
     "privacy": "Privacy Policy",
     "cgv": "Terms & Conditions",
     "copyright_suffix": "Irys Agency · All rights reserved"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This page doesn't exist or no longer exists. No worries — let's get you back home.",
+    "cta": "Back to home"
   }
 }

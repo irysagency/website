@@ -323,6 +323,12 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${inter.variable} ${dmSans.variable} ${outfit.variable} h-full`}>
       <head>
+        {/* Preconnect : economie ~100-200ms LCP sur tiers critiques */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://plausible.io" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="dns-prefetch" href="https://app.cal.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
