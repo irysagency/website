@@ -76,6 +76,7 @@ const VIDEO_DATA: PortfolioItem[] = [
   { id: 1,  src: '/videos/KAA_27.mp4',              youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Focus · Dynamic Edit',       offerName: 'Usine à contenu'    },
   { id: 2,  src: '/videos/LES_MATHS.mp4',           youtubeId: '5Egg356Cq30',    typeKey: 'reels', clientName: 'QUENTIN.PRPROJ',  details: 'Coaching · Expert Edit',                offerName: 'Machine à Shorts'   },
   { id: 3,  src: '/videos/Nico_Lancement.mp4',      youtubeId: 'fo_RbvFOATM',    typeKey: 'reels', clientName: 'NICO',             details: 'Automotive · Launch · Storytelling',    offerName: 'Machine à Shorts'   },
+  { id: 48, src: '/videos/MONTAGE_TOYOTA_comp.mp4', youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'THÉO PARISI',     details: 'Reels Premium',                         offerName: 'Machine à Shorts'   },
   { id: 4,  src: '/videos/Ernesto_Investir.mp4',    youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'ERNESTO.IMMO',    details: 'Real Estate · Investment',              offerName: 'Usine à contenu'    },
   { id: 5,  src: '/videos/350_ILYES.mp4',           youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: '350 BARBER',      details: 'Barbershop · Lifestyle · Dynamic',      offerName: 'Machine à Shorts'   },
   { id: 6,  src: '/videos/KAA_Enfant.mp4',          youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Hook · Captivation',         offerName: 'Usine à contenu'    },
@@ -113,6 +114,8 @@ const VIDEO_DATA: PortfolioItem[] = [
   { id: 35, src: '/videos/ADS_CECCA_PENNYLANE.mp4',         youtubeId: '1xkFD_58Cpk',    typeKey: 'ads',     clientName: 'CECCA',            details: 'ADS · Pennylane · SaaS',                offerName: 'Pack Ads'           },
   { id: 38, src: '/videos/ADS_JPO_SOL.mp4',                 youtubeId: 'VIDEO_ID_HERE',  typeKey: 'ads',     clientName: 'DIGITAL CAMPUS',   details: 'ADS · Open Day · Recruitment',          offerName: 'Pack Ads'           },
   // YouTube & Vlogs — alternance KILIAN / CECCA / ADAM / CECCA / KILIAN / CECCA
+  { id: 49, src: '/videos/INTRO_VLOG_KAA.mp4',              youtubeId: 'BYHRbdUWnPU',    typeKey: 'youtube', clientName: 'KILIAN.ADAM',      details: 'Vlog · Build in Public',                offerName: 'Usine à contenu'    },
+  { id: 50, src: '',                                        youtubeId: 'm_sFuTrP6ho',    typeKey: 'youtube', clientName: 'ADAM SWIFT',       details: 'Vlog · Lifestyle · Storytelling',       offerName: 'Pack Youtube'       }, // TODO: REPLACE src quand .mp4 fourni
   { id: 40, src: '/videos/VLOG_MARS_VF.mp4',                youtubeId: 'VP3nLBnMb34',    typeKey: 'youtube', clientName: 'KILIAN.ADAM',      details: 'Vlog · Build in Public · March 2025',   offerName: 'Usine à contenu'    },
   { id: 43, src: '/videos/VERSUS_PODCAST_LONG_FORM.mp4',    youtubeId: 'F3zZbiMty6A',    typeKey: 'youtube', clientName: 'CECCA',            details: 'Podcast Complet · Versus · Full Ep.',   offerName: 'Pack Podcast'       },
   { id: 42, src: '/videos/ADAM_SWIFT_VLOG.mp4',             youtubeId: '-8V4O9KHgzE',    typeKey: 'youtube', clientName: 'ADAM SWIFT',       details: 'Vlog · Lifestyle · Storytelling',       offerName: 'Pack Youtube'       },
