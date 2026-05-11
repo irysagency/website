@@ -1,9 +1,22 @@
 'use client'
 
-import { useLocale } from './I18nProvider'
+import { useLocale } from 'next-intl'
+import { usePathname, useRouter } from '@/i18n/navigation'
+import { routing } from '@/i18n/routing'
+import { useTransition } from 'react'
 
 export function LanguageSwitcher() {
-  const { locale, setLocale } = useLocale()
+  const locale = useLocale()
+  const pathname = usePathname()
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+
+  const switchTo = (target: (typeof routing.locales)[number]): void => {
+    if (target === locale) return
+    startTransition(() => {
+      router.replace(pathname, { locale: target })
+    })
+  }
 
   return (
     <div
@@ -15,16 +28,18 @@ export function LanguageSwitcher() {
         borderRadius: '20px',
         border: '0.5px solid rgba(255,255,255,0.1)',
         background: 'rgba(255,255,255,0.06)',
+        opacity: isPending ? 0.6 : 1,
       }}
       aria-label="Language switcher"
     >
-      {(['fr', 'en'] as const).map((lang) => {
+      {routing.locales.map((lang) => {
         const isActive = locale === lang
         return (
           <button
             key={lang}
             type="button"
-            onClick={() => !isActive && setLocale(lang)}
+            onClick={() => switchTo(lang)}
+            disabled={isActive || isPending}
             style={{
               padding: '5px 12px',
               borderRadius: '16px',

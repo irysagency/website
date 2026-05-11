@@ -1,8 +1,12 @@
 import type { Metadata } from 'next'
 import { Inter, DM_Sans, Outfit } from 'next/font/google'
 import Script from 'next/script'
-import { I18nProvider } from '@/components/I18nProvider'
-import './globals.css'
+import { notFound } from 'next/navigation'
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages, setRequestLocale } from 'next-intl/server'
+import { hasLocale } from 'next-intl'
+import { routing, type Locale } from '@/i18n/routing'
+import '../globals.css'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -24,75 +28,130 @@ const outfit = Outfit({
   weight: ['400', '600', '700'],
 })
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://irysagency.com'),
-  title: {
-    default: 'Agence montage vidéo pour infopreneurs | Irys',
-    template: '%s | Irys',
-  },
-  description:
-    'Arrête de perdre du temps sur Premiere Pro. Délègue ta post-production à notre agence montage vidéo pour infopreneur. Réserve ton appel gratuit !',
-  keywords: [
-    'montage vidéo',
-    'post-production vidéo',
-    'agence montage vidéo',
-    'infopreneur',
-    'coach',
-    'formateur',
-    'done for you vidéo',
-    'Irys Agency',
-  ],
-  authors: [{ name: 'Irys Agency', url: 'https://irysagency.com' }],
-  creator: 'Irys Agency',
-  openGraph: {
-    type: 'website',
-    locale: 'fr_FR',
-    url: 'https://irysagency.com',
-    siteName: 'Irys Agency',
-    title: 'Irys Agency — Post-production vidéo Done-For-You',
-    description:
-      'Agence de montage vidéo pour infopreneurs et créateurs. +54 clients, +1 600 vidéos livrées. Première vidéo offerte.',
-    images: [
-      {
-        url: '/og-image.jpg', // TODO: REPLACE
-        width: 1200,
-        height: 630,
-        alt: 'Irys Agency — Post-production vidéo Done-For-You',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Irys Agency — Post-production vidéo Done-For-You',
-    description:
-      'Tu filmes, on livre. Montage vidéo pro pour infopreneurs francophones.',
-    images: [
-      {
-        url: '/og-image.jpg', // TODO: REPLACE
-        alt: 'IRYS Agency — agence post-production vidéo pour infopreneurs francophones',
-        width: 1200,
-        height: 630,
-      },
-    ],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
+}
+
+const SITE_URL = 'https://irysagency.com'
+
+// localePath retourne l'URL en respectant `localePrefix: 'as-needed'`
+// FR (default) reste sur '/', EN sur '/en'
+function localePath(locale: Locale): string {
+  return locale === routing.defaultLocale ? SITE_URL : `${SITE_URL}/${locale}`
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const validLocale = hasLocale(routing.locales, locale) ? locale : routing.defaultLocale
+
+  const isEn = validLocale === 'en'
+
+  const title = isEn
+    ? 'Video editing agency for content creators | Irys'
+    : 'Agence montage vidéo pour infopreneurs | Irys'
+
+  const description = isEn
+    ? 'Stop wasting time on Premiere Pro. Delegate your post-production to our done-for-you video editing agency. Book your free call.'
+    : 'Arrête de perdre du temps sur Premiere Pro. Délègue ta post-production à notre agence montage vidéo pour infopreneur. Réserve ton appel gratuit !'
+
+  const ogTitle = isEn
+    ? 'Irys Agency — Done-For-You video post-production'
+    : 'Irys Agency — Post-production vidéo Done-For-You'
+
+  const ogDescription = isEn
+    ? 'Video editing agency for content creators. +54 clients, +1,600 videos delivered. First video free.'
+    : 'Agence de montage vidéo pour infopreneurs et créateurs. +54 clients, +1 600 vidéos livrées. Première vidéo offerte.'
+
+  const ogAlt = isEn
+    ? 'IRYS Agency — video post-production agency for content creators'
+    : 'IRYS Agency — agence post-production vidéo pour infopreneurs francophones'
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: title,
+      template: '%s | Irys',
+    },
+    description,
+    keywords: isEn
+      ? [
+          'video editing',
+          'video post-production',
+          'video editing agency',
+          'content creator',
+          'coach',
+          'course creator',
+          'done for you video',
+          'Irys Agency',
+        ]
+      : [
+          'montage vidéo',
+          'post-production vidéo',
+          'agence montage vidéo',
+          'infopreneur',
+          'coach',
+          'formateur',
+          'done for you vidéo',
+          'Irys Agency',
+        ],
+    authors: [{ name: 'Irys Agency', url: SITE_URL }],
+    creator: 'Irys Agency',
+    openGraph: {
+      type: 'website',
+      locale: isEn ? 'en_US' : 'fr_FR',
+      alternateLocale: isEn ? ['fr_FR'] : ['en_US'],
+      url: localePath(validLocale as Locale),
+      siteName: 'Irys Agency',
+      title: ogTitle,
+      description: ogDescription,
+      images: [
+        {
+          url: '/og-image.jpg', // TODO: REPLACE
+          width: 1200,
+          height: 630,
+          alt: ogAlt,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: ogTitle,
+      description: isEn
+        ? 'You film, we deliver. Pro video editing for content creators.'
+        : 'Tu filmes, on livre. Montage vidéo pro pour infopreneurs francophones.',
+      images: [
+        {
+          url: '/og-image.jpg', // TODO: REPLACE
+          alt: ogAlt,
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+    robots: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
-  },
-  alternates: {
-    canonical: 'https://irysagency.com',
-    languages: {
-      'x-default': 'https://irysagency.com',
-      'fr': 'https://irysagency.com',
+    alternates: {
+      canonical: localePath(validLocale as Locale),
+      languages: {
+        'x-default': SITE_URL,
+        fr: SITE_URL,
+        en: `${SITE_URL}/en`,
+      },
     },
-  },
+  }
 }
 
 const jsonLd = {
@@ -246,13 +305,23 @@ const faqJsonLd = {
   ],
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+  params,
+}: {
   children: React.ReactNode
-}>) {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  if (!hasLocale(routing.locales, locale)) {
+    notFound()
+  }
+  setRequestLocale(locale)
+
+  const messages = await getMessages()
+
   return (
-    <html lang="fr" className={`${inter.variable} ${dmSans.variable} ${outfit.variable} h-full`}>
+    <html lang={locale} className={`${inter.variable} ${dmSans.variable} ${outfit.variable} h-full`}>
       <head>
         <script
           type="application/ld+json"
@@ -272,7 +341,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <I18nProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
           {/* Plausible Analytics — cookieless, pas de banner RGPD */}
           <Script
@@ -281,7 +350,7 @@ export default function RootLayout({
             src="https://plausible.io/js/script.js"
             strategy="afterInteractive"
           />
-        </I18nProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )
