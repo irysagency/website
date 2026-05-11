@@ -21,7 +21,7 @@ const outfit = Outfit({
   variable: '--font-outfit',
   subsets: ['latin'],
   display: 'swap',
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['400', '600', '700'],
 })
 
 export const metadata: Metadata = {
@@ -66,7 +66,14 @@ export const metadata: Metadata = {
     title: 'Irys Agency — Post-production vidéo Done-For-You',
     description:
       'Tu filmes, on livre. Montage vidéo pro pour infopreneurs francophones.',
-    images: ['/og-image.jpg'], // TODO: REPLACE
+    images: [
+      {
+        url: '/og-image.jpg', // TODO: REPLACE
+        alt: 'IRYS Agency — agence post-production vidéo pour infopreneurs francophones',
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   robots: {
     index: true,
@@ -118,6 +125,79 @@ const jsonLd = {
     availability: 'https://schema.org/InStock',
   },
 }
+
+const localBusinessJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': 'https://irysagency.com/#localbusiness',
+  name: 'IRYS Agency',
+  url: 'https://irysagency.com',
+  email: 'contact@irysagency.com',
+  description:
+    'Agence francophone de post-production vidéo Done-For-You pour infopreneurs (coaches, formateurs, consultants).',
+  areaServed: ['FR', 'BE', 'CH', 'CA'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '', // TODO: REPLACE
+    addressLocality: '', // TODO: REPLACE
+    addressCountry: 'FR',
+  },
+  serviceType: 'Video Post-Production Services',
+  knowsLanguage: ['fr-FR', 'en-US'],
+}
+
+interface VideoLdItem {
+  '@type': 'VideoObject'
+  name: string
+  description: string
+  thumbnailUrl: string
+  embedUrl: string
+  uploadDate: string
+  contentUrl: string
+}
+
+const portfolioVideoIds: { id: string; name: string; description: string }[] = [
+  {
+    id: '5Egg356Cq30',
+    name: 'QUENTIN.PRPROJ — Les Maths',
+    description: 'Short Coaching · Expert Edit pour Quentin.PrProj.',
+  },
+  {
+    id: 'fo_RbvFOATM',
+    name: 'NICO — Lancement',
+    description: 'Reel Automotive · Launch · Storytelling pour Nico.',
+  },
+  {
+    id: 'GkMIQ0STBLA',
+    name: 'CECCA — Podcast Versus',
+    description: 'Podcast Multi-cam · Edit dynamique pour Cecca.',
+  },
+  {
+    id: 'xDHijcJwJtQ',
+    name: 'QUENTIN.PRPROJ — XEN Mixe',
+    description: 'Short Content · 16 Reels/mois pour Quentin.PrProj.',
+  },
+  {
+    id: 'bxPuaMCtnZM',
+    name: 'JONATHAN KHALFA — Business Reel',
+    description: 'Reel Business · 16 Reels + 2 YT/mois pour Jonathan Khalfa.',
+  },
+  {
+    id: '9YMhzMPxPmE',
+    name: 'QUENTIN.PRPROJ — XEN Gratuit',
+    description: 'Short Content · Psychology pour Quentin.PrProj.',
+  },
+]
+
+const videoJsonLd: VideoLdItem[] = portfolioVideoIds.map((v) => ({
+  '@type': 'VideoObject',
+  name: v.name,
+  description: v.description,
+  thumbnailUrl: `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`,
+  embedUrl: `https://www.youtube.com/embed/${v.id}`,
+  uploadDate: '2025-01-01',
+  contentUrl: `https://www.youtube.com/watch?v=${v.id}`,
+}))
 
 const faqJsonLd = {
   '@context': 'https://schema.org',
@@ -177,6 +257,14 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }}
         />
         <script
           type="application/ld+json"

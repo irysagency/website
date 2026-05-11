@@ -21,14 +21,20 @@ const nextConfig: NextConfig = {
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          { key: 'X-Permitted-Cross-Domain-Policies', value: 'none' },
+          {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()',
+            value:
+              'camera=(), microphone=(), geolocation=(), interest-cohort=(), browsing-topics=()',
           },
           {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://app.cal.com https://app.cal.eu https://plausible.io",
+              "script-src 'self' 'unsafe-inline' https://app.cal.com https://app.cal.eu https://plausible.io",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://app.cal.com https://app.cal.eu",
               "font-src 'self' https://fonts.gstatic.com https://app.cal.com https://app.cal.eu",
               "img-src 'self' data: https://i.ytimg.com https:",

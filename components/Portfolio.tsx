@@ -147,10 +147,47 @@ export default function Portfolio() {
     dragFree: true,
   })
 
-  // Reset errors when changing tab
+  // Lazy-mount tracking : seuls les slides visibles (± buffer) rendent un <video>.
+  // Les autres rendent uniquement le poster <img> → 4 vidéos en DOM max au lieu de 49.
+  const SLIDE_BUFFER = 2
+  const [inViewIndices, setInViewIndices] = useState<Set<number>>(new Set())
+
+  // Reset errors + inView tracking when changing tab
   useEffect(() => {
     setVideoErrors({})
+    setInViewIndices(new Set())
   }, [activeTab])
+
+  // Subscribe to Embla slidesInView / select / reInit and expand with ±SLIDE_BUFFER
+  useEffect(() => {
+    if (!emblaApi) return
+
+    const updateInView = (): void => {
+      const visible = emblaApi.slidesInView()
+      const total = emblaApi.scrollSnapList().length
+      const next = new Set<number>()
+      for (const idx of visible) {
+        for (let offset = -SLIDE_BUFFER; offset <= SLIDE_BUFFER; offset++) {
+          const target = idx + offset
+          if (target >= 0 && target < total) {
+            next.add(target)
+          }
+        }
+      }
+      setInViewIndices(next)
+    }
+
+    updateInView()
+    emblaApi.on('slidesInView', updateInView)
+    emblaApi.on('select', updateInView)
+    emblaApi.on('reInit', updateInView)
+
+    return () => {
+      emblaApi.off('slidesInView', updateInView)
+      emblaApi.off('select', updateInView)
+      emblaApi.off('reInit', updateInView)
+    }
+  }, [emblaApi, activeTab])
 
   const scrollPrev = () => emblaApi && emblaApi.scrollPrev()
   const scrollNext = () => emblaApi && emblaApi.scrollNext()
@@ -228,12 +265,13 @@ export default function Portfolio() {
           <div className="relative group px-1 sm:px-4">
             <div className="overflow-hidden" ref={emblaRef}>
               <div className="flex gap-4">
-                {filtered.map((item) => {
+                {filtered.map((item, index) => {
                   const ytPoster =
                     item.youtubeId && item.youtubeId !== 'VIDEO_ID_HERE'
                       ? `https://i.ytimg.com/vi/${item.youtubeId}/hqdefault.jpg`
                       : undefined
-                  const showVideo = item.src && !videoErrors[item.id]
+                  const isMounted = inViewIndices.has(index)
+                  const showVideo = Boolean(item.src) && !videoErrors[item.id] && isMounted
 
                   return (
                     <div
@@ -341,6 +379,7 @@ export default function Portfolio() {
                 title={modalItem.clientName}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                referrerPolicy="no-referrer"
                 className="w-full h-full border-0"
               />
             ) : (

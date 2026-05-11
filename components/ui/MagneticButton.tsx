@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
 interface MagneticButtonProps {
@@ -11,22 +11,43 @@ interface MagneticButtonProps {
 
 export default function MagneticButton({ children, className = '', href }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number | null>(null)
   const [position, setPosition] = useState({ x: 0, y: 0 })
 
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return
     const { clientX, clientY } = e
     const { height, width, left, top } = ref.current.getBoundingClientRect()
-    // Calcule la distance du centre du bouton
-    const middleX = clientX - (left + width / 2)
-    const middleY = clientY - (top + height / 2)
-    // Multiplicateur pour la force magnétique (0.2 = doux, 0.5 = très fort)
-    setPosition({ x: middleX * 0.25, y: middleY * 0.25 })
+    // Throttle via rAF : on cancel le frame en attente et on schedule le suivant
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current)
+    }
+    rafRef.current = requestAnimationFrame(() => {
+      // Calcule la distance du centre du bouton
+      const middleX = clientX - (left + width / 2)
+      const middleY = clientY - (top + height / 2)
+      // Multiplicateur pour la force magnétique (0.2 = doux, 0.5 = très fort)
+      setPosition({ x: middleX * 0.25, y: middleY * 0.25 })
+      rafRef.current = null
+    })
   }
 
   const reset = () => {
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current)
+      rafRef.current = null
+    }
     setPosition({ x: 0, y: 0 })
   }
+
+  useEffect(() => {
+    return () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current)
+        rafRef.current = null
+      }
+    }
+  }, [])
 
   const { x, y } = position
 

@@ -8,6 +8,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 const CAL_NAMESPACE = 'appel-de-decouverte'
 const CAL_LINK = 'irys-agency/appel-de-decouverte'
 const CAL_ORIGIN = 'https://app.cal.com'
+const ALLOWED_ORIGINS = ['https://app.cal.com', 'https://app.cal.eu', 'https://cal.com', 'https://cal.eu']
 
 export default function CalendlySection() {
   const t = useTranslations('booking')
@@ -28,6 +29,7 @@ export default function CalendlySection() {
 
     // Auto-resize : écoute les changements de hauteur de l'iframe Cal.com
     const handleMessage = (e: MessageEvent) => {
+      if (!ALLOWED_ORIGINS.includes(e.origin)) return
       if (e.data?.type === '__dimensionChanged' && e.data?.namespace === CAL_NAMESPACE) {
         const el = document.getElementById(`my-cal-inline-${CAL_NAMESPACE}`)
         if (el && e.data?.data?.height) {
