@@ -78,7 +78,7 @@ const VIDEO_DATA: PortfolioItem[] = [
   { id: 3,  src: '/videos/Nico_Lancement.mp4',      youtubeId: 'fo_RbvFOATM',    typeKey: 'reels', clientName: 'NICO',             details: 'Automotive · Launch · Storytelling',    offerName: 'Machine à Shorts'   },
   { id: 48, src: '/videos/MONTAGE_TOYOTA_comp.mp4', youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'THÉO PARISI',     details: 'Reels Premium',                         offerName: 'Machine à Shorts'   },
   { id: 4,  src: '/videos/Ernesto_Investir.mp4',    youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'ERNESTO.IMMO',    details: 'Real Estate · Investment',              offerName: 'Usine à contenu'    },
-  { id: 6,  src: '/videos/KAA_Enfant.mp4',          youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Hook · Captivation',         offerName: 'Usine à contenu'    },
+  { id: 6,  src: '/videos/Zeynebmaxim_ai.mp4',      youtubeId: 'itv6drfTbX0',    typeKey: 'reels', clientName: 'ZEYNEBMAXIM.AI', details: 'AI · Short · Personal Branding',        offerName: 'Machine à Shorts'   },
   { id: 7,  src: '/videos/Podcast_Versus.mp4',      youtubeId: 'GkMIQ0STBLA',    typeKey: 'reels', clientName: 'CECCA',           details: 'Podcast · Multi-cam · Dynamic',         offerName: 'Pack Podcast'       },
   { id: 9,  src: '/videos/KAA_France.mp4',          youtubeId: 'VIDEO_ID_HERE',  typeKey: 'reels', clientName: 'KILIAN.ADAM',     details: 'Business · Storytelling',               offerName: 'Usine à contenu'    },
   { id: 10, src: '/videos/JO_PB.mp4',               youtubeId: 'bxPuaMCtnZM',    typeKey: 'reels', clientName: 'JONATHAN KHALFA', details: 'Business · 16 Reels + 2 YT',            offerName: 'Usine à contenu'    },
@@ -105,14 +105,14 @@ const VIDEO_DATA: PortfolioItem[] = [
   { id: 37, src: '/videos/ADS_DOUDOUNE.mp4',                youtubeId: 'VIDEO_ID_HERE',  typeKey: 'ads',     clientName: 'DIGITAL CAMPUS',   details: 'ADS · Fashion · Conversion',            offerName: 'Pack Ads'           },
   { id: 35, src: '/videos/ADS_CECCA_PENNYLANE.mp4',         youtubeId: '1xkFD_58Cpk',    typeKey: 'ads',     clientName: 'CECCA',            details: 'ADS · Pennylane · SaaS',                offerName: 'Pack Ads'           },
   { id: 38, src: '/videos/ADS_JPO_SOL.mp4',                 youtubeId: 'VIDEO_ID_HERE',  typeKey: 'ads',     clientName: 'DIGITAL CAMPUS',   details: 'ADS · Open Day · Recruitment',          offerName: 'Pack Ads'           },
-  // YouTube & Vlogs — alternance KILIAN / CECCA / ADAM / CECCA / KILIAN / CECCA
+  // YouTube & Vlogs — mix clients : Kilian / Adam Swift / Sans Permission / Cecca / Katana / Sol
   { id: 49, src: '/videos/INTRO_VLOG_KAA.mp4',              youtubeId: 'BYHRbdUWnPU',    typeKey: 'youtube', clientName: 'KILIAN.ADAM',      details: 'Vlog · Build in Public',                offerName: 'Usine à contenu'    },
   { id: 50, src: '',                                        youtubeId: 'm_sFuTrP6ho',    typeKey: 'youtube', clientName: 'ADAM SWIFT',       details: 'Vlog · Lifestyle · Storytelling',       offerName: 'Pack Youtube'       }, // TODO: REPLACE src quand .mp4 fourni
-  { id: 40, src: '/videos/VLOG_MARS_VF.mp4',                youtubeId: 'VP3nLBnMb34',    typeKey: 'youtube', clientName: 'KILIAN.ADAM',      details: 'Vlog · Build in Public · March 2025',   offerName: 'Usine à contenu'    },
+  { id: 40, src: '/videos/TEASER_SANS_PERMISSION.mp4',      youtubeId: 'zo9uc8fXRzg',    typeKey: 'youtube', clientName: 'SANS PERMISSION',  details: 'Teaser · Podcast · Business',           offerName: 'Pack Podcast'       },
   { id: 43, src: '/videos/VERSUS_PODCAST_LONG_FORM.mp4',    youtubeId: 'F3zZbiMty6A',    typeKey: 'youtube', clientName: 'CECCA',            details: 'Podcast Complet · Versus · Full Ep.',   offerName: 'Pack Podcast'       },
   { id: 42, src: '/videos/ADAM_SWIFT_VLOG.mp4',             youtubeId: '-8V4O9KHgzE',    typeKey: 'youtube', clientName: 'ADAM SWIFT',       details: 'Vlog · Lifestyle · Storytelling',       offerName: 'Pack Youtube'       },
-  { id: 44, src: '/videos/FOCUS_PODCAST_LONG_FORM.mp4',     youtubeId: '1YSq6zkjahc',    typeKey: 'youtube', clientName: 'CECCA',            details: 'Podcast Complet · Focus · Full Ep.',    offerName: 'Pack Podcast'       },
-  { id: 41, src: '/videos/VLOG_FEVRIER_KAA.mp4',            youtubeId: 'ZQcsQ8nEqsw',    typeKey: 'youtube', clientName: 'KILIAN.ADAM',      details: 'Vlog · Build in Public · Feb. 2025',    offerName: 'Usine à contenu'    },
+  { id: 44, src: '/videos/KATANA_MARKETING.mp4',            youtubeId: 'IdME1nELTww',    typeKey: 'youtube', clientName: 'KATANA',           details: 'Marketing · Brand · Storytelling',      offerName: 'Pack Youtube'       },
+  { id: 41, src: '/videos/TEASER_SOL_2.mp4',                youtubeId: 'fI1TKIqwMGM',    typeKey: 'youtube', clientName: 'SOL.COPYWRITING',  details: 'Vlog · Copywriting · Storytelling',     offerName: 'Pack Youtube'       },
   { id: 45, src: '/videos/MULTI_PODCAST_LONG_FORM.mp4',     youtubeId: '6iO8Bj5VdZw',    typeKey: 'youtube', clientName: 'CECCA',            details: 'Podcast Complet · Multi · Full Ep.',    offerName: 'Pack Podcast'       },
 ]
 
@@ -371,8 +371,7 @@ export default function Portfolio() {
                 title={modalItem.clientName}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                sandbox="allow-scripts allow-same-origin allow-presentation allow-fullscreen"
-                referrerPolicy="no-referrer"
+                sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
                 className="w-full h-full border-0"
               />
             ) : (
